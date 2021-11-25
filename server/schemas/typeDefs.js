@@ -19,9 +19,17 @@ const typeDefs = gql`
     _id: ID
     eventName: String
     address: String
-    zipCode
+    zipCode: Int
+    lat: Float
+    lon: Int
     eventDate: String
     eventImage: String
+  }
+
+  type eventPrefs {
+    _id: ID
+    category: String
+    subCategory: String
   }
 
   type Auth {
@@ -38,7 +46,7 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(firstName: String!, lastName: String!, phone: Int!, zipCode: Int!, email: String!, password: String!): Auth
-    accountReg(email: String!): User
+    accountReg(email: String!, emailConfirmed: Boolean!): User
     eventPrefSetup(email: String!): User
     login(email: String!, password: String!): Auth
     addEvent(eventName: String!, address: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): savedEvent
