@@ -1,23 +1,62 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-export const CREATE_MATCHUP = gql`
-  mutation createMatchup($tech1: String!, $tech2: String!) {
-    createMatchup(tech1: $tech1, tech2: $tech2) {
-      _id
-      tech1
-      tech2
+export const LOGIN_USER = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
     }
   }
 `;
 
-export const CREATE_VOTE = gql`
-  mutation createVote($_id: String!, $techNum: Int!) {
-    createVote(_id: $_id, techNum: $techNum) {
+export const ADD_USER = gql`
+  mutation addUser($firstName: String!, $lastName: String!, $phone: Int!, $zipCode: Int!, $email: String!, $password: String!) {
+    addUser(firstName: $firstName, lastName: $lastName, phone: $phone, zipCode: $zipCode, email: $email, password: $password) {
+      token
+      user {
+        _id
+        email
+      }
+    }
+  }
+`;
+
+export const ACCOUNT_REG = gql`
+  mutation accountReg($email: String!) {
+    accountReg(email: $email) {
+      user {
+        _id
+        emailConfirmed
+      }
+    }
+  }
+`;
+
+export const EVENT_PREF_SETUP = gql`
+  mutation eventPrefSetup($email: String!) {
+    eventPrefSetup(email: $email) {
+      user {
+        _id
+        prefsSet
+      }
+    }
+  }
+`;
+
+export const ADD_SAVED_EVENT = gql`
+  mutation addSavedEvent($eventName: String!, $address: String!, $zipCode: Int!, $lat: Float!, $lon: Float!, $eventDate: String!, $eventImage: String!) {
+    addSavedEvent(eventName: $eventName, address: $address, zipCode: $zipCode, lat: $lat, lon: $lon, eventDate: $eventDate, eventImage: $eventImage) {
       _id
-      tech1
-      tech2
-      tech1_votes
-      tech2_votes
+      eventName
+      address
+      zipCode
+      lat
+      lon
+      eventDate
+      eventImage
     }
   }
 `;
