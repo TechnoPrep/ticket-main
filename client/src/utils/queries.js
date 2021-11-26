@@ -44,7 +44,7 @@ export const QUERY_SAVED_EVENTS = gql`
 
 export const QUERY_SINGLE_SAVED_EVENT = gql`
   query getSingleSavedEvent($savedEventId: ID!) {
-    savedEvent(savedEventId: $savedEventId) {
+    SavedEvent(savedEventId: $savedEventId) {
       _id
       eventName
       venue
