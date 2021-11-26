@@ -5,8 +5,8 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
-    phone: Int
-    zipCode: Int
+    phone: String
+    zipCode: String
     email: String
     password: String
     emailConfirmed: Boolean
@@ -15,7 +15,7 @@ const typeDefs = gql`
     eventPrefs: [EventPref]!
   }
 
-  type savedEvent {
+  type SavedEvent {
     _id: ID
     eventName: String
     venue: String
@@ -26,7 +26,7 @@ const typeDefs = gql`
     eventImage: String
   }
 
-  type eventPrefs {
+  type EventPref {
     _id: ID
     category: String
     subCategory: String
@@ -45,12 +45,12 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, phone: Int!, zipCode: Int!, email: String!, password: String!): Auth
+    addUser(firstName: String!, lastName: String!, phone: String!, zipCode: String!, email: String!, password: String!): Auth
     accountReg(email: String!, emailConfirmed: Boolean!): User
     eventPrefSetup(email: String!): User
     login(email: String!, password: String!): Auth
-    addEvent(eventName: String!, venue: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): savedEvent
-    removeEvent(savedEventId: ID!): savedEvent
+    addEvent(eventName: String!, venue: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): SavedEvent
+    removeEvent(savedEventId: ID!): SavedEvent
   }
 `;
 

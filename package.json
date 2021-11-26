@@ -16,6 +16,6 @@
     "concurrently": "^5.3.0"
   },
   "dependencies": {
-
+    "http-proxy-middleware": "^2.0.1"
   }
 }

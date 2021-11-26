@@ -31,6 +31,8 @@ const resolvers = {
       parent,
       { firstName, lastName, phone, zipCode, email, password }
     ) => {
+
+      console.log(firstName, lastName, phone, zipCode, email, password);
       const user = await User.create(
         { firstName, lastName, phone, zipCode, email, password }
       );
