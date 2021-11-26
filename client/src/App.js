@@ -12,7 +12,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import SearchResults from './pages/SearchResults';
+import SearchResults from './components/Results';
 import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
