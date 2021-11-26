@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import SearchResults from './pages/SearchResults';
+import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -54,6 +55,9 @@ function App() {
             </Route>
             <Route exact path="/signup">
               <Signup />
+            </Route>
+            <Route exact path="/me">
+              <UserProfile />
             </Route>
           </div>
           <Footer />
