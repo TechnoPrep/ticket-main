@@ -92,13 +92,13 @@ const resolvers = {
     // Add Saved Event
     addEvent: async (
       parent,
-      { eventName, address, zipCode, lat, lon, eventDate, eventImage },
+      { eventName, venue, zipCode, lat, lon, eventDate, eventImage },
       context
     ) => {
       if (context.user) {
         const event = await SavedEvent.create({
           eventName,
-          address,
+          venue,
           zipCode,
           lat,
           lon,
