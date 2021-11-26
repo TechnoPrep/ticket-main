@@ -18,7 +18,7 @@ const typeDefs = gql`
   type savedEvent {
     _id: ID
     eventName: String
-    address: String
+    venue: String
     zipCode: Int
     lat: Float
     lon: Int
@@ -49,7 +49,7 @@ const typeDefs = gql`
     accountReg(email: String!, emailConfirmed: Boolean!): User
     eventPrefSetup(email: String!): User
     login(email: String!, password: String!): Auth
-    addEvent(eventName: String!, address: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): savedEvent
+    addEvent(eventName: String!, venue: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): savedEvent
     removeEvent(savedEventId: ID!): savedEvent
   }
 `;
