@@ -5,7 +5,7 @@ import {  } from '../utils/queries';
 import {  } from '../utils/mutations';
 
 const SearchResults = () => {
-  const { loading, data } = useQuery();
+  // const { loading, data } = useQuery();
 
   return (
     <>
