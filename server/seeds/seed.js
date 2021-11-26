@@ -7,10 +7,10 @@ const eventSeeds = require('./savedEvents.json');
 db.once('open', async () => {
   try {
     await SavedEvent.deleteMany({});
-    // await User.deleteMany({});
+    await User.deleteMany({});
   
-    // await User.create(userSeeds);
-    // console.log('User Data Seeded');
+    await User.create(userSeeds);
+    console.log('User Data Seeded');
     
     for (let i = 0; i < eventSeeds.length; i++) {
       const { 
