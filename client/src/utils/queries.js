@@ -11,7 +11,7 @@ export const QUERY_USER = gql`
       savedEvents {
         _id
         eventName
-        address
+        venue
         zipCode
         lat
         lon
@@ -32,7 +32,7 @@ export const QUERY_SAVED_EVENTS = gql`
     SavedEvent {
       _id
       eventName
-      address
+      venue
       zipCode
       lat
       lon
@@ -47,7 +47,7 @@ export const QUERY_SINGLE_SAVED_EVENT = gql`
     savedEvent(savedEventId: $savedEventId) {
       _id
       eventName
-      address
+      venue
       zipCode
       lat
       lon

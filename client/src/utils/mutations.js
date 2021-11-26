@@ -47,11 +47,11 @@ export const EVENT_PREF_SETUP = gql`
 `;
 
 export const ADD_SAVED_EVENT = gql`
-  mutation addSavedEvent($eventName: String!, $address: String!, $zipCode: Int!, $lat: Float!, $lon: Float!, $eventDate: String!, $eventImage: String!) {
-    addSavedEvent(eventName: $eventName, address: $address, zipCode: $zipCode, lat: $lat, lon: $lon, eventDate: $eventDate, eventImage: $eventImage) {
+  mutation addSavedEvent($eventName: String!, $venue: String!, $zipCode: Int!, $lat: Float!, $lon: Float!, $eventDate: String!, $eventImage: String!) {
+    addSavedEvent(eventName: $eventName, venue: $venue, zipCode: $zipCode, lat: $lat, lon: $lon, eventDate: $eventDate, eventImage: $eventImage) {
       _id
       eventName
-      address
+      venue
       zipCode
       lat
       lon
