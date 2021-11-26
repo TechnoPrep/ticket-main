@@ -1,0 +1,32 @@
+[
+  {
+    "firstName": "Larry",
+    "lastName": "David",
+    "phone": "5555555555",
+    "zipCode": "80220",
+    "email": "larry@david.com",
+    "password": "PrettyGood!",
+    "emailConfirmed": true,
+    "prefsSet": false
+  },
+  {
+    "firstName": "Jerry",
+    "lastName": "Seinfeld",
+    "phone": "5555551234",
+    "zipCode": "64804",
+    "email": "jerry@seinfeld.com",
+    "password": "Password123!",
+    "emailConfirmed": true,
+    "prefsSet": true
+  },
+  {
+    "firstName": "Cosmo",
+    "lastName": "Kramer",
+    "phone": "5555552345",
+    "zipCode": "10007",
+    "email": "assman@mail.com",
+    "password": "Password123!",
+    "emailConfirmed": false,
+    "prefsSet": false
+  }
+]
