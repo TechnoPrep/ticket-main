@@ -7,11 +7,13 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css'
 
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import SearchResults from './components/Results';
+import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -54,6 +56,9 @@ function App() {
             </Route>
             <Route exact path="/signup">
               <Signup />
+            </Route>
+            <Route exact path="/me">
+              <UserProfile />
             </Route>
           </div>
           <Footer />
