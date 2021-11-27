@@ -62,3 +62,30 @@ body {
 .sample-search {
     color: white;
 }
+
+.login {
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.login-form {
+    margin: auto;
+}
+
+.login-header {
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.login-btn {
+    background-color: #4d7392 !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+}
+
+.go-back-btn {
+    background-color: #D1CFC0 !important;
+}

@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container text-center mb-5">
         {location.pathname !== '/' && (
           <button
-            className="btn btn-dark mb-3"
+            className="btn go-back-btn mb-3"
             onClick={() => history.goBack()}
           >
             &larr; Go Back
