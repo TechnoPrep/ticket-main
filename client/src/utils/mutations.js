@@ -25,12 +25,9 @@ export const ADD_USER = gql`
 `;
 
 export const ACCOUNT_REG = gql`
-  mutation accountReg($email: String!) {
-    accountReg(email: $email) {
-      user {
-        _id
-        emailConfirmed
-      }
+  mutation accountReg($token: String!) {
+    accountReg(token: $token) {
+      token
     }
   }
 `;
