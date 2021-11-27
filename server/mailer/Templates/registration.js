@@ -1,7 +1,7 @@
-const registration = (token, email) => {
+const registration = (url, email) => {
 
   return `
-  <a href="http://locatlhost:3000/signup/token/${token}">http://locatlhost:3000/signup/token/${token}</a>
+  <a href="${url}">${url}</a>
   <br>
   <p> This email verification is for 
     <a href="mailto:${email}">
@@ -12,4 +12,4 @@ const registration = (token, email) => {
   `
 }
 
-export default registration;
+module.exports =  registration;
