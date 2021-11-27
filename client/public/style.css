@@ -1,0 +1,64 @@
+body {
+    background-color: #151318 !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #151318;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:#4d7392; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2c485f; 
+  }
+  
+  * {
+    overflow-y: auto !important;
+  }
+
+.navbar {
+    background-color: #000000;
+}
+
+.hero {
+    background-size: cover;
+    position: relative;
+    color: white;
+}
+
+.hero-img {
+    height: 400px;
+    width: 100vw;
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 48px;
+    left: 16px;
+    background-color: rgb(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+.hero-text2 {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    background-color: rgb(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+.sample-search {
+    color: white;
+}
