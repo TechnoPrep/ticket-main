@@ -18,10 +18,10 @@ function Signup(props) {
 
   const [addUser] = useMutation(ADD_USER);
 
+  let submitted = false;
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    console.log(formState.firstName, formState.lastName, formState.phone, formState.zipCode, formState.email, formState.password);
 
       const mutationResponse = await addUser({
         variables: {
@@ -34,10 +34,9 @@ function Signup(props) {
           // ...formState
         },
       });
-
-      const token = mutationResponse.data.addUser.token;
-
-      Auth.login(token);
+    
+    alert(`Please check your email ${formState.email} to confirm your account`)
+      
   };
 
   const handleChange = (event) => {
@@ -49,8 +48,9 @@ function Signup(props) {
   };
 
   return (
-    <div className="container my-1">
+    !submitted ? <div className="container my-1">
       <h2>Signup</h2>
+      
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
           <label htmlFor="firstName">First Name:</label>
@@ -126,7 +126,17 @@ function Signup(props) {
           <button type="submit">Submit</button>
         </div>
       </form>
-    </div>
+      </div>
+
+      :
+        
+        <div className="container my-1">
+          <h2>Signup</h2>
+          <p>
+            Please check your email {formState.email} to confirm your account
+          </p>
+        </div>
+
   );
 }
 
