@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+
 // import {  } from '../utils/queries';
 
 const Home = () => {
@@ -8,10 +9,14 @@ const Home = () => {
   // });
 
   return (
+    <div className='home'>
     <div className='search-input'>
-      <label for="site-search">Placeholder for api testing</label>
+
+      <label className='sample-search'for="site-search">Placeholder search for api testing</label>
+
       <input className='m-2' type="search" id="site-search" name="q" aria-label="Search through site content"/>
       <button>Search</button>
+    </div>
     </div>
   );
 };
