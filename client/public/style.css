@@ -1,0 +1,130 @@
+body {
+    background-color: #151318 !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #151318;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:#4d7392; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2c485f; 
+  }
+  
+  * {
+    overflow-y: auto !important;
+  }
+
+.navbar {
+    background-color: #000000;
+}
+
+.hero {
+    background-size: cover;
+    position: relative;
+    color: white;
+}
+
+.hero-img {
+    height: 400px;
+    width: 100vw;
+}
+
+.hero-text {
+    position: absolute;
+    bottom: 48px;
+    left: 16px;
+    background-color: rgb(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+.hero-text2 {
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+    background-color: rgb(255, 255, 255, 0.5);
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+.sample-search {
+    color: white;
+}
+
+.login {
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.login-form {
+    margin: auto;
+}
+
+.login-header {
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.login-btn {
+    background-color: #4d7392 !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+}
+
+.go-back-btn {
+    background-color: #D1CFC0 !important;
+}
+
+.signup-box {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    max-width: 800px;
+}
+
+.signup-form {
+    margin: auto;
+    background-color: #E8E8E8;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.signup-header {
+    text-align: center;
+    color: #E8E8E8;
+}
+
+.signup-btn {
+    margin: auto;
+    text-align: center;
+    font-size: 1.5rem !important;
+}
+
+.submit-btn {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    background-color: #4d7392 !important;
+    color: white !important;
+    padding-left: 25%;
+    padding-right: 25%;
+}
+
+.form-input {
+    margin: auto;
+}

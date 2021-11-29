@@ -17,6 +17,7 @@ import SearchResults from './components/Results';
 import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Hero from './components/Hero';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -48,6 +49,7 @@ function App() {
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
+          <Hero />
           <div className="container">
             <Route exact path="/">
               <Home />
