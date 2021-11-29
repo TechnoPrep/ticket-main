@@ -16,12 +16,12 @@ function Signup(props) {
     // confirm: "",
   });
 
-  const [addUser] = useMutation(ADD_USER);
-
-  let submitted = false;
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+
+    try{
 
       const mutationResponse = await addUser({
         variables: {
@@ -35,8 +35,19 @@ function Signup(props) {
         },
       });
     
-    alert(`Please check your email ${formState.email} to confirm your account`)
-      
+    } catch(e){
+      console.error(e)
+    }
+
+    setFormState({
+      firstName: '',
+      lastName: '',
+      phone: '',
+      zipCode: '',
+      email: '',
+      password: '',
+    });
+    
   };
 
   const handleChange = (event) => {
@@ -50,6 +61,11 @@ function Signup(props) {
   return (
     <div className="signup-box">
       <h2 className='signup-header'>Signup</h2>
+      {data ? (
+        <p style={{color: 'white'}}>
+          Thank you! Please check your email for a confirmation Link!
+        </p>
+      ) : (
       <form className='signup-form' onSubmit={handleFormSubmit}>
         <div className="flex-row space-between">
           <label htmlFor="firstName">First Name:</label>
@@ -128,11 +144,20 @@ function Signup(props) {
             onChange={handleChange}
           />
         </div>
+        
         <div className="signup-btn flex-row space-between">
           <button className='submit-btn' type="submit">Submit</button>
         </div>
       </form>
+      )}
+
+       {error && (
+         <div className="my-3 p-3 bg-danger text-white">
+           {error.message}
+         </div>
+       )}
       </div>
+      
 
   );
 }
