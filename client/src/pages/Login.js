@@ -5,6 +5,18 @@ import { useMutation, useQuery } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
+import {
+  StyledTitle,
+  StyledFormButton,
+  ButtonGroup,
+  StyledFormArea,
+  colors,
+  Avatar,
+  CopyrightText,
+  ExtraText,
+  TextLink,
+} from "../components/styles/styles";
+
 
 const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -75,14 +87,8 @@ const Login = (props) => {
                 >
                   Submit
                 </button>
-                <button
-                  className="btn btn-block login-btn"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Forgot your password?
-                </button>
               </form>
+              
             )}
 
             {error && (
@@ -91,6 +97,9 @@ const Login = (props) => {
               </div>
             )}
           </div>
+          <ExtraText>
+            Forgot Password? <TextLink to="/forgottenpassword">Reset It</TextLink>
+          </ExtraText>
     </main>
   );
 };
