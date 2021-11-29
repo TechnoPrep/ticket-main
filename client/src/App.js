@@ -18,7 +18,7 @@ import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
-import Forgot from './pages/ForgotPassword'
+import ForgotPassword from './pages/ForgotPassword'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -67,8 +67,8 @@ function App() {
             <Route exact path="/me">
               <UserProfile />
             </Route>
-            <Route exact path="/forgot">
-              <Forgot />
+            <Route exact path="/forgottenpassword">
+              <ForgotPassword />
             </Route>
           </div>
           <Footer />
