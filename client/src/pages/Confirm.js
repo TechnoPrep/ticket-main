@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useParams } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
@@ -8,19 +8,45 @@ import { ACCOUNT_REG } from "../utils/mutations";
 function Confirm() {
   
   const {token} = useParams();
-  const [accountReg, {loading, data}] = useMutation(ACCOUNT_REG);
 
-  console.log(token);
+  // const [tokenState, setTokenState] = useState({
+  //   token: "",
+  // })
 
-  useEffect(() => {
-    accountReg(token);
-  })
+  const [accountReg] = useMutation(ACCOUNT_REG);
+
+  // setTokenState({
+  //   token: token
+  // });
+
+  const handleUpdate = async () => {
+    try{
+
+      const confirmedUser = await accountReg({
+        variables: {
+          token: token,
+        },
+      });
+    
+    } catch(e){
+      console.error(e)
+    }
+  
+    // setTokenState({
+    //   token: '',
+    // });
+  }
+
+  window.onload = function() {
+    handleUpdate();
+  }
+
 
   return (
     <div className="container my-1">
       <h2>Signup</h2>
       <p>
-        Please check your email to confirm your account
+        Thank you for confirming your Email Account You may now Login!
       </p>
     </div>
   );
