@@ -1,6 +1,13 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, SavedEvent, EventPref } = require("../models");
 const { signToken } = require("../utils/auth");
+const  Mailer = require("../mailer/sendEmail");
+const { jwt, JsonWebTokenError } = require("jsonwebtoken");
+const { _ }  =require('lodash');
+
+const decode = require('jwt-decode');
+const path = require('path');
+require('dotenv').config({path: path.join(__dirname, '../.env')})
 
 const resolvers = {
   Query: {
@@ -27,29 +34,37 @@ const resolvers = {
 
   Mutation: {
     // Create User Account
-    addUser: async (
-      parent,
-      { firstName, lastName, phone, zipCode, email, password }
-    ) => {
+    addUser: async (parent, args) => {
       
       const user = await User.create(
-        { firstName, lastName, phone, zipCode, email, password }
+        { ...args }
       );
-      const token = signToken(user);
+
+      const token = signToken(user, '1d')
+
+      const url = `http://localhost:3000/confirmation/${token}`;
+      
+      Mailer("confirm", args.email, url, args.firstName)
+
       return { token, user };
     },
 
     // Set emailConfied equal to true, completed during email registration
-    accountReg: async (parent, { email }) =>{
-      const user = await User.findOne({ email });
+    accountReg: async (parent, { token }) =>{
 
-      if(!user){
-        throw new AuthenticationError("No user found with this email address");
+      try{
+
+        const decoded = decode(token)
+
+        const id = decoded.data._id
+
+        const user = await User.findOneAndUpdate({_id: id}, {emailConfirmed: true})
+ 
+        return (token, user)
+
+      } catch (err){
+        console.log(err);
       }
-
-      await User.findOneAndUpdate({ email: email }, {emailConfirmed: true}) 
-
-      return user;
     },
 
     // Set prefsSet to true after initial login survey
@@ -78,6 +93,10 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
+
+      // if(!user.emailConfirmed){
+      //   throw new AuthenticationError("Please confirm your email to login");
+      // }
 
       const correctPw = await user.isCorrectPassword(password);
 

@@ -18,10 +18,10 @@ function Signup(props) {
 
   const [addUser] = useMutation(ADD_USER);
 
+  let submitted = false;
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    console.log(formState.firstName, formState.lastName, formState.phone, formState.zipCode, formState.email, formState.password);
 
       const mutationResponse = await addUser({
         variables: {
@@ -34,10 +34,9 @@ function Signup(props) {
           // ...formState
         },
       });
-
-      const token = mutationResponse.data.addUser.token;
-
-      Auth.login(token);
+    
+    alert(`Please check your email ${formState.email} to confirm your account`)
+      
   };
 
   const handleChange = (event) => {
@@ -133,7 +132,8 @@ function Signup(props) {
           <button className='submit-btn' type="submit">Submit</button>
         </div>
       </form>
-    </div>
+      </div>
+
   );
 }
 

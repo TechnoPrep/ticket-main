@@ -599,4 +599,4 @@ const notificationEmailTemplate = (firstName, messageContent) => {
 
 }
 
-export default notificationEmailTemplate;
+module.exports = notificationEmailTemplate;

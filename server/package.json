@@ -18,7 +18,10 @@
     "express": "^4.17.1",
     "graphql": "^15.7.2",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
     "mongoose": "^5.11.6",
+    "nodemailer": "^6.7.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.4"
   },

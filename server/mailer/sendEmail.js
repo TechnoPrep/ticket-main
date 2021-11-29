@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
-const EmailTemplate = require("../Templates/EmailTemplate")
-const Registration = require("../Templates/registration")
+const EmailTemplate = require("./Templates/EmailTemplate")
+const Registration = require("./Templates/registration")
+const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../.env')})
 
 
@@ -10,14 +11,7 @@ require('dotenv').config({path: path.join(__dirname, '../.env')})
  * @param {OBJECT} emailObject 
  * @returns Sending Mail to recipents in Object
  */
-const Mailer = async (event, emailObject) => {
-
-
-  // Checks if any Data was exported, if array is empty, end
-  if(emailObject[0] === undefined){
-    return;
-
-  } else {  
+const Mailer = async (event, email, url, firstName) => {
 
     // create reusable transporter object using a Gmail Account setup with OAuth2
     const transporter = nodemailer.createTransport({
@@ -32,38 +26,30 @@ const Mailer = async (event, emailObject) => {
       },
     });
 
+    let type = ''
+
     switch (event) {
-      case "verify":
-        let type = "Account Verification Email"
+      case "confirm":
+        type = "Account Confirmation Email"
         break;
       case "reset":
-        let type = "Password Reset Email"
+        type = "Password Reset Email"
         break;
       default:
         break;
     }
-    
-    //Iterate over the Object to construct the email.
-    for (let i = 0; i < emailObject.length; i++) {
 
-    const token = emailObject[i].login.token;
-    const toEmail = emailObject[i].login.user.email;
-    const firstName = emailObject[i].firstName;
+    const messageHTML = EmailTemplate(firstName, Registration(url, email))
 
-    const messageHTML = EmailTemplate(firstName,messageContent)
-
-    let info = await transporter.sendMail({
+    await transporter.sendMail({
       from: `"Voltron App" <remindr.notification@gmail.com>`, // sender address
-      to: `${toEmail}`, // list of receivers
+      to: `${email}`, // list of receivers
       subject: `${type}`, // Subject line
       text: "Subject Text", // plain text body
       html: `${messageHTML}`
     });
-    }
-  }
 
   return;
-
 }
 
-export default Mailer;
+module.exports = Mailer;
