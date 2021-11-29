@@ -75,6 +75,13 @@ const Login = (props) => {
                 >
                   Submit
                 </button>
+                <button
+                  className="btn btn-block login-btn"
+                  style={{ cursor: 'pointer' }}
+                  type="submit"
+                >
+                  Forgot your password?
+                </button>
               </form>
             )}
 
