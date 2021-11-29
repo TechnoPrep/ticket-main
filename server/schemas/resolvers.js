@@ -35,6 +35,14 @@ const resolvers = {
   Mutation: {
     // Create User Account
     addUser: async (parent, args) => {
+
+      const email = args.email
+
+      const existing = await User.findOne({ email })
+
+      if(existing){
+        throw new AuthenticationError("An account already exists with this Email. Please reset your password or try another email!");
+      }
       
       const user = await User.create(
         { ...args }
@@ -60,7 +68,8 @@ const resolvers = {
 
         const user = await User.findOneAndUpdate({_id: id}, {emailConfirmed: true})
  
-        return (token, user)
+        // return (token, user)
+        return (token)
 
       } catch (err){
         console.log(err);
@@ -94,9 +103,9 @@ const resolvers = {
         throw new AuthenticationError("No user found with this email address");
       }
 
-      // if(!user.emailConfirmed){
-      //   throw new AuthenticationError("Please confirm your email to login");
-      // }
+      if(!user.emailConfirmed){
+        throw new AuthenticationError("Please confirm your email to login");
+      }
 
       const correctPw = await user.isCorrectPassword(password);
 
