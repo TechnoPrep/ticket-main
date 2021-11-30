@@ -5,17 +5,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
-import {
-  StyledTitle,
-  StyledFormButton,
-  ButtonGroup,
-  StyledFormArea,
-  colors,
-  Avatar,
-  CopyrightText,
-  ExtraText,
-  TextLink,
-} from "../components/styles/styles";
 
 //This is just boilerplate from login page - Needs to get updated. 
 //Functionality Still needs to be done

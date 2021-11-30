@@ -5,17 +5,6 @@ import { useMutation, useQuery } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
-import {
-  StyledTitle,
-  StyledFormButton,
-  ButtonGroup,
-  StyledFormArea,
-  colors,
-  Avatar,
-  CopyrightText,
-  ExtraText,
-  TextLink,
-} from "../components/styles/styles";
 
 
 const Login = (props) => {
@@ -97,9 +86,9 @@ const Login = (props) => {
               </div>
             )}
           </div>
-          <ExtraText>
-            Forgot Password? <TextLink to="/forgottenpassword">Reset It</TextLink>
-          </ExtraText>
+          <p style={{textAlign: "center", color: "white"}}>
+            Forgot Password? <Link to="/forgottenpassword">Reset It</Link>
+          </p>
     </main>
   );
 };
