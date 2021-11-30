@@ -18,11 +18,6 @@ export const QUERY_USER = gql`
         eventDate
         eventImage
       }
-      eventPrefs{
-        _id
-        category
-        subCategory
-      }
     }
   }
 `;

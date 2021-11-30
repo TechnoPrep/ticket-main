@@ -24,11 +24,11 @@ const savedEventSchema = new Schema({
     match: [/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Must be a valid US Zip Code!'],
   },
   lat: {
-    type: SchemaTypes.Decimal128,
+    type: String,
     required: true,
   },
   lon: {
-    type: SchemaTypes.Decimal128,
+    type: String,
     required: true,
   },
   eventDate: {

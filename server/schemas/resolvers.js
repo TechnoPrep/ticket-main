@@ -12,6 +12,9 @@ require('dotenv').config({path: path.join(__dirname, '../.env')})
 const resolvers = {
   Query: {
     // Get User Saved Events
+    user: async (parent, { email }) => {
+      return User.findOne({ email }).populate('savedEvents');
+    },
     me: async (parent, args, context) => {
       if (context.user) {
 
@@ -19,9 +22,9 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    savedEvents: async (parent, { email }) => {
-      const params = email ? { email } : {};
-      return SavedEvent.find(params).sort({ createdAt: -1 });
+    savedEvents: async (parent, {userId}) => {
+
+      return SavedEvent.find({userId: userId}).sort({ createdAt: -1 });
     },
     savedEvent: async (parent, { savedEventId }) => {
       return SavedEvent.findOne({ _id: savedEventId });

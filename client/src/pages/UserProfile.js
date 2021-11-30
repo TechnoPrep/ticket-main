@@ -17,10 +17,10 @@ const UserProfile = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  console.log(user);
   console.log(user.savedEvents);
 
-  if (!user?.email) {
+  if (!user.email) {
     return (
       <h4>
         You need to be logged in to see this. Use the navigation links above to
