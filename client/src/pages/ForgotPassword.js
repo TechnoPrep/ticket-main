@@ -6,8 +6,9 @@ import { LOGIN_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
-
-const Login = (props) => {
+//This is just boilerplate from login page - Needs to get updated. 
+//Functionality Still needs to be done
+const ForgotPassword = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -44,7 +45,7 @@ const Login = (props) => {
 
   return (
     <main className="login">
-          <h4 className="login-header">Login</h4>
+          <h4 className="login-header">Reset Password</h4>
           <div className="login-box">
             {data ? (
               <p>
@@ -59,14 +60,6 @@ const Login = (props) => {
                   name="email"
                   type="email"
                   value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
                   onChange={handleChange}
                 />
                 <button
@@ -86,12 +79,9 @@ const Login = (props) => {
               </div>
             )}
           </div>
-          <p style={{textAlign: "center", color: "white"}}>
-            Forgot Password? <Link to="/forgottenpassword">Reset It</Link>
-          </p>
+
     </main>
   );
 };
 
-export default Login;
-
+export default ForgotPassword;
