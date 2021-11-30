@@ -19,8 +19,8 @@ const typeDefs = gql`
     eventName: String
     venue: String
     zipCode: Int
-    lat: Float
-    lon: Int
+    lat: String
+    lon: String
     eventDate: String
     eventImage: String
   }
@@ -37,7 +37,7 @@ const typeDefs = gql`
   type Query {
     me: User
     user(email: String!): User
-    savedEvents(email: String): [SavedEvent]
+    savedEvents(userId: ID!): [SavedEvent]
     savedEvent(savedEventId: ID!): SavedEvent
   }
 
