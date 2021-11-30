@@ -12,7 +12,6 @@ const typeDefs = gql`
     emailConfirmed: Boolean
     prefsSet: Boolean
     savedEvents: [SavedEvent]!
-    eventPrefs: [EventPref]!
   }
 
   type SavedEvent {
@@ -26,12 +25,6 @@ const typeDefs = gql`
     eventImage: String
   }
 
-  type EventPref {
-    _id: ID
-    category: String
-    subCategory: String
-  }
-
   type Auth {
     token: ID!
     user: User
@@ -42,10 +35,10 @@ const typeDefs = gql`
   }
 
   type Query {
+    me: User
     user(email: String!): User
     savedEvents(email: String): [SavedEvent]
     savedEvent(savedEventId: ID!): SavedEvent
-    me: User
   }
 
   type Mutation {

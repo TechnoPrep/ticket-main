@@ -27,6 +27,28 @@ export const QUERY_USER = gql`
   }
 `;
 
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      firstName
+      lastName
+      zipCode
+      email
+      savedEvents {
+        _id
+        eventName
+        venue
+        zipCode
+        lat
+        lon
+        eventDate
+        eventImage
+      }
+    }
+  }
+`;
+
 export const QUERY_SAVED_EVENTS = gql`
   query savedEvents {
     SavedEvent {
