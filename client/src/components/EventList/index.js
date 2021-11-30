@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { convertTimestamp } from '../../utils/timestampConverter'
 
 const EventList = ({
   events,
@@ -13,40 +14,19 @@ const EventList = ({
 
   return (
     <div>
-     {/* {showTitle && <h3>{title}</h3>}
+     {showTitle && <h3>{title}</h3>}
       {events &&
         events.map((event) => (
           <div key={event._id} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
-              {showUsername ? (
-                <Link
-                  className="text-light"
-                  to={`/profiles/${event.eventAuthor}`}
-                >
-                  {event.eventAuthor} <br />
-                  <span style={{ fontSize: '1rem' }}>
-                    saved this event on {event.createdAt}
-                  </span>
-                </Link>
-              ) : (
-                <>
-                  <span style={{ fontSize: '1rem' }}>
-                    You saved this event on {event.createdAt}
-                  </span>
-                </>
-              )}
+              {event.eventName}
             </h4>
             <div className="card-body bg-light p-2">
-              <p>{event.eventText}</p>
+              <p>Location: {event.venue}</p>
+              <p>Event Date: {convertTimestamp(event.eventDate)}</p>
             </div>
-            <Link
-              className="btn btn-primary btn-block btn-squared"
-              to={`/events/${event._id}`}
-            >
-              Join the discussion on this event.
-            </Link>
           </div>
-        ))} */}
+        ))}
     </div>
   );
 };
