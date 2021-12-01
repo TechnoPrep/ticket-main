@@ -12,7 +12,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import SearchResults from './components/Results';
+import Results from './pages/Results';
 import Confirm from './pages/Confirm'
 import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
@@ -46,6 +46,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const apiTokens = {
+  stubhub: process.env.REACT_APP_SH_BEARER_TOKEN,
+}
+
+
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -57,6 +62,9 @@ function App() {
           <div className="container">
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/results">
+              <Results apitokens={apiTokens} />
             </Route>
             <Route exact path="/login">
               <Login />
