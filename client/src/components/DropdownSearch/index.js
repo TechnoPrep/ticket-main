@@ -13,7 +13,7 @@ import SportsTennisIcon from '@mui/icons-material/SportsTennis';
 import SportsMmaIcon from '@mui/icons-material/SportsMma';
 import SportsMotorsportsIcon from '@mui/icons-material/SportsMotorsports';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -76,7 +76,7 @@ export default function DropdownSearch() {
         variant="contained"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+        // endIcon={<KeyboardArrowDownIcon />}
       >
         Sports
       </Button>
