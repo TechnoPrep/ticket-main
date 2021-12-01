@@ -8,7 +8,9 @@ const { _ }  =require('lodash');
 const decode = require('jwt-decode');
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../.env')})
+const api_keytm = process.env.API_KEY1;
 
+const api_keysg = process.env.API_KEY2;
 const resolvers = {
   Query: {
     // Get User Saved Events
@@ -163,6 +165,40 @@ const resolvers = {
   
     
   },
+  // apiNormalized: () => ({}),
+  searchApi: async (_, { query }) => {
+    // check if in cache
+    if (cache[query]) {
+      // cache hit
+      // returning data from the cache
+      return cache[query];
+    }
+
+    const ticketmaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${query}&apikey=${api_keytm}`);
+    const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=${api_keysg}`);
+
+    const [ticketmasterData, seatGeekData] = await Promise.all([ticketmaster, seatGeek]);
+
+    const normalizedticketmasterData = ticketmasterData.recipes.map(x => ({
+     //discover what ticketmaster is spitting out for perfomer venue etc
+      performer: x.performer,
+      venue: x.venue
+    }));
+
+    const normalizedseatGeekData = seatGeekData.recipes.map(x => ({
+      //discover what seat geek is spitting out for perfomer venue etc
+      performer: x.performer,
+      venue: x.venue
+    }));
+
+    const totallyNormalized = [...normalizedticketmasterData, ...normalizedseatGeekData];
+
+  
+    cache[query] = totallyNormalized;
+    dateStore[query] = new Date();
+
+    return totallyNormalized;
+  }
 };
 
 module.exports = resolvers;
