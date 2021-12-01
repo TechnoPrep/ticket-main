@@ -3,11 +3,16 @@ import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
-import Divider from '@mui/material/Divider';
-import ArchiveIcon from '@mui/icons-material/Archive';
-import FileCopyIcon from '@mui/icons-material/FileCopy';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import SportsHockeyIcon from '@mui/icons-material/SportsHockey';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
+import SportsGolfIcon from '@mui/icons-material/SportsGolf';
+import SportsFootballIcon from '@mui/icons-material/SportsFootball';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import SportsMmaIcon from '@mui/icons-material/SportsMma';
+import SportsMotorsportsIcon from '@mui/icons-material/SportsMotorsports';
+import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const StyledMenu = styled((props) => (
@@ -64,8 +69,8 @@ export default function DropdownSearch() {
   return (
     <div>
       <Button
-        id="demo-customized-button"
-        aria-controls="demo-customized-menu"
+        id="sports-button"
+        aria-controls="sports-menu"
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         variant="contained"
@@ -73,33 +78,64 @@ export default function DropdownSearch() {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        Options
+        Sports
       </Button>
       <StyledMenu
-        id="demo-customized-menu"
+        id="sports-menu"
         MenuListProps={{
-          'aria-labelledby': 'demo-customized-button',
+          'aria-labelledby': 'sports-button',
         }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          <EditIcon />
-          Edit
+        <MenuItem disableRipple>
+          <SportsGolfIcon />
+          Golf
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
-          Duplicate
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
-          <ArchiveIcon />
-          Archive
+          <SportsBaseballIcon />
+          MLB
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
+          <SportsBasketballIcon />
+          NBA
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsBasketballIcon />
+          NCAA - BB
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsFootballIcon />
+          NCAA - FB
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsFootballIcon />
+          NFL
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsHockeyIcon />
+          NHL
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsSoccerIcon />
+          Soccer
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsTennisIcon />
+          Tennis
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsMmaIcon />
+          Fighting
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsMotorsportsIcon />
+          Motorsports
+        </MenuItem>
+        <MenuItem onClick={handleClose} disableRipple>
+          <SportsScoreIcon />
+          Horse Racing
         </MenuItem>
       </StyledMenu>
     </div>
