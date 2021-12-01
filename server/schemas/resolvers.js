@@ -8,7 +8,9 @@ const { _ }  =require('lodash');
 const decode = require('jwt-decode');
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../.env')})
+const api_keytm = process.env.API_KEY1;
 
+const api_keysg = process.env.API_KEY2;
 const resolvers = {
   Query: {
     // Get User Saved Events
@@ -172,8 +174,8 @@ const resolvers = {
       return cache[query];
     }
 
-    const ticketmaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${query}&apikey=3EsdGsY1mfDJBF3LR3bUUbnCcwYu8KqL`);
-    const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=MjQ1NTE0OTV8MTYzODMyNDc2Ny40NzczMDMz&client_secret=6291d7af6e03d86de5ce8152a33dc85e46135bf48cdb5183897aedbd7edf3da6`);
+    const ticketmaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${query}&apikey=${api_keytm}`);
+    const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=${api_keysg}`);
 
     const [ticketmasterData, seatGeekData] = await Promise.all([ticketmaster, seatGeek]);
 
