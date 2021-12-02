@@ -14,6 +14,9 @@ import SportsMmaIcon from '@mui/icons-material/SportsMma';
 import SportsMotorsportsIcon from '@mui/icons-material/SportsMotorsports';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 // import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import Golf from './Golf/Golf'
+import MLB from './MLB/MLB'
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -67,77 +70,83 @@ export default function DropdownSearch() {
   };
 
   return (
-    <div>
-      <Button
-        id="sports-button"
-        aria-controls="sports-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        variant="contained"
-        disableElevation
-        onClick={handleClick}
-        // endIcon={<KeyboardArrowDownIcon />}
-      >
-        Sports
-      </Button>
-      <StyledMenu
-        id="sports-menu"
-        MenuListProps={{
-          'aria-labelledby': 'sports-button',
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem disableRipple>
-          <SportsGolfIcon />
-          Golf
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsBaseballIcon />
-          MLB
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsBasketballIcon />
-          NBA
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsBasketballIcon />
-          NCAA - BB
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsFootballIcon />
-          NCAA - FB
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsFootballIcon />
-          NFL
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsHockeyIcon />
-          NHL
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsSoccerIcon />
-          Soccer
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsTennisIcon />
-          Tennis
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsMmaIcon />
-          Fighting
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsMotorsportsIcon />
-          Motorsports
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <SportsScoreIcon />
-          Horse Racing
-        </MenuItem>
-      </StyledMenu>
+    <div className='dropdown'>
+      <ul className='dropdown-nav'>
+        <li className='dropdown-item'>
+          <Button
+            id="sports-button"
+            aria-controls="sports-menu"
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            variant="contained"
+            disableElevation
+            onClick={handleClick}
+            // endIcon={<KeyboardArrowDownIcon />}
+          >
+            Sports
+          </Button>
+          <StyledMenu
+            id="sports-menu"
+            MenuListProps={{
+              'aria-labelledby': 'sports-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem disableRipple>
+              <SportsGolfIcon />
+              <Golf />
+              <KeyboardArrowRightIcon />
+            </MenuItem>
+            <MenuItem disableRipple>
+              <SportsBaseballIcon />
+              <MLB />
+              <KeyboardArrowRightIcon />
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsBasketballIcon />
+              NBA
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsBasketballIcon />
+              NCAA - BB
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsFootballIcon />
+              NCAA - FB
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsFootballIcon />
+              NFL
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsHockeyIcon />
+              NHL
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsSoccerIcon />
+              Soccer
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsTennisIcon />
+              Tennis
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsMmaIcon />
+              Fighting
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsMotorsportsIcon />
+              Motorsports
+            </MenuItem>
+            <MenuItem onClick={handleClose} disableRipple>
+              <SportsScoreIcon />
+              Horse Racing
+            </MenuItem>
+          </StyledMenu>
+        </li>
+      </ul>
     </div>
   );
 }
