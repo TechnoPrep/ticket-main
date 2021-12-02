@@ -24,7 +24,7 @@ export const fetchVenues = async (apitokens, lat, lon, radius) => {
 
   const data = await fetch("https://api.stubhub.com/partners/search/venues/v3", {
     method: "GET",
-    mode: 'no-cors',
+    mode: 'cors',
     headers: {
       "Authorization": `Bearer ${apitokens.stubhub}`,
       "Accept": "application/json",
