@@ -22,9 +22,9 @@ const Home = ({apitokens}) => {
     performers: []
   })
 
-  useEffect(() => {
-    console.log('useEffect ran');
-  }, [])
+  // useEffect(() => {
+  //   console.log('useEffect ran');
+  // }, [])
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -35,9 +35,8 @@ const Home = ({apitokens}) => {
  
     fetchVenues(apitokens, lat, lon, radius)
         
-    
-    // const results = await fetchEvents(apitokens)
-    // setEventList(results)
+    const results = await fetchEvents(apitokens)
+    setEventList(results)
   };
 
   const handleChange = (event) => {

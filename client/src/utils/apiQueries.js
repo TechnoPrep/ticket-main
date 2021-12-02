@@ -5,7 +5,7 @@ export const fetchEvents = async (apitokens) => {
     headers: {
       "Authorization": `Bearer ${apitokens.stubhub}`,
       "Accept": "application/json",
-      'Access-Control-Allow-Origin':'http://localhost:3000',
+      "Access-Control-Allow-Origin":"*",
       "Access-Control-Allow-Credential": "true"
     }
   })
@@ -18,25 +18,26 @@ export const fetchEvents = async (apitokens) => {
 
 export const fetchVenues = async (apitokens, lat, lon, radius) => {
 
+  console.log(apitokens.stubhub);
 
   //https://api.stubhub.com/partners/search/venues/v3/?point=${lat}%2C${lon}&radius=${radius}&unit=mi&rows=500&sort=eventCount%20desc&fieldList=id%2Cname
 
   const data = await fetch("https://api.stubhub.com/partners/search/venues/v3", {
     method: "GET",
-    mode: 'cors',
+    mode: 'no-cors',
     headers: {
       "Authorization": `Bearer ${apitokens.stubhub}`,
       "Accept": "application/json",
-      'Access-Control-Allow-Origin':'http://localhost:3000',
+      "Access-Control-Allow-Origin":"*",
       "Access-Control-Allow-Credential": "true"
     }
   })
 
   console.log(data);
 
-  // const json = await data.json()
+  const json = await data.json()
 
-  // console.log(json);
+  console.log(json);
 
   // const queryVenue = await json.map((venue) => (
   //   venue.eventCount > 0
@@ -46,22 +47,6 @@ export const fetchVenues = async (apitokens, lat, lon, radius) => {
 
   // return json
 }
-
-// export const fetchVenues = async (apitokens, lat, lon, radius) => {
-//   const data = await fetch(`https://api.stubhub.com/partners/search/venues/v3/?point=${lat}%2C${lon}&radius=${radius}&unit=mi&rows=500&sort=eventCount%20desc&fieldList=id%2Cname`, {
-//     method: "GET",
-//     mode: 'cors',
-//     headers: {
-//       "Authorization": `Bearer ${apitokens.stubhub}`,
-//       "Accept": "application/json",
-//       'Access-Control-Allow-Origin':'http://localhost:3000',
-//       "Access-Control-Allow-Credential": "true"
-//     }
-//   })
-//   const json = await data.json()
-
-//   return json
-// }
 
 export const fetchLocation = async (apitokens, zipCode) => {
   const data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apitokens.googleapi}`, {
