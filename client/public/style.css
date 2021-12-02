@@ -57,6 +57,27 @@ body {
     padding-right: 5px;
     padding-bottom: 2px;
 }
+
+.dropdown {
+    background-color: #222222;
+}
+
+.dropdown-item {
+    position: relative;
+}
+
+.dropdown-btn {
+    display: flex;
+    padding-right: 10px;
+}
+.dropdown-item-btn {
+    background-color: #ffffff !important;
+    color: #222222 !important;
+    padding-right: 40px;
+}
+
+
+
 .hero {
     background-size: cover;
     position: relative;
@@ -155,3 +176,4 @@ body {
 .form-input {
     margin: auto;
 }
+
