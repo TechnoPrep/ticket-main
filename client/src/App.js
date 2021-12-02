@@ -48,7 +48,8 @@ const client = new ApolloClient({
 
 const apiTokens = {
   stubhub: process.env.REACT_APP_SH_BEARER_TOKEN,
-  googleapi: process.env.REACT_APP_GAPI_KEY
+  googleapi: process.env.REACT_APP_GAPI_KEY,
+  ticketmaster: process.env.REACT_APP_TM_API_KEY
 }
 
 
