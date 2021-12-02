@@ -14,11 +14,12 @@ import SportsMmaIcon from '@mui/icons-material/SportsMma';
 import SportsMotorsportsIcon from '@mui/icons-material/SportsMotorsports';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 // import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import Golf from './Golf/Golf'
-import MLB from './MLB/MLB'
-import NBA from './NBA/NBA'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import Golf from './Golf/Golf';
+import MLB from './MLB/MLB';
+import NBA from './NBA/NBA';
 import NCAABB from './NCAABB/NCAABB';
+import NCAAFB from './NCAAFB/NCAAFB';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -116,9 +117,10 @@ export default function DropdownSearch() {
               <NCAABB />
               <KeyboardArrowRightIcon />
             </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
+            <MenuItem disableRipple>
               <SportsFootballIcon />
-              NCAA - FB
+              <NCAAFB />
+              <KeyboardArrowRightIcon />
             </MenuItem>
             <MenuItem onClick={handleClose} disableRipple>
               <SportsFootballIcon />
