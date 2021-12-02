@@ -48,6 +48,7 @@ const client = new ApolloClient({
 
 const apiTokens = {
   stubhub: process.env.REACT_APP_SH_BEARER_TOKEN,
+  googleapi: process.env.REACT_APP_GAPI_KEY
 }
 
 
@@ -61,7 +62,7 @@ function App() {
           <Hero />
           <div className="container">
             <Route exact path="/">
-              <Home />
+              <Home apitokens={apiTokens} />
             </Route>
             <Route exact path="/results">
               <Results apitokens={apiTokens} />
