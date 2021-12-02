@@ -1,51 +1,43 @@
-export const fetchEvents = async (apitokens) => {
-  const data = await fetch("https://api.stubhub.com/sellers/search/events/v3", {
+export const fetchEvents = async (apitokens, lat, lon, radius, searchTerm) => {
+
+  const data = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?latlong=${lat}%2C${lon}&radius=${radius}&keyword=${searchTerm}&size=100&apikey=${apitokens.ticketmaster}`, {
     method: "GET",
-    mode: 'cors',
     headers: {
-      "Authorization": `Bearer ${apitokens.stubhub}`,
-      "Accept": "application/json",
-      "Access-Control-Allow-Origin":"*",
-      "Access-Control-Allow-Credential": "true"
-    }
-  })
-  const json = await data.json()
-
-  const { events } = json
-
-  return events
-}
-
-export const fetchVenues = async (apitokens, lat, lon, radius) => {
-
-  console.log(apitokens.stubhub);
-
-  //https://api.stubhub.com/partners/search/venues/v3/?point=${lat}%2C${lon}&radius=${radius}&unit=mi&rows=500&sort=eventCount%20desc&fieldList=id%2Cname
-
-  const data = await fetch("https://api.stubhub.com/partners/search/venues/v3", {
-    method: "GET",
-    mode: 'cors',
-    headers: {
-      "Authorization": `Bearer ${apitokens.stubhub}`,
-      "Accept": "application/json",
-      "Access-Control-Allow-Origin":"*",
-      "Access-Control-Allow-Credential": "true"
     }
   })
 
-  console.log(data);
-
   const json = await data.json()
 
-  console.log(json);
+  const {_embedded } = await json
 
-  // const queryVenue = await json.map((venue) => (
-  //   venue.eventCount > 0
-  // ));
+  if(_embedded !== undefined){
+  const results = await _embedded.events.map((event) => ({
+    id: event.id,
+    date: event.dates.start.localDate,
+    time: event.dates.start.localTime,
+    name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
+    img: event.images.find((e) => {
+      if(e.ratio === "16_9" && e.width === 640){
+        return e
+      }
+    }),
+    venue: event._embedded.venues[0].name,
+    // lat: event._embedded.venues[0].location.latitude,
+    // lng: event._embedded.venues[0].location.longitude,
+    // zipCode: event._embedded.venues[0].postalCode,
+    healthCheck: 'ticketing' in event,
+  }))
+ 
+  //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
+  const trimResults = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
 
-  // console.log(queryVenue);
+  return trimResults
 
-  // return json
+ } else {
+  //  If nothing is found, return a single element array to check on the Results comp.
+   return ['No Events were found']
+ }
+
 }
 
 export const fetchLocation = async (apitokens, zipCode) => {
@@ -57,9 +49,9 @@ export const fetchLocation = async (apitokens, zipCode) => {
   })
   const json = await data.json()
 
-  const { geometry } = json
+  const { results } = json
 
-  return geometry
+  return results[0]
 }
 
-export default { fetchEvents, fetchLocation, fetchVenues }
+export default { fetchEvents, fetchLocation }
