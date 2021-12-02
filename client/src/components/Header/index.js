@@ -9,14 +9,12 @@ const Header = () => {
     Auth.logout();
   };
   return (
-    <header className="navbar text-light flex-row align-center">
-      <div className="container flex-row justify-space-between-lg justify-center align-center">
-        <div>
+    <header className="navbar">
+      <div className="navbar-start">
           <Link className="text-light" to="/">
-            <h1 className="m-0">Logo // TOTAL TICKET</h1>
+            <h1 className="logo">Logo // TOTAL TICKET</h1>
           </Link>
-        </div>
-        <div>
+        <div className='navbar-end'>
           {Auth.loggedIn() ? (
             <>
               <Link className="m-2" to="/me">
@@ -28,14 +26,14 @@ const Header = () => {
             </>
           ) : (
             <>
-            <Link className="m-2" to="/">
+            <Link className="m-2 nav-link" to="/">
                 Home
               </Link>
               
-              <Link className="m-2" to="/login">
+              <Link className="m-2 nav-link" to="/login">
                 Login
               </Link>
-              <Link className="m-2" to="/signup">
+              <Link className="m-2 nav-link" to="/signup">
                 Signup
               </Link>
             </>
