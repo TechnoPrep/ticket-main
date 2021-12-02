@@ -45,7 +45,7 @@ const StyledMenu = styled((props) => (
   },
 }));
 
-export default function NCAABB() {
+export default function NCAAFB() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -67,7 +67,7 @@ export default function NCAABB() {
             onClick={handleClick}
             // endIcon={<KeyboardArrowDownIcon />}
           >
-            NCAA-BB
+            NCAA-FB
           </button>
           <StyledMenu
             id="golf-menu"
@@ -79,7 +79,7 @@ export default function NCAABB() {
             onClose={handleClose}
           >
             <MenuItem className='ncaa-header' onClick={handleClose} disableRipple>
-              March Madness
+              Bowl Games
             </MenuItem>
             <Divider />
             <MenuItem className='ncaa-header' disableRipple>
