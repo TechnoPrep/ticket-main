@@ -6,25 +6,31 @@ const Results = ({
   title,
   showTitle = true,
 }) => {
-  if (!events.length) {
-    return <h3>No events Yet</h3>;
+  if (events[0] === 'No Events were found') {
+    return <h3> No events were found, please check another Performer or Change your search location </h3>;
   }
 
   return (
     <div>
-    <h3>I am losing it</h3>
     {showTitle && <h3>{title}</h3>}
      {events &&
         events.map((event) => (
           (<div key={event.id} className="card mb-3">
            <h4 className="card-header bg-primary text-light p-2 m-0">
-             Event Name{event.name}
+             {event.name}
            </h4>
+           <img src={event.img.url} alt={event.name}/>
            <div className="card-body bg-light p-2">
-             <p>Desc: {event.description}</p>
-             <p>Location: {event.venue.name}</p>
-             <p>Event Date: {event.eventDateUTC}</p>
-             <p>Event Type: {event.categoriesCollection.categories[0].name}</p>
+             <p>Location: {event.venue}</p>
+             <p>Event Date: {event.date} @ {event.time}</p>
+            {event.healthCheck ? (
+               <p>Health Check Required</p>
+              ) 
+              :
+              (
+                <p>No Health Check Required</p>
+              )
+            }
            </div>
          </div>)
         ))}
