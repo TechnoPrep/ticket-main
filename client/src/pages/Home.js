@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchEvents, fetchLocation, fetchVenues } from '../utils/apiQueries'
+import { fetchEvents, fetchLocation } from '../utils/apiQueries'
 
 import Results from '../components/Results'
 
@@ -10,17 +10,12 @@ const Home = ({apitokens}) => {
   const [eventList, setEventList] = useState([]);
   
   const [queryState, setQueryState] = useState({
-    eventName: '',
+    searchTerm: '',
     zipCode: '',
-    radius: '',
+    radius: '10',
     lat: '',
     lon: '',
   });
-
-  const [eventQuery, setEventQuery] = useState({
-    venues: [],
-    performers: []
-  })
 
   // useEffect(() => {
   //   console.log('useEffect ran');
@@ -29,14 +24,11 @@ const Home = ({apitokens}) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const lat = 39.7316982;
-    const lon = -104.9431649;
-    const radius = 50;
+    const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
  
-    fetchVenues(apitokens, lat, lon, radius)
-        
-    const results = await fetchEvents(apitokens)
-    setEventList(results)
+    const results = await fetchEvents(apitokens, lat, lng, queryState.radius, queryState.searchTerm);
+    console.log(results);
+    setEventList(results);
   };
 
   const handleChange = (event) => {
@@ -61,8 +53,8 @@ const Home = ({apitokens}) => {
       <input 
         className='m-2' 
         type="text" 
-        name="eventName"
-        value={queryState.eventName}
+        name="searchTerm"
+        value={queryState.searchTerm}
         onChange={handleChange}
         aria-label="Search for tickets"
         />
@@ -88,25 +80,34 @@ const Home = ({apitokens}) => {
           Radius:
       </label>
      
-      <select value={queryState.radius} onChange={handleChange}>
-        <option name="10">10</option>
-        <option name="25">25</option>
-        <option name="50">50</option>
-        <option name="100">100</option>
-        <option name="200">200</option>
+      <select name="radius" value={queryState.radius} onChange={handleChange}>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
       </select>
 
       <button type="submit">Search</button>
         </form>
       </div>
       <div className="flex-row justify-center mb-3">
-      <div className="col-12 col-md-10 mb-5">
-        <Results 
-          events={eventList}
-          title={`My Searched Events events...`}
-          showTitle={false}
-        />
-      </div>
+        {eventList.length > 0 ? (
+          <div className="col-12 col-md-10 mb-5">
+            <Results 
+              events={eventList}
+              title={`My Searched Events events...`}
+              showTitle={false}
+            />
+            </div>
+          ) 
+          :
+          (
+            <div className="col-12 col-md-10 mb-5">
+              <h3> Please Search for an Event! </h3>
+            </div>
+          )
+        }
     </div>
     </div>
   );
