@@ -76,7 +76,14 @@ body {
     padding-right: 40px;
 }
 
+.ncaabb-btn {
+    background-color: #ffffff !important;
+    color: #222222 !important;
+}
 
+.ncaa-header {
+    font-weight: bold !important;
+}
 
 .hero {
     background-size: cover;

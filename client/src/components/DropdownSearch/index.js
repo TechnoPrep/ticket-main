@@ -18,6 +18,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import Golf from './Golf/Golf'
 import MLB from './MLB/MLB'
 import NBA from './NBA/NBA'
+import NCAABB from './NCAABB/NCAABB';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -110,9 +111,10 @@ export default function DropdownSearch() {
               <NBA />
               <KeyboardArrowRightIcon />
             </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
+            <MenuItem disableRipple>
               <SportsBasketballIcon />
-              NCAA - BB
+              <NCAABB />
+              <KeyboardArrowRightIcon />
             </MenuItem>
             <MenuItem onClick={handleClose} disableRipple>
               <SportsFootballIcon />
