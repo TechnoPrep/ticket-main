@@ -19,6 +19,7 @@ const Results = ({
            <h4 className="card-header bg-primary text-light p-2 m-0">
              {event.name}
            </h4>
+           <Link to={`/tickets/`}>Find Tickets</Link> 
            <img src={event.img.url} alt={event.name}/>
            <div className="card-body bg-light p-2">
              <p>Location: {event.venue}</p>

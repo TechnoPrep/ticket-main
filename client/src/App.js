@@ -12,7 +12,6 @@ import 'semantic-ui-css/semantic.min.css'
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-// import Results from './pages/Results';
 import Confirm from './pages/Confirm'
 import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
