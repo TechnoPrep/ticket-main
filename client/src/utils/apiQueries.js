@@ -1,6 +1,8 @@
-export const fetchEvents = async (apitokens, lat, lon, radius, searchTerm) => {
+export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radius = 0 ) => {
 
-  const data = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?latlong=${lat}%2C${lon}&radius=${radius}&keyword=${searchTerm}&size=100&apikey=${apitokens.ticketmaster}`, {
+  const criteria = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
+
+  const data = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?${criteria}keyword=${searchTerm}&size=100&sort=date,asc&apikey=${apitokens.ticketmaster}`, {
     method: "GET",
     headers: {
     }
@@ -22,9 +24,6 @@ export const fetchEvents = async (apitokens, lat, lon, radius, searchTerm) => {
       }
     }),
     venue: event._embedded.venues[0].name,
-    // lat: event._embedded.venues[0].location.latitude,
-    // lng: event._embedded.venues[0].location.longitude,
-    // zipCode: event._embedded.venues[0].postalCode,
     healthCheck: 'ticketing' in event,
   }))
  
