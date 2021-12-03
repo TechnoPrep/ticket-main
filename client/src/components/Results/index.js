@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const Results = ({
   events,
@@ -26,35 +27,52 @@ const Results = ({
                 component="img"
                 sx={{ width: 300, height: 200 }}
                 image={event.img.url}
-                alt="Live from space album cover"
+                alt={event.name}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
-                  <Typography component="div" variant="h5">
+                  <Typography component="div" variant="h4">
                     {event.name}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary" component="div">
                     {event.venue}
                   </Typography>
-                  <Typography component="div" variant="h5">
+                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                    {event.city}, {event.stateCode}
+                  </Typography>
+                  <Typography className='result-date' component="div" variant="h5">
                     {event.date}
                   </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div">
+                  <Typography variant="h5" color="text.secondary" component="div">
                     {event.time}
                   </Typography>
                 </CardContent>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+              {event.healthCheck ? (
+                      <CardContent sx={{ flex: '1 0 auto' }}>
+                        <Typography component="div" className='health-check'>
+                          <LocalHospitalIcon/> Health care check required
+                        </Typography>
+                      </CardContent>
+                      ) 
+                      :
+                      (
+                      <CardContent sx={{ flex: '1 0 auto' }}>
+                        <Typography component="div" className='health-check'>
+                        No Health care check required
+                        </Typography>
+                      </CardContent>
+                      )
+                      
+                    }
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
-                  <Typography component="div" variant="h5">
-                    {event.date}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary" component="div">
-                    {event.time}
-                  </Typography>
+                <Link to={`/tickets/`}>Find Tickets</Link> 
                 </CardContent>
               </Box>
-                <div key={event.id} className="card mb-3">
+                {/* <div key={event.id} className="card mb-3">
                   <h4 className="card-header bg-primary text-light p-2 m-0">
                     {event.name}
                   </h4>
@@ -72,7 +90,7 @@ const Results = ({
                       )
                     }
                   </div>
-                </div>
+                </div> */}
             </Card>
          )
         ))}

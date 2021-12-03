@@ -187,3 +187,17 @@ body {
     margin: auto;
 }
 
+.result-date {
+    margin-top: 15px !important;
+}
+
+.health-check {
+    background-color: #222222;
+    color: white;
+    align-content: center;
+    vertical-align: auto;
+    border-radius: 5px;
+    padding: 4px;
+    margin-top: 40px !important;
+}
+
