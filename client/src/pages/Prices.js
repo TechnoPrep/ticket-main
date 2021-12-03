@@ -17,10 +17,6 @@ const Prices = ({apitokens}) => {
     lon: '',
   });
 
-  // useEffect(() => {
-  //   console.log('useEffect ran');
-  // }, [])
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -79,19 +75,6 @@ const Prices = ({apitokens}) => {
         aria-label="Search for tickets"
         />
 
-      <label 
-        className='sample-search'
-        htmlFor="Radius">
-          Radius:
-      </label>
-     
-      <select name="radius" value={queryState.radius} onChange={handleChange}>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
-      </select>
 
       <button type="submit">Search</button>
         </form>
