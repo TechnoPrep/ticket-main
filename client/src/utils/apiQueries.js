@@ -19,11 +19,14 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
     date: event.dates.start.localDate,
     time: event.dates.start.localTime,
     name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
+    city: event.city.name,
+    stateCode: event.state.stateCode,
     img: event.images.find((e) => {
       if(e.ratio === "16_9" && e.width === 640){
         return e
       }
     }),
+    venueId: event._embedded.venues[0].id,
     venue: event._embedded.venues[0].name,
     healthCheck: 'ticketing' in event,
   }))
@@ -55,18 +58,24 @@ export const fetchLocation = async (apitokens, zipCode) => {
 }
 
 
-export const searchApi = async () => {
+export const fetchPricing = async (apitokens, event, date, venue, tmVenueId) => {
 
   const query = ''
-  const api_keytm = ''
-  const api_keysg = ''
 
-  const ticketmaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${query}&apikey=${api_keytm}`);
-  const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=${api_keysg}`);
+  const stubhub = fetch(`https://api.stubhub.com/sellers/search/events/v3?name=Billie%20Eilish&date=2022-03-19&venue=Ball%20Arena&parking=false`, {
+    method: "GET",
+    headers: {
+      "Accept": "application/json", 
+      "Authorization": `Bearer ${apitokens.stubhub}`,
+      "Access-Control-Allow-Origin": "*",
+    }
+  });
 
-  const [ticketmasterData, seatGeekData] = await Promise.all([ticketmaster, seatGeek]);
+  const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=${apitokens.seatgeek}`);
 
-  const normalizedticketmasterData = ticketmasterData.recipes.map(x => ({
+  const [stubhubData, seatGeekData] = await Promise.all([stubhub, seatGeek]);
+
+  const normalizedstubhubData = stubhubData.recipes.map(x => ({
    //discover what ticketmaster is spitting out for perfomer venue etc
     performer: x.performer,
     venue: x.venue
@@ -78,7 +87,7 @@ export const searchApi = async () => {
     venue: x.venue
   }));
 
-  const totallyNormalized = [...normalizedticketmasterData, ...normalizedseatGeekData];
+  const totallyNormalized = [...normalizedstubhubData, ...normalizedseatGeekData];
 
   return totallyNormalized;
 }
