@@ -24,11 +24,16 @@ const Home = ({apitokens}) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
- 
-    const results = await fetchEvents(apitokens, lat, lng, queryState.radius, queryState.searchTerm);
-    console.log(results);
-    setEventList(results);
+    if(queryState.zipCode !== ''){
+      const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
+      const results = await fetchEvents(apitokens, queryState.searchTerm, lat, lng, queryState.radius );
+      setEventList(results);
+    } else {
+      const results = await fetchEvents(apitokens, queryState.searchTerm);
+      setEventList(results);
+    }
+
+
   };
 
   const handleChange = (event) => {
