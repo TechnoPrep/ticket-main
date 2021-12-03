@@ -12,7 +12,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Results from './pages/Results';
+// import Results from './pages/Results';
 import Confirm from './pages/Confirm'
 import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
@@ -62,9 +62,6 @@ function App() {
           <div className="container">
             <Route exact path="/">
               <Home />
-            </Route>
-            <Route exact path="/results">
-              <Results apitokens={apiTokens} />
             </Route>
             <Route exact path="/login">
               <Login />
