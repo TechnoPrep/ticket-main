@@ -187,6 +187,10 @@ body {
     margin: auto;
 }
 
+.results-card {
+    margin-bottom: 15px;
+}
+
 .result-date {
     margin-top: 15px !important;
 }

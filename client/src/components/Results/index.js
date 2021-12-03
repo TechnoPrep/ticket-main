@@ -22,7 +22,7 @@ const Results = ({
      {events &&
         events.map((event) => (
           (
-            <Card sx={{ display: 'flex' }}>
+            <Card sx={{ display: 'flex' }} className='results-card'>
               <CardMedia
                 component="img"
                 sx={{ width: 300, height: 200 }}
