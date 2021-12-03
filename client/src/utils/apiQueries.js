@@ -31,6 +31,8 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
     venue: event._embedded.venues[0].name,
     healthCheck: 'ticketing' in event,
   }))
+
+  console.log(results);
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
   const trimResults = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
