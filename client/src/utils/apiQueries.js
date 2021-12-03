@@ -2,7 +2,6 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const locData = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
 
-
   const data = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?${locData}keyword=${searchTerm}&countryCode=US&size=100&sort=date,asc&apikey=${apitokens.ticketmaster}`, {
     method: "GET",
     headers: {
@@ -11,28 +10,25 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const json = await data.json()
 
-  const {_embedded } = await json
-
-  if(_embedded !== undefined){
-  const results = await _embedded.events.map((event) => ({
-    id: event.id,
-    date: event.dates.start.localDate,
-    dateUTC: event.dates.start.dateTime,
-    time: event.dates.start.localTime,
-    name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
-    city: event._embedded.venues[0].city.name,
-    stateCode: event._embedded.venues[0].state.stateCode,
-    img: event.images.find((e) => {
-      if(e.ratio === "16_9" && e.width === 640){
-        return e
-      }
-    }),
-    venueId: event._embedded.venues[0].id,
-    venue: event._embedded.venues[0].name,
-    healthCheck: 'ticketing' in event,
-  }))
-
-  console.log(results);
+  if(json._embedded !== undefined){
+    const results = await json._embedded.events.map((event) => ({
+      id: event.id,
+      date: event.dates.start.localDate,
+      dateUTC: event.dates.start.dateTime,
+      time: event.dates.start.localTime,
+      name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
+      performer: event._embedded.attractions[0].name,
+      city: event._embedded.venues[0].city.name,
+      stateCode: event._embedded.venues[0].state.stateCode,
+      img: event.images.find((e) => {
+        if(e.ratio === "16_9" && e.width === 640){
+          return e
+        }
+      }),
+      venueId: event._embedded.venues[0].id,
+      venue: event._embedded.venues[0].name,
+      healthCheck: 'ticketing' in event,
+    }))
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
   const trimResults = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
@@ -61,38 +57,66 @@ export const fetchLocation = async (apitokens, zipCode) => {
 }
 
 
-export const fetchPricing = async (apitokens, event, date, dateUTC, venue, tmVenueId) => {
+export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, tmVenueId) => {
 
-  const query = ''
-
-  const stubhub = fetch(`https://api.stubhub.com/sellers/search/events/v3?name=Billie%20Eilish&date=2022-03-19&venue=Ball%20Arena&parking=false`, {
+  const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`, {
     method: "GET",
     headers: {
       "Accept": "application/json", 
-      "Authorization": `Bearer ${apitokens.stubhub}`,
+      "Authorization": `Bearer ${apitokens.stubHub}`,
       "Access-Control-Allow-Origin": "*",
     }
   });
 
-  const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=${apitokens.seatgeek}`);
+  const ticketmMaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`)
 
-  const [stubhubData, seatGeekData] = await Promise.all([stubhub, seatGeek]);
+  const slug = performer.toLowerCase().repalce(' ', '-')
 
-  const normalizedstubhubData = stubhubData.recipes.map(x => ({
+  const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
+
+  const [stubHubData, seatGeekData, ticketMaster] = await Promise.all([stubHub, seatGeek, ticketmMaster]);
+
+  const [shJson, sgJson, tmJson] = await Promise.all([stubHubData.json(), seatGeekData.json(), ticketMaster.json()])
+
+  const normalizedStubHubData = shJson.events.map(event => ({
    //discover what ticketmaster is spitting out for perfomer venue etc
-    performer: x.performer,
-    venue: x.venue
+   id: event.id,
+   name: event.name,
+   city: event.venue.city,
+   stateCode: event.venue.state,
+   url: `https://www.stubhub.com/${event.webURI}`,
+   minPrice: event.ticketInfo.minListPrice,
+   maxPrice: event.ticketInfo.maxListPrice,
+   vendor: 'StubHub'
   }));
 
-  const normalizedseatGeekData = seatGeekData.recipes.map(x => ({
+  const normalizedseatGeekData = sgJson.recipes.map(event => ({
     //discover what seat geek is spitting out for perfomer venue etc
-    performer: x.performer,
-    venue: x.venue
+    id: event.id,
+    name: event.name,
+    city: event.venue.city,
+    stateCode: event.venue.state,
+    url: event.url,
+    minPrice: event.stats.lowest_price,
+    maxPrice: event.stats.median_price,
+    vendor: 'SeatGeek'
   }));
 
-  const totallyNormalized = [...normalizedstubhubData, ...normalizedseatGeekData];
+  const normalizedTicketmMaster = tmJson._embedded.events.map(event => ({
+    //discover what ticketmaster is spitting out for perfomer venue etc
+    id: event.id,
+    name: event.name,
+    city: event._embedded.venues[0].city.name,
+    stateCode: event._embedded.venues[0].state.stateCode,
+    url: event.url,
+    minPrice: event.priceRanges[0].min,
+    maxPrice: event.priceRanges[0].max,
+    vendor: 'Ticket Master'
+   }));
+
+  const totallyNormalized = [...normalizedStubHubData, ...normalizedseatGeekData, ...normalizedTicketmMaster];
 
   return totallyNormalized;
 }
 
-export default { fetchEvents, fetchLocation }
+export default { fetchEvents, fetchLocation, fetchPricing }
