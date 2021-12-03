@@ -57,3 +57,17 @@ export const ADD_SAVED_EVENT = gql`
     }
   }
 `;
+
+export const PRICE_CHECK = gql`
+  mutation priceCheck(performer: String!, $venue: String!, $zipCode: String!, $radius: Int!) {
+    priceCheck(performer: $performer, venue: $venue, radiues: $radius) {
+      token
+      prices {
+        _id
+        performer
+        venue
+        radius
+      }
+    }
+  }
+`;

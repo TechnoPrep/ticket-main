@@ -5,10 +5,16 @@ import { fetchEvents, fetchLocation } from '../utils/apiQueries'
 
 import Results from '../components/Results'
 
+import { PRICE_CHECK } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
+
+
+
+
 const Home = ({apitokens}) => {
   
   const [eventList, setEventList] = useState([]);
-  
+
   const [queryState, setQueryState] = useState({
     searchTerm: '',
     zipCode: '',
@@ -16,13 +22,14 @@ const Home = ({apitokens}) => {
     lat: '',
     lon: '',
   });
-
+  // const [priceCheck, { error, data }] = useMutation(PRICE_CHECK);
   // useEffect(() => {
   //   console.log('useEffect ran');
   // }, [])
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    
 
     if(queryState.zipCode !== ''){
       const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);

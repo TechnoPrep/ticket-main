@@ -46,6 +46,14 @@ type searchApi{
   venue: String
 
 }
+
+type priceCheck{
+  token: ID!
+  performer: String
+  venue: String
+  zipCode: String
+  radius: Int
+}
   type Mutation {
     addUser(firstName: String!, lastName: String!, phone: String!, zipCode: String!, email: String!, password: String!): Auth!
     accountReg(token: String!) : RegAuth
@@ -53,6 +61,7 @@ type searchApi{
     login(email: String!, password: String!): Auth
     addEvent(eventName: String!, venue: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): SavedEvent
     removeEvent(savedEventId: ID!): SavedEvent
+    findTicket(performer: String!, venue: String!, zipCode: String!, radius: Int!): priceCheck
   }
 `;
 
