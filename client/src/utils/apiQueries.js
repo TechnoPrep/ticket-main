@@ -17,10 +17,11 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
   const results = await _embedded.events.map((event) => ({
     id: event.id,
     date: event.dates.start.localDate,
+    dateUTC: event.dates.start.dateTime,
     time: event.dates.start.localTime,
     name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
-    city: event.city.name,
-    stateCode: event.state.stateCode,
+    city: event._embedded.venues[0].city.name,
+    stateCode: event._embedded.venues[0].state.stateCode,
     img: event.images.find((e) => {
       if(e.ratio === "16_9" && e.width === 640){
         return e
@@ -58,7 +59,7 @@ export const fetchLocation = async (apitokens, zipCode) => {
 }
 
 
-export const fetchPricing = async (apitokens, event, date, venue, tmVenueId) => {
+export const fetchPricing = async (apitokens, event, date, dateUTC, venue, tmVenueId) => {
 
   const query = ''
 
