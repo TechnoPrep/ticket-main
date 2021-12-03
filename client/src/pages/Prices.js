@@ -1,119 +1,102 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { fetchEvents, fetchLocation } from '../utils/apiQueries'
+import { fetchEvents, fetchPricing } from '../utils/apiQueries'
 
 import Results from '../components/Results'
 
 const Prices = ({apitokens}) => {
   
   const [eventList, setEventList] = useState([]);
-  
-  const [queryState, setQueryState] = useState({
-    searchTerm: '',
-    zipCode: '',
-    radius: '10',
-    lat: '',
-    lon: '',
-  });
 
-  // useEffect(() => {
-  //   console.log('useEffect ran');
-  // }, [])
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    if(queryState.zipCode !== ''){
-      const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
-      const results = await fetchEvents(apitokens, queryState.searchTerm, lat, lng, queryState.radius );
-      setEventList(results);
-    } else {
-      const results = await fetchEvents(apitokens, queryState.searchTerm);
-      setEventList(results);
-    }
-
-
-  };
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setQueryState({
-      ...queryState,
-      [name]: value,
-    });
-  };
+  useEffect(() => {
+    
+    const results = fetchPricing(apitokens, 'Billie Eilish', '2022-03-19', '2022-03-20T01:30:00Z', 'Ball Arena', 'KovZpZAFaJeA')
+    console.log(results);
+    setEventList(results)
+  }, [])
 
   return (
     <div className='home'>
-    <div className='search-input'>
-    <form onSubmit={handleFormSubmit}>
-      <label 
-        className='sample-search'
-        htmlFor="eventName">
-          Event / Performer Name
-      </label>
-     
-      <input 
-        className='m-2' 
-        type="text" 
-        name="searchTerm"
-        value={queryState.searchTerm}
-        onChange={handleChange}
-        aria-label="Search for tickets"
-        />
-
-      <label 
-        className='sample-search'
-        htmlFor="zipCode">
-          Zip Code
-      </label>
-     
-      <input 
-        className='m-2' 
-        type="text" 
-        name="zipCode"
-        value={queryState.zipCode}
-        onChange={handleChange}
-        aria-label="Search for tickets"
-        />
-
-      <label 
-        className='sample-search'
-        htmlFor="Radius">
-          Radius:
-      </label>
-     
-      <select name="radius" value={queryState.radius} onChange={handleChange}>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
-      </select>
-
-      <button type="submit">Search</button>
-        </form>
+      <div className='search-input'>
+        </div>
+        <div className="flex-row justify-center mb-3">
+          {/* {eventList &&
+             eventList.map((event) => (
+               (
+                 <Card sx={{ display: 'flex' }} className='results-card'>
+                   <CardMedia
+                     component="img"
+                     sx={{ width: 300, height: 200 }}
+                     image={event.img.url}
+                     alt={event.name}
+                   />
+                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                     <CardContent sx={{ flex: '1 0 auto' }}>
+                       <Typography component="div" variant="h4">
+                         {event.name}
+                       </Typography>
+                       <Typography variant="subtitle1" color="text.secondary" component="div">
+                         {event.venue}
+                       </Typography>
+                       <Typography variant="subtitle1" color="text.secondary" component="div">
+                         {event.city}, {event.stateCode}
+                       </Typography>
+                       <Typography className='result-date' component="div" variant="h5">
+                         {event.date}
+                       </Typography>
+                       <Typography variant="h5" color="text.secondary" component="div">
+                         {event.time}
+                       </Typography>
+                     </CardContent>
+                   </Box>
+                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                   {event.healthCheck ? (
+                           <CardContent sx={{ flex: '1 0 auto' }}>
+                             <Typography component="div" className='health-check'>
+                               <LocalHospitalIcon/> Health care check required
+                             </Typography>
+                           </CardContent>
+                           ) 
+                           :
+                           (
+                           <CardContent sx={{ flex: '1 0 auto' }}>
+                             <Typography component="div" className='health-check'>
+                             No Health care check required
+                             </Typography>
+                           </CardContent>
+                           )
+                           
+                         }
+                   </Box>
+                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                     <CardContent sx={{ flex: '1 0 auto' }}>
+                     <Link to={`/tickets/`}>Find Tickets</Link> 
+                     </CardContent>
+                   </Box>
+                     <div key={event.id} className="card mb-3">
+                       <h4 className="card-header bg-primary text-light p-2 m-0">
+                         {event.name}
+                       </h4>
+                       <Link to={`/tickets/`}>Find Tickets</Link> 
+                       <img src={event.img.url} alt={event.name}/>
+                       <div className="card-body bg-light p-2">
+                         <p>Location: {event.venue}</p>
+                         <p>Event Date: {event.date} @ {event.time}</p>
+                         {event.healthCheck ? (
+                           <p>Health Check Required</p>
+                           ) 
+                           :
+                           (
+                             <p>No Health Check Required</p>
+                           )
+                         }
+                       </div>
+                     </div>
+                 </Card>
+              )
+             ))} */}
       </div>
-      <div className="flex-row justify-center mb-3">
-        {eventList.length > 0 ? (
-          <div className="col-12 col-md-10 mb-5">
-            <Results 
-              events={eventList}
-              title={`My Searched Events events...`}
-              showTitle={false}
-            />
-            </div>
-          ) 
-          :
-          (
-            <div className="col-12 col-md-10 mb-5">
-              <h3> Please Search for an Event! </h3>
-            </div>
-          )
-        }
-    </div>
     </div>
   );
 };
