@@ -60,10 +60,7 @@ body {
 
 .dropdown {
     background-color: #222222;
-}
-
-.dropdown-item {
-    position: relative;
+    display: flex;
 }
 
 .dropdown-btn {
@@ -74,11 +71,17 @@ body {
     background-color: #ffffff !important;
     color: #222222 !important;
     padding-right: 40px;
+    width: 100px;
+}
+
+.dropdown-title {
+    margin-left: 15px !important;
 }
 
 .ncaabb-btn {
     background-color: #ffffff !important;
     color: #222222 !important;
+    width: 100px;
 }
 
 .ncaa-header {
