@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 import Hero from './components/Hero';
 import ForgotPassword from './pages/ForgotPassword'
 import DropdownSearch from './components/DropdownSearch';
+import Prices from "./pages/Prices"
 // import DropdownTest from './components/DropdownTest';
 
 // Construct our main GraphQL API endpoint
@@ -78,6 +79,9 @@ function App() {
             </Route>
             <Route exact path="/forgottenpassword">
               <ForgotPassword />
+            </Route>
+            <Route exact path="/prices">
+              <Prices />
             </Route>
           </div>
           <Footer />
