@@ -49,7 +49,8 @@ const client = new ApolloClient({
 const apiTokens = {
   stubhub: process.env.REACT_APP_SH_BEARER_TOKEN,
   googleapi: process.env.REACT_APP_GAPI_KEY,
-  ticketmaster: process.env.REACT_APP_TM_API_KEY
+  ticketmaster: process.env.REACT_APP_TM_API_KEY,
+  seatgeek: process.env.REACT_APP_SG_API_KEY
 }
 
 
@@ -81,7 +82,7 @@ function App() {
               <ForgotPassword />
             </Route>
             <Route exact path="/prices">
-              <Prices />
+              <Prices apitokens={apiTokens}/>
             </Route>
           </div>
           <Footer />

@@ -61,22 +61,28 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`, {
     method: "GET",
+    mode: 'cors',
     headers: {
-      "Accept": "application/json", 
-      "Authorization": `Bearer ${apitokens.stubHub}`,
-      "Access-Control-Allow-Origin": "*",
+      "Authorization": `Bearer ${apitokens.stubhub}`,
+      "Accept": "application/json",
+      'Access-Control-Allow-Origin':'http://localhost:3000',
+      "Access-Control-Allow-Credential": "true"
     }
   });
 
   const ticketmMaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`)
 
-  const slug = performer.toLowerCase().repalce(' ', '-')
+  const slug = performer.toLowerCase().replace(' ', '-')
 
   const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
 
   const [stubHubData, seatGeekData, ticketMaster] = await Promise.all([stubHub, seatGeek, ticketmMaster]);
 
   const [shJson, sgJson, tmJson] = await Promise.all([stubHubData.json(), seatGeekData.json(), ticketMaster.json()])
+
+  console.log('sh', shJson);
+  console.log('sg', sgJson);
+  console.log('tm', tmJson);
 
   const normalizedStubHubData = shJson.events.map(event => ({
    //discover what ticketmaster is spitting out for perfomer venue etc
@@ -90,10 +96,10 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
    vendor: 'StubHub'
   }));
 
-  const normalizedseatGeekData = sgJson.recipes.map(event => ({
+  const normalizedseatGeekData = sgJson.events.map(event => ({
     //discover what seat geek is spitting out for perfomer venue etc
     id: event.id,
-    name: event.name,
+    name: event.performers[0].name,
     city: event.venue.city,
     stateCode: event.venue.state,
     url: event.url,
@@ -116,7 +122,9 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   const totallyNormalized = [...normalizedStubHubData, ...normalizedseatGeekData, ...normalizedTicketmMaster];
 
-  return totallyNormalized;
+  console.log(totallyNormalized);
+
+  // return totallyNormalized;
 }
 
 export default { fetchEvents, fetchLocation, fetchPricing }
