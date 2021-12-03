@@ -23,6 +23,7 @@ import NCAAFB from './NCAAFB/NCAAFB';
 import NFL from './NFL/NFL'
 import NHL from './NHL/NHL'
 import MLS from './MLS/MLS';
+import Tennis from './Tennis/Tennis';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -140,9 +141,10 @@ export default function DropdownSearch() {
               <NHL />
               <KeyboardArrowRightIcon />
             </MenuItem>
-            <MenuItem onClick={handleClose} disableRipple>
+            <MenuItem disableRipple>
               <SportsTennisIcon />
-              Tennis
+              <Tennis />
+              <KeyboardArrowRightIcon />
             </MenuItem>
             <MenuItem onClick={handleClose} disableRipple>
               <SportsMmaIcon />
