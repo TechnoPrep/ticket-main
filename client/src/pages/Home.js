@@ -22,14 +22,25 @@ const Home = ({apitokens}) => {
     lat: '',
     lon: '',
   });
-  // const [priceCheck, { error, data }] = useMutation(PRICE_CHECK);
+  
   // useEffect(() => {
   //   console.log('useEffect ran');
   // }, [])
 
+  
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     
+    // const [priceCheck, { error, data }] = useMutation(PRICE_CHECK);
+    // const mutationResponse = await priceCheck({
+    //   variables: {
+    //     searchTerm: queryState.performer,
+    //     zipCode: queryState.zipCode,
+    //     radius: queryState.radius,
+    //     // ...formState
+    //   },
+    // });
 
     if(queryState.zipCode !== ''){
       const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
