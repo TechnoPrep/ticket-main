@@ -53,4 +53,39 @@ export const fetchLocation = async (apitokens, zipCode) => {
   return results[0]
 }
 
+
+searchApi: async (_, { query }) => {
+  // check if in cache
+  if (cache[query]) {
+    // cache hit
+    // returning data from the cache
+    return cache[query];
+  }
+
+  const ticketmaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${query}&apikey=${api_keytm}`);
+  const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${query}?client_id=${api_keysg}`);
+
+  const [ticketmasterData, seatGeekData] = await Promise.all([ticketmaster, seatGeek]);
+
+  const normalizedticketmasterData = ticketmasterData.recipes.map(x => ({
+   //discover what ticketmaster is spitting out for perfomer venue etc
+    performer: x.performer,
+    venue: x.venue
+  }));
+
+  const normalizedseatGeekData = seatGeekData.recipes.map(x => ({
+    //discover what seat geek is spitting out for perfomer venue etc
+    performer: x.performer,
+    venue: x.venue
+  }));
+
+  const totallyNormalized = [...normalizedticketmasterData, ...normalizedseatGeekData];
+
+
+  cache[query] = totallyNormalized;
+  dateStore[query] = new Date();
+
+  return totallyNormalized;
+}
+
 export default { fetchEvents, fetchLocation }
