@@ -10,7 +10,7 @@ function Confirm() {
   
   const {token} = useParams();
 
-  const [accountReg] = useMutation(ACCOUNT_REG);
+  const [accountReg, {data, error}] = useMutation(ACCOUNT_REG);
 
 
   const handleUpdate = async () => {
@@ -32,15 +32,28 @@ function Confirm() {
     handleUpdate();
   }
 
+  if(data){
+    return (
+      <div className="container my-1">
+       <h2>Account Confirmation</h2>
+       <p>
+         Thank you for confirming your Email Account You may now Login!
+       </p>
+       <Link to={'/login'}>
+       <button type="button" className="btn btn-info">Button</button>
+       </Link>
+      </div>
+    )
+  }
+
   return (
     <div className="container my-1">
-      <h2>Signup</h2>
-      <p>
-        Thank you for confirming your Email Account You may now Login!
-      </p>
-      <Link to='/login'>
-      <button type="button" className="btn btn-info">Button</button>
-      </Link>
+      <h2>Account Confirmation</h2>
+      {error && (
+         <div className="my-3 p-3 bg-danger text-white">
+           {error.message}
+         </div>
+       )}
     </div>
   );
 }

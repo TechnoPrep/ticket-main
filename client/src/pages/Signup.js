@@ -1,54 +1,106 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import Auth from "../utils/auth";
 import Validate from "../utils/validators";
 import { ADD_USER } from "../utils/mutations";
 
 function Signup(props) {
   const [formState, setFormState] = useState({
-    firstName: "",
+    firstName: "a",
     lastName: "",
-    phone: "",
     zipCode: "",
     email: "",
     password: "",
-    // confirm: "",
+    confirm: "",
+    isSubmitted: false
   });
+
+  const [errorMsg, setErrorMsg] = useState({
+    fName: false,
+    lName: false,
+    zipCode: false,
+    email: false,
+    passLen: false,
+    passMatch: false
+  })
+
+  console.log('PreSubmit',
+    errorMsg.fName,
+    errorMsg.lName,
+    errorMsg.zipCode,
+    errorMsg.email,
+    errorMsg.passLen,
+    errorMsg.passMatch
+  );
 
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    try{
+    const [validFName, validLName, validZip, validEmail, validLen, match] = await Promise.all([
+      Validate.isNotEmpty(formState.firstName),
+      Validate.isNotEmpty(formState.lastName),
+      Validate.isZipCode(formState.zipCode),
+      Validate.isEmail(formState.email),
+      Validate.passLen(formState.password),
+      Validate.passMatch(formState.password, formState.confirm)
+    ])
 
-      const mutationResponse = await addUser({
-        variables: {
-          firstName: formState.firstName,
-          lastName: formState.lastName,
-          phone: formState.phone,
-          zipCode: formState.zipCode,
-          email: formState.email,
-          password: formState.password,
-          // ...formState
-        },
-      });
-    
-    } catch(e){
-      console.error(e)
-    }
+    setErrorMsg({
+      fName: validFName,
+      lName: validLName,
+      zipCode: validZip,
+      email: validEmail,
+      passLen: validLen,
+      passMatch: match
+    })
 
     setFormState({
-      firstName: '',
-      lastName: '',
-      phone: '',
-      zipCode: '',
-      email: '',
+      ...formState,
       password: '',
+      confirm: '',
+      isSubmitted: true
     });
     
   };
+
+  useEffect(() => {
+    const validateAndAdd = async () => {
+      if(
+        errorMsg.fName &&
+        errorMsg.lName &&
+        errorMsg.zipCode &&
+        errorMsg.email &&
+        errorMsg.passLen &&
+        errorMsg.passMatch
+        ) {
+        try{
+  
+          console.log('I made it this far!');
+  
+          const mutationResponse = await addUser({
+            variables: {
+              firstName: formState.firstName,
+              lastName: formState.lastName,
+              zipCode: formState.zipCode,
+              email: formState.email,
+              password: formState.password,
+            },
+          });
+  
+          console.log(mutationResponse);
+        
+        } catch(e){
+          console.error(e)
+        }  
+  
+      }
+    }
+
+    validateAndAdd();
+      
+  }, [errorMsg])
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -62,95 +114,125 @@ function Signup(props) {
     <div className="signup-box">
       <h2 className='signup-header'>Signup</h2>
       {data ? (
-        <p style={{color: 'white'}}>
-          Thank you! Please check your email for a confirmation Link!
-        </p>
+        <>
+          <p style={{color: 'white'}}>
+            Thank you! Please check your email for a confirmation Link!
+          </p>
+        </>
       ) : (
-      <form className='signup-form' onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between">
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            className='form-input'
-            placeholder="First"
-            name="firstName"
-            type="firstName"
-            id="firstName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            className='form-input'
-            placeholder="Last"
-            name="lastName"
-            type="lastName"
-            id="lastName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="Phone">Phone#:</label>
-          <input
-            className='form-input'
-            placeholder="555-555-5555"
-            name="phone"
-            type="phone"
-            id="phone"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="zipCode">Zip Code:</label>
-          <input
-            className='form-input'
-            placeholder="Zip Code"
-            name="zipCode"
-            type="zipCode"
-            id="zipCode"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="email">Email:</label>
-          <input
-            className='form-input'
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="password">Password:</label>
-          <input
-            className='form-input'
-            placeholder="******"
-            name="password"
-            type="password"
-            id="password"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="confirm">Confirm Password:</label>
-          <input
-            className='form-input'
-            placeholder="******"
-            name="confirm"
-            type="password"
-            id="confirm"
-            onChange={handleChange}
-          />
-        </div>
-        
-        <div className="signup-btn flex-row space-between">
-          <button className='submit-btn' type="submit">Submit</button>
-        </div>
-      </form>
-      )}
-
+        <form className='signup-form' onSubmit={handleFormSubmit}>
+          <div className="flex-row space-between">
+            <label htmlFor="firstName">First Name:</label>
+            <input
+              className='form-input'
+              placeholder="First"
+              name="firstName"
+              type="firstName"
+              id="firstName"
+              onChange={handleChange}
+            />
+            {
+              !errorMsg.fName && formState.isSubmitted ? 
+                (<div className='text-danger'> Please enter your First Name </div>) 
+                  : 
+                <div></div> 
+            }
+          </div>
+          <div className="flex-row space-between">
+            <label htmlFor="lastName">Last Name:</label>
+            <input
+              className='form-input'
+              placeholder="Last"
+              name="lastName"
+              type="lastName"
+              id="lastName"
+              onChange={handleChange}
+            />
+            {
+              !errorMsg.lName && formState.isSubmitted ? 
+                (<div className='text-danger'> Please enter your Last Name </div>) 
+                  : 
+                <div></div> 
+            }
+          </div>
+          <div className="flex-row space-between">
+            <label htmlFor="zipCode">Zip Code:</label>
+            <input
+              className='form-input'
+              placeholder="Zip Code"
+              name="zipCode"
+              type="zipCode"
+              id="zipCode"
+              onChange={handleChange}
+            />
+            {
+              !errorMsg.zipCode && formState.isSubmitted ? 
+                (<div className='text-danger'> Please enter a valid US Zip Code </div>) 
+                  : 
+                <div></div> 
+            }
+          </div>
+          <div className="flex-row space-between">
+            <label htmlFor="email">Email:</label>
+            <input
+              className='form-input'
+              placeholder="youremail@test.com"
+              name="email"
+              type="email"
+              id="email"
+              onChange={handleChange}
+            />
+            {
+              !errorMsg.email && formState.isSubmitted ? 
+                (<div className='text-danger'> Please enter a valid Email </div>) 
+                  : 
+                <div></div> 
+            }
+          </div>
+          <div className="flex-row space-between">
+            <label htmlFor="password">Password:</label>
+            <input
+              className='form-input'
+              placeholder="******"
+              name="password"
+              type="password"
+              id="password"
+              onChange={handleChange}
+              value={formState.password}
+            />
+            {
+              !errorMsg.passLen && formState.isSubmitted ? 
+                (<div className='text-danger'> Password must be longer than 8 Characters </div>) 
+                  : 
+                <div></div> 
+            }
+          </div>
+          <div className="flex-row space-between">
+            <label htmlFor="confirm">Confirm Password:</label>
+            <input
+              className='form-input'
+              placeholder="******"
+              name="confirm"
+              type="password"
+              id="confirm"
+              onChange={handleChange}
+              value={formState.confirm}
+            />
+            {
+              !errorMsg.passMatch && formState.isSubmitted ? 
+                (<div className='text-danger'> Passwords Do Not Match </div>) 
+                  : 
+                <div></div> 
+            }
+          </div>
+          
+          <div className="signup-btn flex-row space-between">
+            <button className='submit-btn' type="submit">Submit</button>
+          </div>
+        </form>
+        )
+      }
+      
        {error && (
          <div className="my-3 p-3 bg-danger text-white">
            {error.message}

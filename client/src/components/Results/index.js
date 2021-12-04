@@ -11,6 +11,8 @@ import jwtDecode from 'jwt-decode';
 import Button from '@mui/material/Button';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
+import { formatDate, formatTime } from '../../utils/timestampConverter'
+
 
 const Results = ({
   events,
@@ -21,17 +23,13 @@ const Results = ({
     return <h3> No events were found, please check another Performer or Change your search location </h3>;
   }
 
-  // const qEvents = events.map((event) => ({
-  //   queryLink: jwt.sign(event.)
-  // }))
-
   return (
     <div>
     {showTitle && <h3>{title}</h3>}
      {events &&
         events.map((event) => (
           (
-            <Card sx={{ display: 'flex' }} className='results-card'>
+            <Card key={event.id} sx={{ display: 'flex' }} className='results-card'>
               <CardMedia
                 component="img"
                 sx={{ width: 300, height: 'fill' }}
@@ -50,10 +48,10 @@ const Results = ({
                     {event.city}, {event.stateCode}
                   </Typography>
                   <Typography className='result-date' component="div" variant="h5">
-                    {event.date}
+                    {formatDate(event.date)}
                   </Typography>
                   <Typography variant="h5" color="text.secondary" component="div">
-                    {event.time}
+                    {formatTime(event.time)}
                   </Typography>
                 </CardContent>
               </Box>
@@ -79,12 +77,14 @@ const Results = ({
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
-                <Button variant="contained" size='small'><Link to={`/tickets/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
+
+                <Button variant="contained" size='small'><Link to={`/prices/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
                 </CardContent>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                 <IconButton aria-label="favorite" size='large'>
                   <FavoriteBorderIcon />
                 </IconButton>
+
                 </CardContent>
               </Box>
             </Card>

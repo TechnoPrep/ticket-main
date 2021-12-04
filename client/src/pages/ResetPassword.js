@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from 'react-router-dom';
 import Validate from "../utils/validators";
 import { useMutation } from "@apollo/client";
 
@@ -12,42 +12,68 @@ function ResetPassword() {
   const [formState, setFormState] = useState({
     password: "",
     confirm: "",
+    isSubmitted: false
   });
 
-  const [resetPW, { error }] = useMutation(RESETPW);
+  const [errorMsg, setErrorMsg] = useState({
+    passLen: false,
+    passMatch: false
+  })
+
+  const [resetPW, { error, data }] = useMutation(RESETPW);
+
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const validatePass = Validate.Pass(formState.password, formState.confirm)
+    const [validLen, match] = await Promise.all([
+      Validate.passLen(formState.password),
+      Validate.passMatch(formState.password, formState.confirm)
+    ])
 
-    if(!validatePass){
-      setFormState({
-        password: '',
-        confirm: ''
-      });
-      return
-    }
-
-    try{
-
-      const mutationResponse = await resetPW({
-        variables: {
-          token: token,
-          password: formState.password,
-        },
-      });
-    
-    } catch(e){
-      console.error(e)
-    }
+    setErrorMsg({
+      passLen: validLen,
+      passMatch: match
+    })
 
     setFormState({
       password: '',
-      confirm: ''
+      confirm: '',
+      isSubmitted: true
     });
     
   };
+
+  useEffect(() => {
+
+    const validateAndUpdate = async () => {
+      if( 
+        errorMsg.passLen &&
+        errorMsg.passMatch
+         ){
+       
+       try{
+ 
+         console.log('I Worked!');
+ 
+         const mutationResponse = await resetPW({
+           variables: {
+             token: token,
+             password: formState.password,
+           },
+         });
+ 
+         console.log(mutationResponse);
+       
+       } catch(e){
+         console.error(e)
+       }
+     }
+    }
+
+    validateAndUpdate();
+
+  },[errorMsg])
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,38 +85,61 @@ function ResetPassword() {
 
   return (
     <div className="signup-box">
-      <h2 className='signup-header'>Signup</h2>
-      <form className='signup-form' onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between">
-          <label htmlFor="password">Password:</label>
-          <input
-            className='form-input'
-            placeholder="******"
-            name="password"
-            type="password"
-            id="password"
-            onChange={handleChange}
-            value={formState.password}
-          />
+      <h2 className='signup-header'>Password Reset</h2>
+      {data ? (
+        <>
+        <p> Your Password has been successfully reset! Please Login!</p>
+        <div>
+          <Link to='/login'>
+            <button className='submit-btn' type="submit" >Log In</button>
+          </Link>
         </div>
-        <div className="flex-row space-between">
-          <label htmlFor="confirm">Confirm Password:</label>
-          <input
-            className='form-input'
-            placeholder="******"
-            name="confirm"
-            type="password"
-            id="confirm"
-            onChange={handleChange}
-            value={formState.confirm}
-          />
-        </div>
+        </>
+      ) : (
+        <form className='signup-form' onSubmit={handleFormSubmit}>
+          <div className="flex-row space-between">
+            <label htmlFor="password">Password:</label>
+            <input
+              className='form-input'
+              placeholder="******"
+              name="password"
+              type="password"
+              id="password"
+              onChange={handleChange}
+              value={formState.password}
+            />
+          </div>
+          {
+            !errorMsg.passLen && formState.isSubmitted ? 
+              (<div className='text-danger'> Password must be longer than 8 Characters </div>) 
+                : 
+              <div></div> 
+          }
+          <div className="flex-row space-between">
+            <label htmlFor="confirm">Confirm Password:</label>
+            <input
+              className='form-input'
+              placeholder="******"
+              name="confirm"
+              type="password"
+              id="confirm"
+              onChange={handleChange}
+              value={formState.confirm}
+            />
+            {
+            !errorMsg.passMatch && formState.isSubmitted ? 
+              (<div className='text-danger'> Passwords Do Not Match </div>) 
+                : 
+              <div></div> 
+            }
+          </div>
+          <div className="signup-btn flex-row space-between">
+            <button className='submit-btn' type="submit" >Submit</button>
+          </div>
+        </form>
+        )
+      }
         
-        <div className="signup-btn flex-row space-between">
-          <button className='submit-btn' type="submit">Submit</button>
-        </div>
-      </form>
-
        {error && (
          <div className="my-3 p-3 bg-danger text-white">
            {error.message}

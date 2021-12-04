@@ -34,17 +34,26 @@ const resolvers = {
     // Create User Account
     addUser: async (parent, args) => {
 
+      console.log(args);
+
       const email = args.email
 
       const existing = await User.findOne({ email })
 
+      console.log(existing);
+
       if(existing){
+        console.log('I exist already');
         throw new AuthenticationError("An account already exists with this Email. Please reset your password or try another email!");
       }
+
+      console.log(existing);
       
       const user = await User.create(
         { ...args }
       );
+
+      console.log(user);
 
       const token = signToken(user, process.env.REG_RESET_EXP)
 
@@ -107,11 +116,11 @@ const resolvers = {
 
         const user = await User.findById(id, function(err, u){
           if (err) {
-            return false
+            throw new AuthenticationError('There as an issue with updating your password, please try again later or request another reset link')
           };
           u.password = password;
           u.save()
-          console.log('Updated Password');
+          
         })
 
         // return (token, user)
@@ -141,7 +150,7 @@ const resolvers = {
     },
 
     // Auth Process for User Account
-    login: async (parent, { email, password }) => {
+    login: async (parent, { email, password, firstName }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -149,7 +158,14 @@ const resolvers = {
       }
 
       if(!user.emailConfirmed){
-        throw new AuthenticationError("Please confirm your email to login");
+        
+        const token = signToken(user, process.env.REG_RESET_EXP)
+
+        const url = `${process.env.SITE_URL}/confirmation/${token}`;
+        
+        Mailer("confirm", user.email, url, user.firstName)
+
+        throw new AuthenticationError("Please confirm your email to login, another confirmation code has been sent!");
       }
 
       const correctPw = await user.isCorrectPassword(password);

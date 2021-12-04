@@ -17,10 +17,6 @@ const Home = ({apitokens}) => {
     lon: '',
   });
 
-  // useEffect(() => {
-  //   console.log('useEffect ran');
-  // }, [])
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -32,7 +28,6 @@ const Home = ({apitokens}) => {
       const results = await fetchEvents(apitokens, queryState.searchTerm);
       setEventList(results);
     }
-
 
   };
 
