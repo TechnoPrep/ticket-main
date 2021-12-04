@@ -94,27 +94,29 @@ body {
     color: white;
 }
 
+.video-bg {
+    width: 100%;
+}
+
 .hero-img {
     height: 400px;
     width: 100vw;
 }
 
 .hero-text {
-    position: absolute;
-    bottom: 48px;
-    left: 16px;
-    background-color: rgb(255, 255, 255, 0.5);
     font-size: 1.5rem;
-    padding: 10px;
+    text-align: center;
 }
 
-.hero-text2 {
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
+.hero-text-box {
     background-color: rgb(255, 255, 255, 0.5);
-    font-size: 1.5rem;
-    padding: 10px;
+    width: 50%;
+    position: absolute;
+    left: 25%;
+    bottom: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
 }
 
 .sample-search {
