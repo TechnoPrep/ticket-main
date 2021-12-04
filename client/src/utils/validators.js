@@ -3,12 +3,43 @@
  * @param {STRING} email 
  * @returns {BOOLEAN}
  */
- export const Email = async (email) => {
+ export const isEmail = async (email) => {
 
   let mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   if(!email.match(mailFormat)) {
-    alert('Please Enter a valid Email!')
+    return false;
+  } else {
+    return true;
+  }
+
+}
+
+/**
+ * Validates the Password field and length and Confirm Password fields match
+ * @param {STRING} zipCode 
+ * @returns {BOOLEAN}
+ */
+export const isZipCode = async (zipCode) => {
+
+  let zipCodeFormat = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+
+  if(!zipCode.match(zipCodeFormat)) {
+    return false;
+  } else {
+    return true;
+  }
+
+}
+
+/**
+ * Validates the Password field and length and Confirm Password fields match
+ * @param {STRING} value 
+ * @returns {BOOLEAN}
+ */
+export const isNotEmpty = async (value) => {
+
+  if(value === '') {
     return false;
   } else {
     return true;
@@ -22,23 +53,28 @@
  * @param {STRING} confirmPass 
  * @returns {BOOLEAN}
  */
- export const Pass = async (pass, confirmPass) => {
+ export const passMatch = async (pass, confirmPass) => {
 
-  if(pass === ''){
-    alert('Please enter a password')
+  if(pass !== confirmPass) {
     return false;
-  } else if(pass.length < 8){
-    alert('Password must be 8 or more characters')
-
-    return false;
-  } else if(pass !== confirmPass) {
-    alert('Passwords Do Not Match')
-    return false;
-
   } else {
     return true;
   }
-
 }
 
-export default { Email, Pass}
+
+/**
+ * Validates the Password field and length and Confirm Password fields match
+ * @param {STRING} pass 
+ * @returns {BOOLEAN}
+ */
+export const passLen = async (pass) => {
+
+  if(pass.length < 8){
+    return false;
+  } else {
+    return true;
+  }
+}
+
+export default { isEmail, isNotEmpty, isZipCode, passMatch, passLen }
