@@ -32,6 +32,22 @@ export const ACCOUNT_REG = gql`
   }
 `;
 
+export const FORGOTPW = gql`
+  mutation forgotPass($email: String!) {
+    forgotPass(email: $email) {
+      email
+    }
+  }
+`;
+
+export const RESETPW = gql`
+  mutation resetPass($token: String!, $password: String!) {
+    resetPass(token: $token, password: $password) {
+      token
+    }
+  }
+`;
+
 export const EVENT_PREF_SETUP = gql`
   mutation eventPrefSetup($email: String!) {
     eventPrefSetup(email: $email) {
