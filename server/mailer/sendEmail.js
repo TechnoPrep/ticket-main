@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const EmailTemplate = require("./Templates/EmailTemplate")
 const Registration = require("./Templates/registration")
+const Reset = require("./Templates/reset")
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../.env')})
 
@@ -39,13 +40,16 @@ const Mailer = async (event, email, url, firstName) => {
         break;
     }
 
-    const messageHTML = EmailTemplate(firstName, Registration(url, email))
+    const messageHTML = (event === 'confirm') ? 
+      EmailTemplate(firstName, Registration(url, email)) 
+        :
+      EmailTemplate(firstName, Reset(url, email))
 
     await transporter.sendMail({
-      from: `"Voltron App" <remindr.notification@gmail.com>`, // sender address
+      from: `"Totally Tickets" <remindr.notification@gmail.com>`, // sender address
       to: `${email}`, // list of receivers
       subject: `${type}`, // Subject line
-      text: "Subject Text", // plain text body
+      text: `${url}`, // plain text body
       html: `${messageHTML}`
     });
 
