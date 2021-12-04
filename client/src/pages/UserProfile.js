@@ -17,8 +17,6 @@ const UserProfile = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  console.log(user);
-  console.log(user.savedEvents);
 
   if (!user.email) {
     return (
