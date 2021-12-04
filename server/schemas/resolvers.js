@@ -1,6 +1,6 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, SavedEvent, EventPref } = require("../models");
-const { signToken } = require("../utils/auth");
+const { signToken, isTokenExpired } = require("../utils/auth");
 const  Mailer = require("../mailer/sendEmail");
 const { jwt, JsonWebTokenError } = require("jsonwebtoken");
 const { _ }  =require('lodash');
@@ -8,9 +8,7 @@ const { _ }  =require('lodash');
 const decode = require('jwt-decode');
 const path = require('path');
 require('dotenv').config({path: path.join(__dirname, '../.env')})
-const api_keytm = process.env.API_KEY1;
 
-const api_keysg = process.env.API_KEY2;
 const resolvers = {
   Query: {
     // Get User Saved Events
@@ -32,7 +30,6 @@ const resolvers = {
       return SavedEvent.findOne({ _id: savedEventId });
     },
   },
-
   Mutation: {
     // Create User Account
     addUser: async (parent, args) => {
@@ -49,15 +46,14 @@ const resolvers = {
         { ...args }
       );
 
-      const token = signToken(user, '1d')
+      const token = signToken(user, process.env.REG_RESET_EXP)
 
-      const url = `http://localhost:3000/confirmation/${token}`;
+      const url = `${process.env.SITE_URL}/confirmation/${token}`;
       
       Mailer("confirm", args.email, url, args.firstName)
 
       return { token, user };
     },
-
     // Set emailConfied equal to true, completed during email registration
     accountReg: async (parent, { token }) =>{
 
@@ -76,7 +72,55 @@ const resolvers = {
         console.log(err);
       }
     },
+    forgotPass: async (parent, { email }) => {
 
+      const user = await User.findOne({ email: email })
+
+      // No user was found, return null
+      if(!user){ return }
+
+      const token = signToken(user, process.env.REG_RESET_EXP)
+
+      console.log(token);
+
+      const url = `${process.env.SITE_URL}/reset/${token}`;
+      
+      Mailer("reset", user.email, url, user.firstName)
+
+      return user;
+    },
+    resetPass: async (parent, { token, password }) =>{
+
+      console.log('Function is being ran');
+
+      try{
+
+        const expiredToken = isTokenExpired(token)
+
+        if(expiredToken) {
+          throw new AuthenticationError('Your Password reset token has expired, please request a new token via the "Reset Password" link!')
+        }
+
+        const decoded = decode(token)
+
+        const id = decoded.data._id
+
+        const user = await User.findById(id, function(err, u){
+          if (err) {
+            return false
+          };
+          u.password = password;
+          u.save()
+          console.log('Updated Password');
+        })
+
+        // return (token, user)
+        return {token}
+
+      } catch (err){
+        console.log(err);
+      }
+    },
     // Set prefsSet to true after initial login survey
     eventPrefSetup: async (parent, { email }, context) =>{
       if (context.user) {

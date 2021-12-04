@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radius = 0 ) => {
 
   const locData = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
@@ -9,6 +11,8 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
   })
 
   const json = await data.json()
+
+  console.log(process.env.REACT_APP_JWT_SECRET);
 
   if(json._embedded !== undefined){
     const results = await json._embedded.events.map((event) => ({
@@ -28,12 +32,19 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
       venueId: event._embedded.venues[0].id,
       venue: event._embedded.venues[0].name,
       healthCheck: 'ticketing' in event,
+      queryLink: jwt.sign({
+        performer: event._embedded.attractions[0].name, 
+        date: event.dates.start.localDate, 
+        dateUTC: event.dates.start.dateTime, 
+        venue: event._embedded.venues[0].name,
+        tmVenueId: event._embedded.venues[0].id
+      }, process.env.REACT_APP_JWT_SECRET)
     }))
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
-  const trimResults = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
+  const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
 
-  return trimResults
+  return dedup
 
  } else {
   //  If nothing is found, return a single element array to check on the Results comp.
@@ -93,7 +104,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
    url: `https://www.stubhub.com/${event.webURI}`,
    minPrice: event.ticketInfo.minListPrice,
    maxPrice: event.ticketInfo.maxListPrice,
-   vendor: 'StubHub'
+   vendor: 'StubHub',
   }));
 
   const normalizedseatGeekData = sgJson.events.map(event => ({

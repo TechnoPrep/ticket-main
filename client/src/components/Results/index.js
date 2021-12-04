@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import jwtDecode from 'jwt-decode';
 
 const Results = ({
   events,
@@ -15,6 +16,10 @@ const Results = ({
   if (events[0] === 'No Events were found') {
     return <h3> No events were found, please check another Performer or Change your search location </h3>;
   }
+
+  // const qEvents = events.map((event) => ({
+  //   queryLink: jwt.sign(event.)
+  // }))
 
   return (
     <div>
@@ -69,7 +74,11 @@ const Results = ({
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
-                <Link to={`/tickets/`}>Find Tickets</Link> 
+
+                <Link to={`/tickets/${event.queryLink}`}>Find Tickets
+                   
+                </Link>
+
                 </CardContent>
               </Box>
                 {/* <div key={event.id} className="card mb-3">

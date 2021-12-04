@@ -1,87 +1,75 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-// import { useMutation } from '../utils/queries';
-import { LOGIN_USER } from '../utils/mutations';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { FORGOTPW } from "../utils/mutations";
 
-import Auth from '../utils/auth';
+function ForgotPassword() {
+  
+  const [formState, setFormState] = useState({
+    email: "",
+    isSubmitted: false,
+  });
 
-//This is just boilerplate from login page - Needs to get updated. 
-//Functionality Still needs to be done
-const ForgotPassword = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [findUser, {data, loading}] = useMutation(FORGOTPW);
 
-  // update state based on form input changes
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try{
+
+      const queryResponse = await findUser({
+        variables: {
+          email: formState.email,
+        },
+      });
+    
+    } catch(e){
+      console.error(e)
+    }
+
+    setFormState({
+      email: '',
+      isSubmitted: true,
+    });
+    
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
-  // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-    try {
-      const { data } = await login({
-        variables: { ...formState },
-      });
-
-      Auth.login(data.login.token);
-    } catch (e) {
-      console.error(e);
-    }
-
-    // clear form values
-    setFormState({
-      email: '',
-      password: '',
-    });
-  };
-
   return (
-    <main className="login">
-          <h4 className="login-header">Reset Password</h4>
-          <div className="login-box">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form className='login-form' onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block login-btn"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-              
-            )}
+    <div className="signup-box">
+      <h2 className='signup-header'>Signup</h2>
+      {formState.isSubmitted ? (
+        <p style={{color: 'white'}}>
+          Thank you! And Email has been sent to reset your Password!
+        </p>
+      ) : (
+      <form className='signup-form' onSubmit={handleFormSubmit}>
+        <div className="flex-row space-between">
+          <label htmlFor="email">Email:</label>
+          <input
+            className='form-input'
+            placeholder="youremail@test.com"
+            name="email"
+            type="email"
+            id="email"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="signup-btn flex-row space-between">
+          <button className='submit-btn' type="submit">Submit</button>
+        </div>
+      </form>
+      )}
+      </div>
+      
 
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-
-    </main>
   );
-};
+}
 
 export default ForgotPassword;

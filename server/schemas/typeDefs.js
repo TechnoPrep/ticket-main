@@ -41,14 +41,11 @@ const typeDefs = gql`
     savedEvent(savedEventId: ID!): SavedEvent
   }
 
-type searchApi{
-  performer: String
-  venue: String
-
-}
   type Mutation {
     addUser(firstName: String!, lastName: String!, phone: String!, zipCode: String!, email: String!, password: String!): Auth!
     accountReg(token: String!) : RegAuth
+    forgotPass(email: String!): User
+    resetPass(token: String!, password: String!) : RegAuth
     eventPrefSetup(email: String!): User
     login(email: String!, password: String!): Auth
     addEvent(eventName: String!, venue: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): SavedEvent
