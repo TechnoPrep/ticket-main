@@ -27,8 +27,9 @@ console.log(performer, date, tmVenueId);
 
   const fetchResults = async () => {
     const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
-    console.log(priceResults);
+   
     setEventList(priceResults)
+    console.log(priceResults);
   }
 
 window.onload = function(){
