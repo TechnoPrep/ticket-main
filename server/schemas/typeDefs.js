@@ -5,7 +5,6 @@ const typeDefs = gql`
     _id: ID
     firstName: String
     lastName: String
-    phone: String
     zipCode: String
     email: String
     password: String
@@ -42,7 +41,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, phone: String!, zipCode: String!, email: String!, password: String!): Auth!
+    addUser(firstName: String!, lastName: String!, zipCode: String!, email: String!, password: String!): Auth!
     accountReg(token: String!) : RegAuth
     forgotPass(email: String!): User
     resetPass(token: String!, password: String!) : RegAuth

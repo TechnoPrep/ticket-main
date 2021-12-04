@@ -16,10 +16,10 @@ const {token} = useParams();
  
 const decoded = decode(token)
 
-let {perfogitrmer, date, dateUTC, venue, tmVenueID} = decoded;
+let {performer, date, dateUTC, venue, tmVenueId} = decoded;
 
 
-console.log(performer);
+console.log(performer, date, tmVenueId);
 
 
   const [eventList, setEventList] = useState([]);
@@ -27,10 +27,12 @@ console.log(performer);
   useEffect(() => {
   
    
-
-    const priceResults = fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueID)
-    console.log(priceResults);
-    // setEventList(results)
+const fetchResults = async () => {
+  const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
+  console.log(priceResults);
+  setEventList(priceResults)
+}
+fetchResults()
   }, [])
 
   return (
