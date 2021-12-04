@@ -5,8 +5,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import HealthCheckEdit from '../../img/health-check.svg'
+import NoHealthCheck from '../../img/no-health-check.svg'
+import jwtDecode from 'jwt-decode';
+import Button from '@mui/material/Button';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import IconButton from '@mui/material/IconButton';
 import { formatDate, formatTime } from '../../utils/timestampConverter'
+
 
 const Results = ({
   events,
@@ -26,13 +32,13 @@ const Results = ({
             <Card key={event.id} sx={{ display: 'flex' }} className='results-card'>
               <CardMedia
                 component="img"
-                sx={{ width: 300, height: 200 }}
+                sx={{ width: 300, height: 'fill' }}
                 image={event.img.url}
                 alt={event.name}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
-                  <Typography component="div" variant="h4">
+                  <Typography component="div" variant="h4" sx={{ width: 300, height: 'fill' }}>
                     {event.name}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary" component="div">
@@ -51,50 +57,36 @@ const Results = ({
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
               {event.healthCheck ? (
-                      <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography component="div" className='health-check'>
-                          <LocalHospitalIcon/> Health care check required
-                        </Typography>
-                      </CardContent>
+                      <CardMedia
+                      component="img"
+                      sx={{ width: 250, height: 200 }}
+                      image={HealthCheckEdit}
+                      alt={event.name}
+                    />
                       ) 
                       :
                       (
-                      <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography component="div" className='health-check'>
-                        No Health care check required
-                        </Typography>
-                      </CardContent>
+                        <CardMedia
+                        component="img"
+                        sx={{ width: 250, height: 200 }}
+                        image={NoHealthCheck}
+                        alt={event.name}
+                      />
                       )
-                      
                     }
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
 
-                <Link to={`/prices/${event.queryLink}`}>Find Tickets
-                   
-                </Link>
+                <Button variant="contained" size='small'><Link to={`/prices/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
+                </CardContent>
+                <CardContent sx={{ flex: '1 0 auto' }}>
+                <IconButton aria-label="favorite" size='large'>
+                  <FavoriteBorderIcon />
+                </IconButton>
+
                 </CardContent>
               </Box>
-                {/* <div key={event.id} className="card mb-3">
-                  <h4 className="card-header bg-primary text-light p-2 m-0">
-                    {event.name}
-                  </h4>
-                  <Link to={`/tickets/`}>Find Tickets</Link> 
-                  <img src={event.img.url} alt={event.name}/>
-                  <div className="card-body bg-light p-2">
-                    <p>Location: {event.venue}</p>
-                    <p>Event Date: {event.date} @ {event.time}</p>
-                    {event.healthCheck ? (
-                      <p>Health Check Required</p>
-                      ) 
-                      :
-                      (
-                        <p>No Health Check Required</p>
-                      )
-                    }
-                  </div>
-                </div> */}
             </Card>
          )
         ))}
