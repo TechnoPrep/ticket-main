@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from 'react-router-dom';
 import Validate from "../utils/validators";
 import { useMutation } from "@apollo/client";
@@ -22,42 +22,19 @@ function ResetPassword() {
 
   const [resetPW, { error, data }] = useMutation(RESETPW);
 
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const validLen = await Validate.passLen(formState.password)
-    const match = await Validate.passMatch(formState.password, formState.confirm)
+    const [validLen, match] = await Promise.all([
+      Validate.passLen(formState.password),
+      Validate.passMatch(formState.password, formState.confirm)
+    ])
 
     setErrorMsg({
       passLen: validLen,
       passMatch: match
     })
-
-    console.log(errorMsg);
-    console.log(formState);
-
-    if( 
-       validLen &&
-       match
-        ){
-      
-      try{
-
-        console.log('I Worked!');
-
-        const mutationResponse = await resetPW({
-          variables: {
-            token: token,
-            password: formState.password,
-          },
-        });
-
-        console.log(mutationResponse);
-      
-      } catch(e){
-        console.error(e)
-      }
-    }
 
     setFormState({
       password: '',
@@ -67,6 +44,37 @@ function ResetPassword() {
     
   };
 
+  useEffect(() => {
+
+    const validateAndUpdate = async () => {
+      if( 
+        errorMsg.passLen &&
+        errorMsg.passMatch
+         ){
+       
+       try{
+ 
+         console.log('I Worked!');
+ 
+         const mutationResponse = await resetPW({
+           variables: {
+             token: token,
+             password: formState.password,
+           },
+         });
+ 
+         console.log(mutationResponse);
+       
+       } catch(e){
+         console.error(e)
+       }
+     }
+    }
+
+    validateAndUpdate();
+
+  },[errorMsg])
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({
@@ -75,21 +83,19 @@ function ResetPassword() {
     });
   };
 
-  if(data){
-    return (
-      <div className="signup-box">
-        <h2 className='signup-header'>Password Reset</h2>
-        <p> Your Password has been successfully reset! Please Login!</p>
-        <Link to='/login'>
-        <button className='submit-btn' type="submit" >Log In</button>
-        </Link>
-      </div>
-    )
-  }
-
   return (
     <div className="signup-box">
       <h2 className='signup-header'>Password Reset</h2>
+      {data ? (
+        <>
+        <p> Your Password has been successfully reset! Please Login!</p>
+        <div>
+          <Link to='/login'>
+            <button className='submit-btn' type="submit" >Log In</button>
+          </Link>
+        </div>
+        </>
+      ) : (
         <form className='signup-form' onSubmit={handleFormSubmit}>
           <div className="flex-row space-between">
             <label htmlFor="password">Password:</label>
@@ -121,7 +127,7 @@ function ResetPassword() {
               value={formState.confirm}
             />
             {
-            !errorMsg.match && formState.isSubmitted ? 
+            !errorMsg.passMatch && formState.isSubmitted ? 
               (<div className='text-danger'> Passwords Do Not Match </div>) 
                 : 
               <div></div> 
@@ -131,7 +137,9 @@ function ResetPassword() {
             <button className='submit-btn' type="submit" >Submit</button>
           </div>
         </form>
-       
+        )
+      }
+        
        {error && (
          <div className="my-3 p-3 bg-danger text-white">
            {error.message}
