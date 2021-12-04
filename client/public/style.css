@@ -109,7 +109,7 @@ body {
 }
 
 .hero-text-box {
-    background-color: rgb(255, 255, 255, 0.5);
+    background-color: rgb(38,45,45, .5);
     width: 50%;
     position: absolute;
     left: 25%;
@@ -119,8 +119,9 @@ body {
 
 }
 
-.sample-search {
-    color: white;
+.search-input {
+    margin-bottom: 20px;
+
 }
 
 .login {
@@ -148,6 +149,35 @@ body {
 
 .go-back-btn {
     background-color: #D1CFC0 !important;
+}
+
+.search-box {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    max-width: 800px;
+}
+
+.search-label {
+    color: rgb(255, 255, 255, 0.87);
+}
+
+.search-form {
+    margin: auto;
+    background-color: #25282a;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.search-header {
+    text-align: center;
+    color: #E8E8E8;
+}
+
+.search-btn {
+    margin: auto;
+    text-align: center;
+    font-size: 1.5rem !important;
 }
 
 .signup-box {
@@ -187,6 +217,8 @@ body {
 
 .form-input {
     margin: auto;
+    background: #181a1b !important;
+    border-color: rgb(204, 204, 204) !important;
 }
 
 .results-card {
