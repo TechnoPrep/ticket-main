@@ -83,4 +83,4 @@ export const searchApi = async () => {
   return totallyNormalized;
 }
 
-export default { fetchEvents, fetchLocation }
+export default { fetchEvents, fetchLocation, }
