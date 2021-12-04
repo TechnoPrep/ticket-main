@@ -29,7 +29,6 @@ const Home = ({apitokens}) => {
       setEventList(results);
     }
 
-
   };
 
   const handleChange = (event) => {

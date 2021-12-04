@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
 
-import { fetchEvents, fetchPricing } from '../utils/apiQueries'
-
-import Results from '../components/Results'
+import { fetchPricing } from '../utils/apiQueries'
 import decode from 'jwt-decode';
 import { useParams } from 'react-router-dom';
 // import { results } from '../utils/apiQueries'
-const jwt = require('jsonwebtoken');
 
 
 const Prices = ({apitokens}) => {
@@ -19,21 +21,25 @@ const decoded = decode(token)
 let {performer, date, dateUTC, venue, tmVenueId} = decoded;
 
 
-console.log(performer, date, tmVenueId);
-
 
   const [eventList, setEventList] = useState([]);
 
 
-  const fetchResults = async () => {
-    const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
-    console.log(priceResults);
-    setEventList(priceResults)
-  }
+  useEffect(() => {
 
-window.onload = function(){
-  fetchResults()
-}
+    const fetchResults = async () => {
+      try {
+        const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
+        console.log(priceResults);
+        setEventList(priceResults)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    fetchResults();
+
+}, [eventList])
 
 
   return (
@@ -41,22 +47,21 @@ window.onload = function(){
       <div className='search-input'>
         </div>
         <div className="flex-row justify-center mb-3">
-          {/* {eventList &&
+           {eventList &&
              eventList.map((event) => (
                (
                  <Card sx={{ display: 'flex' }} className='results-card'>
                    <CardMedia
                      component="img"
                      sx={{ width: 300, height: 200 }}
-                     image={event.img.url}
-                     alt={event.name}
                    />
                    <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                      <CardContent sx={{ flex: '1 0 auto' }}>
                        <Typography component="div" variant="h4">
-                         {event.name}
+                         {/* {event.name} */}
+                         {console.log(event)}
                        </Typography>
-                       <Typography variant="subtitle1" color="text.secondary" component="div">
+                       {/* <Typography variant="subtitle1" color="text.secondary" component="div">
                          {event.venue}
                        </Typography>
                        <Typography variant="subtitle1" color="text.secondary" component="div">
@@ -67,10 +72,10 @@ window.onload = function(){
                        </Typography>
                        <Typography variant="h5" color="text.secondary" component="div">
                          {event.time}
-                       </Typography>
+                       </Typography> */}
                      </CardContent>
                    </Box>
-                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                   {/* <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                    {event.healthCheck ? (
                            <CardContent sx={{ flex: '1 0 auto' }}>
                              <Typography component="div" className='health-check'>
@@ -112,10 +117,10 @@ window.onload = function(){
                            )
                          }
                        </div>
-                     </div>
+                     </div> */}
                  </Card>
               )
-             ))} */}
+             ))} 
       </div>
     </div>
   );
