@@ -10,8 +10,6 @@ export const convertTimestamp =(timestamp) => {
         ampm = 'AM',
         time;
 
-    console.log(d);
-
     if (hh > 12) {
         h = hh - 12;
         ampm = 'PM';
@@ -25,6 +23,14 @@ export const convertTimestamp =(timestamp) => {
     // ie: 03-24-2022, 3:00 PM
     time =  mm + '-' + dd + '-' +  yyyy + ', ' + h + ':' + min + ' ' + ampm;
     return time;
+}
+
+export const formatDate = (date) => {
+
+}
+
+export const formatTime = (time) => {
+
 }
 
 export default {convertTimestamp}
