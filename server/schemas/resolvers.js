@@ -34,17 +34,26 @@ const resolvers = {
     // Create User Account
     addUser: async (parent, args) => {
 
+      console.log(args);
+
       const email = args.email
 
       const existing = await User.findOne({ email })
 
+      console.log(existing);
+
       if(existing){
+        console.log('I exist already');
         throw new AuthenticationError("An account already exists with this Email. Please reset your password or try another email!");
       }
+
+      console.log(existing);
       
       const user = await User.create(
         { ...args }
       );
+
+      console.log(user);
 
       const token = signToken(user, process.env.REG_RESET_EXP)
 

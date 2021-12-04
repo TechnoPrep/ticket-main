@@ -9,14 +9,14 @@ function ForgotPassword() {
     isSubmitted: false,
   });
 
-  const [findUser, {data, loading}] = useMutation(FORGOTPW);
+  const [findUser, {error}] = useMutation(FORGOTPW);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try{
 
-      const queryResponse = await findUser({
+      await findUser({
         variables: {
           email: formState.email,
         },
@@ -66,9 +66,13 @@ function ForgotPassword() {
         </div>
       </form>
       )}
-      </div>
-      
 
+      {error && (
+         <div className="my-3 p-3 bg-danger text-white">
+           {error.message}
+         </div>
+       )}
+      </div>
   );
 }
 
