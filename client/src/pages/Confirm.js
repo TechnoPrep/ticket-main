@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import { useMutation } from "@apollo/client";
@@ -9,15 +10,8 @@ function Confirm() {
   
   const {token} = useParams();
 
-  // const [tokenState, setTokenState] = useState({
-  //   token: "",
-  // })
-
   const [accountReg] = useMutation(ACCOUNT_REG);
 
-  // setTokenState({
-  //   token: token
-  // });
 
   const handleUpdate = async () => {
     try{
@@ -32,15 +26,11 @@ function Confirm() {
       console.error(e)
     }
   
-    // setTokenState({
-    //   token: '',
-    // });
   }
 
   window.onload = function() {
     handleUpdate();
   }
-
 
   return (
     <div className="container my-1">
@@ -48,6 +38,9 @@ function Confirm() {
       <p>
         Thank you for confirming your Email Account You may now Login!
       </p>
+      <Link to='/login'>
+      <button type="button" className="btn btn-info">Button</button>
+      </Link>
     </div>
   );
 }
