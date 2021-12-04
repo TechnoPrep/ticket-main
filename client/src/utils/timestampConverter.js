@@ -64,7 +64,7 @@ export const formatDate = (date) => {
 
 export const formatTime = (time) => {
 
-    if(time === undefined){
+    if(!time){
         return 'Event Time Not Listed'
     }
 
