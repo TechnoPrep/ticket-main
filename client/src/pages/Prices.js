@@ -45,17 +45,18 @@ const Prices = ({apitokens}) => {
              eventList.map((event) => (
                (
                  <Card key={event.name} sx={{ display: 'flex' }} className='results-card'>
-                   <CardMedia
-                component="img"
-                sx={{ width: 300, height: 'fill' }}
-                image={event.minPrice}
-                alt={event.vendor}
-                Link ={event.url}
-              />
+              <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                     <CardContent sx={{ flex: '1 0 auto' }}>
+                       <Typography component="div" variant="h4">
+                         {event.vendor}
+                         {}
+                       </Typography>
+                     </CardContent>
+                   </Box>
                    <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                      <CardContent sx={{ flex: '1 0 auto' }}>
                        <Typography component="div" variant="h4">
-                         {event.minPrice}
+                         ${event.minPrice}
                          {}
                        </Typography>
                      </CardContent>
@@ -63,7 +64,7 @@ const Prices = ({apitokens}) => {
                    <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
 
-                <Button href={event.url} variant="contained" size='small'><span className='find-ticket-text'>Buy Tickets</span></Button>
+                <Button href={event.url} target="_blank" variant="contained" size='small'><span className='find-ticket-text'>Buy Tickets</span></Button>
                 </CardContent>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                 <IconButton aria-label="favorite" size='large'>
