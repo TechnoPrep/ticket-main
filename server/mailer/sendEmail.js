@@ -46,7 +46,7 @@ const Mailer = async (event, email, url, firstName) => {
       EmailTemplate(firstName, Reset(url, email))
 
     await transporter.sendMail({
-      from: `"Totally Tickets" <remindr.notification@gmail.com>`, // sender address
+      from: `"Totally Tickets" <totally.tickets.notifications@gmail.com>`, // sender address
       to: `${email}`, // list of receivers
       subject: `${type}`, // Subject line
       text: `${url}`, // plain text body

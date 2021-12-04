@@ -9,7 +9,6 @@ function Signup(props) {
   const [formState, setFormState] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
     zipCode: "",
     email: "",
     password: "",
@@ -27,7 +26,6 @@ function Signup(props) {
         variables: {
           firstName: formState.firstName,
           lastName: formState.lastName,
-          phone: formState.phone,
           zipCode: formState.zipCode,
           email: formState.email,
           password: formState.password,
@@ -42,7 +40,6 @@ function Signup(props) {
     setFormState({
       firstName: '',
       lastName: '',
-      phone: '',
       zipCode: '',
       email: '',
       password: '',
@@ -86,17 +83,6 @@ function Signup(props) {
             name="lastName"
             type="lastName"
             id="lastName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between">
-          <label htmlFor="Phone">Phone#:</label>
-          <input
-            className='form-input'
-            placeholder="555-555-5555"
-            name="phone"
-            type="phone"
-            id="phone"
             onChange={handleChange}
           />
         </div>

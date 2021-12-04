@@ -17,10 +17,6 @@ const Results = ({
     return <h3> No events were found, please check another Performer or Change your search location </h3>;
   }
 
-  // const qEvents = events.map((event) => ({
-  //   queryLink: jwt.sign(event.)
-  // }))
-
   return (
     <div>
     {showTitle && <h3>{title}</h3>}

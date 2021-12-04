@@ -17,10 +17,6 @@ const Home = ({apitokens}) => {
     lon: '',
   });
 
-  // useEffect(() => {
-  //   console.log('useEffect ran');
-  // }, [])
-
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 

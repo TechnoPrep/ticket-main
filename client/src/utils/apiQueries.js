@@ -91,10 +91,6 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   const [shJson, sgJson, tmJson] = await Promise.all([stubHubData.json(), seatGeekData.json(), ticketMaster.json()])
 
-  console.log('sh', shJson);
-  console.log('sg', sgJson);
-  console.log('tm', tmJson);
-
   const normalizedStubHubData = shJson.events.map(event => ({
    //discover what ticketmaster is spitting out for perfomer venue etc
    id: event.id,
