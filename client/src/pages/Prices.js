@@ -24,16 +24,17 @@ console.log(performer, date, tmVenueId);
 
   const [eventList, setEventList] = useState([]);
 
-  useEffect(() => {
-  
-   
-const fetchResults = async () => {
-  const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
-  console.log(priceResults);
-  setEventList(priceResults)
+
+  const fetchResults = async () => {
+    const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
+    console.log(priceResults);
+    setEventList(priceResults)
+  }
+
+window.onload = function(){
+  fetchResults()
 }
-fetchResults()
-  }, [])
+
 
   return (
     <div className='home'>
