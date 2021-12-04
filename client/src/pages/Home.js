@@ -41,74 +41,80 @@ const Home = ({apitokens}) => {
   };
 
   return (
-    <div className='home'>
-    <div className='search-input'>
-    <form onSubmit={handleFormSubmit}>
-      <label 
-        className='sample-search'
-        htmlFor="eventName">
-          Event / Performer Name
-      </label>
-     
-      <input 
-        className='m-2' 
-        type="text" 
-        name="searchTerm"
-        value={queryState.searchTerm}
-        onChange={handleChange}
-        aria-label="Search for tickets"
-        />
-
-      <label 
-        className='sample-search'
-        htmlFor="zipCode">
-          Zip Code
-      </label>
-     
-      <input 
-        className='m-2' 
-        type="text" 
-        name="zipCode"
-        value={queryState.zipCode}
-        onChange={handleChange}
-        aria-label="Search for tickets"
-        />
-
-      <label 
-        className='sample-search'
-        htmlFor="Radius">
-          Radius:
-      </label>
-     
-      <select name="radius" value={queryState.radius} onChange={handleChange}>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="200">200</option>
-      </select>
-
-      <button type="submit">Search</button>
-        </form>
-      </div>
-      <div className="flex-row justify-center mb-3">
-        {eventList.length > 0 ? (
-          <div className="col-12 col-md-10 mb-5">
-            <Results 
-              events={eventList}
-              title={`My Searched Events events...`}
-              showTitle={false}
-            />
-            </div>
-          ) 
-          :
-          (
+    <div className=''>
+      <div className='search-box'>
+        <h2 className='search-header'>Enter an Event or band name to get started!</h2>
+        <form className='search-form' onSubmit={handleFormSubmit}>
+          <div className="flex-row space-between">
+            <label 
+              className='search-label'
+              htmlFor="eventName">
+                Event / Performer Name
+            </label>
+          
+            <input 
+              className='form-input' 
+              type="text"
+              name="searchTerm"
+              value={queryState.searchTerm}
+              onChange={handleChange}
+              aria-label="Search for tickets"
+              />
+          </div>
+          <div className="flex-row space-between">
+            <label 
+              className='search-label'
+              htmlFor="zipCode">
+                Zip Code
+            </label>
+          
+            <input 
+              className='form-input' 
+              type="text" 
+              name="zipCode"
+              value={queryState.zipCode}
+              onChange={handleChange}
+              aria-label="Search for tickets"
+              />
+          </div>
+          <div className="flex-row space-between">
+          <label 
+            className='search-label'
+            htmlFor="Radius">
+              Radius:
+          </label>
+        
+          <select name="radius" value={queryState.radius} onChange={handleChange} className='form-input'>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+          </select>
+          </div>
+          <div className="search-btn flex-row space-between">
+            <button className='submit-btn' type="submit">Search</button>
+          </div>
+            </form>
+        </div>
+        <div className="flex-row justify-center mb-3">
+          {eventList.length > 0 ? (
             <div className="col-12 col-md-10 mb-5">
-              <h3> Please Search for an Event! </h3>
-            </div>
-          )
-        }
-    </div>
+              <Results 
+                events={eventList}
+                title={`My Searched Events events...`}
+                showTitle={false}
+              />
+              </div>
+            ) 
+            :
+            (
+              <div className="col-12 col-md-10 mb-5">
+                <h3></h3>
+              </div>
+            )
+          }
+      </div>
     </div>
   );
 };
