@@ -170,6 +170,10 @@ body {
     border-radius: 10px;
 }
 
+.radius {
+    color: rgb(255, 255, 255, 0.87);
+}
+
 .search-header {
     text-align: center;
     color: #E8E8E8;
@@ -218,7 +222,7 @@ body {
 
 .form-input {
     margin: auto;
-    background: #181a1b !important;
+    background: #e8f0fe !important;
     border-color: rgb(204, 204, 204) !important;
 }
 
