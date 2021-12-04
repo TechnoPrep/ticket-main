@@ -71,10 +71,9 @@ const Results = ({
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
 
-                <Link to={`/tickets/${event.queryLink}`}>Find Tickets
+                <Link to={`/prices/${event.queryLink}`}>Find Tickets
                    
                 </Link>
-
                 </CardContent>
               </Box>
                 {/* <div key={event.id} className="card mb-3">
