@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 
+import { stringCleanup } from './replace'
+
 export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radius = 0 ) => {
 
   const locData = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
@@ -14,17 +16,13 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const json = await data.json()
 
-  console.log(json);
-
   if('_embedded' in json && 'events' in json._embedded){
     const results = await json._embedded.events.map((event) => ({
       id: event.id,
       date: event.dates.start.localDate,
-      dateUTC: event.dates.start.dateTime,
-      time: event.dates.start.localTime,
-      // name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
-      name: event.classifications[0].segment.name === 'Music' ? ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name) : event.name,
-      // performer: event._embedded.attractions[0].name,
+      dateUTC: 'dateTime' in event.dates.start ? event.dates.start.dateTime : event.dates.start.localDate + 'T00:00:00Z',
+      time: 'localTime' in event.dates.start ? event.dates.start.localTime : false,
+      name: event.classifications[0].segment.name === 'Sports' ? event.name : ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name),
       performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name,
       city: event._embedded.venues[0].city.name,
       stateCode: event._embedded.venues[0].state.stateCode,
@@ -44,23 +42,14 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
       queryLink: jwt.sign({
         performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name, 
         date: event.dates.start.localDate, 
-        dateUTC: event.dates.start.dateTime,  
+        dateUTC: 'dateTime' in event.dates.start ? event.dates.start.dateTime : event.dates.start.localDate + 'T00:00:00Z',
         venue: event._embedded.venues[0].name,
         tmVenueId: event._embedded.venues[0].id
       }, process.env.REACT_APP_JWT_SECRET)
     }))
-
-    // if(json._embedded.events !== undefined){
-    //   const results = await json._embedded.events.map((event, i) => {
-    //     console.log('name',(event.classifications[0].segment.name === 'Music' ? ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name) : event.name), i);  
-    //     console.log('performer',('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name), i);
-    //   })
-
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
   const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
-
-  console.log(dedup);
 
   return dedup
 
@@ -94,20 +83,27 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     headers: {
       "Authorization": `Bearer ${apitokens.stubhub}`,
       "Accept": "application/json",
-      'Access-Control-Allow-Origin':'http://localhost:3000',
+      'Access-Control-Allow-Origin':'*',
       "Access-Control-Allow-Credential": "true"
-    }
+     }
   });
 
-  const ticketmMaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`)
+  const ticketmMaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`,{
+    method: "GET",
+    headers: {
 
-  const slug = performer.toLowerCase().replace(' ', '-')
+    }
+  })
+  
+  const slug = stringCleanup(performer)
+
+  console.log(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
 
   const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
 
   const [stubHubData, seatGeekData, ticketMaster] = await Promise.all([stubHub, seatGeek, ticketmMaster]);
-
   const [shJson, sgJson, tmJson] = await Promise.all([stubHubData.json(), seatGeekData.json(), ticketMaster.json()])
+  
   const normalizedStubHubData = shJson.events.map(event => ({
    //discover what stubhub is spitting out for perfomer venue etc
    id: event.id,
@@ -115,8 +111,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
    city: event.venue.city,
    stateCode: event.venue.state,
    url: `https://www.stubhub.com/${event.webURI}`,
-   minPrice: event.ticketInfo.minListPrice,
-   maxPrice: event.ticketInfo.maxListPrice,
+   minPrice: 'minListPrice' in event.ticketInfo ? event.ticketInfo.minListPrice : false,
+   maxPrice: 'maxListPrice' in event.ticketInfo ? event.ticketInfo.maxListPrice : false,
    vendor: 'StubHub',
   }));
 
@@ -127,8 +123,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     city: event.venue.city,
     stateCode: event.venue.state,
     url: event.url,
-    minPrice: event.stats.lowest_price,
-    maxPrice: event.stats.median_price,
+    minPrice: 'lowest_price' in event.stats && event.stats.lowest_price !== null ? event.stats.lowest_price : false,
+    maxPrice: 'median_price' in event.stats && event.stats.median_price !== null ? event.stats.median_price : false,
     vendor: 'SeatGeek'
   }));
 
@@ -139,8 +135,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     city: event._embedded.venues[0].city.name,
     stateCode: event._embedded.venues[0].state.stateCode,
     url: event.url,
-    minPrice: event.priceRanges[0].min,
-    maxPrice: event.priceRanges[0].max,
+    minPrice: 'priceRanges' in event ? event.priceRanges[0].min : false,
+    maxPrice: 'priceRanges' in event ? event.priceRanges[0].max : false,
     vendor: 'Ticket Master'
    }));
 
