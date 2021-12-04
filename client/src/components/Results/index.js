@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import jwtDecode from 'jwt-decode';
+import { formatDate, formatTime } from '../../utils/timestampConverter'
 
 const Results = ({
   events,
@@ -23,7 +23,7 @@ const Results = ({
      {events &&
         events.map((event) => (
           (
-            <Card sx={{ display: 'flex' }} className='results-card'>
+            <Card key={event.id} sx={{ display: 'flex' }} className='results-card'>
               <CardMedia
                 component="img"
                 sx={{ width: 300, height: 200 }}
@@ -42,10 +42,10 @@ const Results = ({
                     {event.city}, {event.stateCode}
                   </Typography>
                   <Typography className='result-date' component="div" variant="h5">
-                    {event.date}
+                    {formatDate(event.date)}
                   </Typography>
                   <Typography variant="h5" color="text.secondary" component="div">
-                    {event.time}
+                    {formatTime(event.time)}
                   </Typography>
                 </CardContent>
               </Box>
