@@ -4,6 +4,8 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const locData = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
 
+  console.log(`https://app.ticketmaster.com/discovery/v2/events.json?${locData}keyword=${searchTerm}&countryCode=US&size=100&sort=date,asc&apikey=${apitokens.ticketmaster}`);
+
   const data = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?${locData}keyword=${searchTerm}&countryCode=US&size=100&sort=date,asc&apikey=${apitokens.ticketmaster}`, {
     method: "GET",
     headers: {
@@ -12,14 +14,18 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const json = await data.json()
 
-  if(json._embedded !== undefined){
+  console.log(json);
+
+  if('_embedded' in json && 'events' in json._embedded){
     const results = await json._embedded.events.map((event) => ({
       id: event.id,
       date: event.dates.start.localDate,
       dateUTC: event.dates.start.dateTime,
       time: event.dates.start.localTime,
-      name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
-      performer: event._embedded.attractions[0].name,
+      // name: event.classifications[0].segment.name === 'Sports' ? event.name : event._embedded.attractions[0].name,
+      name: event.classifications[0].segment.name === 'Music' ? ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name) : event.name,
+      // performer: event._embedded.attractions[0].name,
+      performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name,
       city: event._embedded.venues[0].city.name,
       stateCode: event._embedded.venues[0].state.stateCode,
       img: event.images.find((e) => {
@@ -36,16 +42,25 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
       venue: event._embedded.venues[0].name,
       healthCheck: 'ticketing' in event,
       queryLink: jwt.sign({
-        performer: event._embedded.attractions[0].name, 
+        performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name, 
         date: event.dates.start.localDate, 
-        dateUTC: event.dates.start.dateTime, 
+        dateUTC: event.dates.start.dateTime,  
         venue: event._embedded.venues[0].name,
         tmVenueId: event._embedded.venues[0].id
       }, process.env.REACT_APP_JWT_SECRET)
     }))
+
+    // if(json._embedded.events !== undefined){
+    //   const results = await json._embedded.events.map((event, i) => {
+    //     console.log('name',(event.classifications[0].segment.name === 'Music' ? ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name) : event.name), i);  
+    //     console.log('performer',('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name), i);
+    //   })
+
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
   const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
+
+  console.log(dedup);
 
   return dedup
 
