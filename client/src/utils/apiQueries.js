@@ -12,8 +12,6 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const json = await data.json()
 
-  console.log(process.env.REACT_APP_JWT_SECRET);
-
   if(json._embedded !== undefined){
     const results = await json._embedded.events.map((event) => ({
       id: event.id,
@@ -26,6 +24,11 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
       stateCode: event._embedded.venues[0].state.stateCode,
       img: event.images.find((e) => {
         if(e.ratio === "16_9" && e.width === 640){
+          return e
+        }
+      }),
+      banner: event.images.find((e) => {
+        if(e.ratio === "16_9" && e.width === 2048){
           return e
         }
       }),
@@ -69,7 +72,6 @@ export const fetchLocation = async (apitokens, zipCode) => {
 
 
 export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, tmVenueId) => {
-  console.log(apitokens, performer, date, dateUTC, venue, tmVenueId);
 
   const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`, {
     method: "GET",
@@ -92,7 +94,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   const [shJson, sgJson, tmJson] = await Promise.all([stubHubData.json(), seatGeekData.json(), ticketMaster.json()])
   const normalizedStubHubData = shJson.events.map(event => ({
-   //discover what ticketmaster is spitting out for perfomer venue etc
+   //discover what stubhub is spitting out for perfomer venue etc
    id: event.id,
    name: event.name,
    city: event.venue.city,
