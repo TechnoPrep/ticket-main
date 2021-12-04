@@ -129,9 +129,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   const totallyNormalized = [...normalizedStubHubData, ...normalizedseatGeekData, ...normalizedTicketmMaster];
 
-  console.log(totallyNormalized);
-
-
+  return totallyNormalized;
 }
 
 export default { fetchEvents, fetchLocation, fetchPricing }
