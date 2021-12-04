@@ -11,6 +11,8 @@ const Login = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
+  console.log(error, data);
+
   // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -87,7 +89,7 @@ const Login = (props) => {
             )}
           </div>
           <p style={{textAlign: "center", color: "white"}}>
-            Forgot Password? <Link to="/forgotpassword">Reset It</Link>
+            <Link to="/forgotpassword">Forgot Password?</Link>
           </p>
     </main>
   );
