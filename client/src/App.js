@@ -18,6 +18,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import DropdownSearch from './components/DropdownSearch';
 import Prices from "./pages/Prices"
 // import DropdownTest from './components/DropdownTest';
@@ -78,8 +79,11 @@ function App() {
             <Route exact path="/me">
               <UserProfile />
             </Route>
-            <Route exact path="/forgottenpassword">
+            <Route exact path="/forgotpassword">
               <ForgotPassword />
+            </Route>
+            <Route exact path="/reset/:token">
+              <ResetPassword />
             </Route>
             <Route exact path="/prices">
               <Prices apitokens={apiTokens}/>
