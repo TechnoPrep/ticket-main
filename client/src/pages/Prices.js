@@ -14,12 +14,11 @@ import { useParams } from 'react-router-dom';
 
 const Prices = ({apitokens}) => {
 
-const {token} = useParams();
- 
-const decoded = decode(token)
-
-let {performer, date, dateUTC, venue, tmVenueId} = decoded;
-
+  const {token} = useParams();
+   
+  const decoded = decode(token)
+  
+  let {performer, date, dateUTC, venue, tmVenueId} = decoded;
 
 
   const [eventList, setEventList] = useState([]);
@@ -28,18 +27,13 @@ let {performer, date, dateUTC, venue, tmVenueId} = decoded;
   useEffect(() => {
 
     const fetchResults = async () => {
-      try {
-        const priceResults = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
-        console.log(priceResults);
-        setEventList(priceResults)
-      } catch (e) {
-        console.error(e)
-      }
+        const events = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
+        setEventList(events)
     }
 
     fetchResults();
 
-}, [eventList])
+}, [])
 
 
   return (
@@ -50,7 +44,7 @@ let {performer, date, dateUTC, venue, tmVenueId} = decoded;
            {eventList &&
              eventList.map((event) => (
                (
-                 <Card sx={{ display: 'flex' }} className='results-card'>
+                 <Card key={event.id} sx={{ display: 'flex' }} className='results-card'>
                    <CardMedia
                      component="img"
                      sx={{ width: 300, height: 200 }}
