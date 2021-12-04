@@ -135,7 +135,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   console.log(totallyNormalized);
 
-  // return totallyNormalized;
+
 }
 
 export default { fetchEvents, fetchLocation, fetchPricing }

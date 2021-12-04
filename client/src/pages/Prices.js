@@ -4,16 +4,33 @@ import { Link } from 'react-router-dom';
 import { fetchEvents, fetchPricing } from '../utils/apiQueries'
 
 import Results from '../components/Results'
+import decode from 'jwt-decode';
+import { useParams } from 'react-router-dom';
+// import { results } from '../utils/apiQueries'
+const jwt = require('jsonwebtoken');
+
 
 const Prices = ({apitokens}) => {
-  
+
+const {token} = useParams();
+ 
+const decoded = decode(token)
+
+let {perfogitrmer, date, dateUTC, venue, tmVenueID} = decoded;
+
+
+console.log(performer);
+
+
   const [eventList, setEventList] = useState([]);
 
   useEffect(() => {
-    
-    const results = fetchPricing(apitokens, 'Billie Eilish', '2022-03-19', '2022-03-20T01:30:00Z', 'Ball Arena', 'KovZpZAFaJeA')
-    console.log(results);
-    setEventList(results)
+  
+   
+
+    const priceResults = fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueID)
+    console.log(priceResults);
+    // setEventList(results)
   }, [])
 
   return (

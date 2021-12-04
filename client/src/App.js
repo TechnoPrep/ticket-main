@@ -85,7 +85,7 @@ function App() {
             <Route exact path="/reset/:token">
               <ResetPassword />
             </Route>
-            <Route exact path="/prices">
+            <Route exact path="/prices/:token">
               <Prices apitokens={apiTokens}/>
             </Route>
           </div>
