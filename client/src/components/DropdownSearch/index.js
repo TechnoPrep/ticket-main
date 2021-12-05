@@ -25,12 +25,14 @@ import NHL from './NHL/NHL'
 import MLS from './MLS/MLS';
 import Tennis from './Tennis/Tennis';
 
+const timeoutLength = 1000;
+
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'right',
+      vertical: 'top',
+      horizontal: 'left',
     }}
     transformOrigin={{
       vertical: 'top',
@@ -67,14 +69,45 @@ const StyledMenu = styled((props) => (
 }));
 
 export default function DropdownSearch() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  
+  const [menuHover, setMenuHover] = React.useState({
+    anchorEl: null,
+    open: false,
+    mouseOverButton: false,
+    mouseOverMenu: false,
+  });
+
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    setMenuHover({ open: true, anchorEl: event.currentTarget });
   };
+
   const handleClose = () => {
-    setAnchorEl(null);
+    setMenuHover({ mouseOverButton: false, mouseOverMenu: false });
   };
+
+  const enterButton = () => {
+    setMenuHover({ mouseOverButton: true });
+  }
+
+  const leaveButton = () => {
+    // Set a timeout so that the menu doesn't close before the user has time to
+    // move their mouse over it
+    setTimeout(() => {
+      setMenuHover({ mouseOverButton: false });
+    }, timeoutLength);
+  }
+
+  const enterMenu = () => {
+    setMenuHover({ mouseOverMenu: true });
+  }
+
+  const leaveMenu = () => {
+     setTimeout(() => {
+      setMenuHover({ mouseOverMenu: false });
+     }, timeoutLength);
+  }
+
+  const open = menuHover.mouseOverButton || menuHover.mouseOverMenu;
 
   return (
     <div className='dropdown'>
@@ -83,11 +116,13 @@ export default function DropdownSearch() {
               id="sports-button"
               aria-controls="sports-menu"
               aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
+              // aria-expanded={open ? 'true' : undefined}
               variant="contained"
-              // disableElevation
+              // onClick={handleClick}
+              aria-owns={setMenuHover.open ? 'simple-menu' : null}
               onClick={handleClick}
-              // endIcon={<KeyboardArrowDownIcon />}
+              onMouseEnter={enterButton}
+              onMouseLeave={leaveButton}
             >
               Sports
             </Button>
@@ -95,8 +130,10 @@ export default function DropdownSearch() {
               id="sports-menu"
               MenuListProps={{
                 'aria-labelledby': 'sports-button',
+                onMouseEnter: enterMenu,
+                onMouseLeave: leaveMenu,
               }}
-              anchorEl={anchorEl}
+              anchorEl={menuHover.anchorEl}
               open={open}
               onClose={handleClose}
             >

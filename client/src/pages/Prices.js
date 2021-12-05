@@ -19,7 +19,7 @@ const Prices = ({apitokens}) => {
    
   const decoded = decode(token)
   
-  let {performer, date, dateUTC, venue, tmVenueId} = decoded;
+  let {performer, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
 
 
   const [eventList, setEventList] = useState([]);
@@ -28,18 +28,20 @@ const Prices = ({apitokens}) => {
   useEffect(() => {
 
     const fetchResults = async () => {
-        const events = await fetchPricing(apitokens, performer, date, dateUTC, venue, tmVenueId)
+        const events = await fetchPricing(apitokens, performer, eventDate, dateUTC, venue, tmVenueId)
         setEventList(events)
-        console.log(events);
     }
 
     fetchResults();
 }, [])
 
   return (
+    <>
+    <div className='banner'>
+      <img src={url} alt={performer} className="banner-img" />
+      <div class="banner-text">{performer.toUpperCase()}</div>
+    </div>
     <div className='home'>
-      <div className='search-input'>
-        </div>
         <div className="flex-row justify-center mb-3">
            {eventList &&
              eventList.map((event) => (
@@ -77,6 +79,7 @@ const Prices = ({apitokens}) => {
              ))} 
       </div>
     </div>
+    </>
   );
 };
 

@@ -33,17 +33,19 @@ const Results = ({
      {events &&
         events.map((event) => (
           (
-            <Card key={event.id} sx={{ display: 'flex' }} className='results-card'>
+            <Card key={event.eventId} sx={{ display: 'flex' }} className='results-card'>
               <CardMedia
                 component="img"
                 sx={{ width: 300, height: 'fill' }}
-                image={event.img.url}
-                alt={event.name}
+                // checks if eventImage is a string or an object, since using the same card on UserProfile and Searching
+                image={ typeof event.eventImage === 'string' ? event.eventImage : event.eventImage.url }
+                alt={event.eventName}
               />
+              {console.log(event)}
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                   <Typography component="div" variant="h4" sx={{ width: 300, height: 'fill' }}>
-                    {event.name}
+                    {event.eventName}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary" component="div">
                     {event.venue}
@@ -52,10 +54,10 @@ const Results = ({
                     {event.city}, {event.stateCode}
                   </Typography>
                   <Typography className='result-date' component="div" variant="h5">
-                    {formatDate(event.date)}
+                    {formatDate(event.eventDate)}
                   </Typography>
                   <Typography variant="h5" color="text.secondary" component="div">
-                    {formatTime(event.time)}
+                    {formatTime(event.eventTime)}
                   </Typography>
                 </CardContent>
               </Box>
@@ -65,7 +67,7 @@ const Results = ({
                       component="img"
                       sx={{ width: 250, height: 200 }}
                       image={HealthCheckEdit}
-                      alt={event.name}
+                      alt={event.eventName}
                     />
                       ) 
                       :
@@ -74,7 +76,7 @@ const Results = ({
                         component="img"
                         sx={{ width: 250, height: 200 }}
                         image={NoHealthCheck}
-                        alt={event.name}
+                        alt={event.eventName}
                       />
                       )
                     }
@@ -86,7 +88,7 @@ const Results = ({
                 </CardContent>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                 <IconButton aria-label="favorite" size='large'>
-                { savedEvents.includes(event.id) ? <FavoriteIcon style={{ color: "red" }}/> : <FavoriteBorderIcon  /> }
+                { savedEvents.includes(event.eventId) ? <FavoriteIcon style={{ color: "red" }}/> : <FavoriteBorderIcon  /> }
                 </IconButton>
 
                 </CardContent>

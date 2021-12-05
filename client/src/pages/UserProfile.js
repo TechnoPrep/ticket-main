@@ -1,12 +1,10 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import EventList from '../components/EventList';
+import Results from '../components/Results';
 
-import { QUERY_ME, QUERY_SAVED_EVENTS } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 
-import Auth from '../utils/auth';
 
 const UserProfile = () => {
 
@@ -14,7 +12,9 @@ const UserProfile = () => {
 
   const user = data?.me || {};
 
-  console.log(user);
+  const eventIdArr = user.savedEvents ? user.savedEvents.map(saved => (saved.eventId)) : []
+
+  const eventList = user.savedEvents
 
   if (loading) {
     return <div>Loading...</div>;
@@ -25,15 +25,17 @@ const UserProfile = () => {
     window.location.assign('/login')
   }
 
+  
+
   return (
     <div>
       <div className="flex-row justify-center mb-3">
         <div className="col-12 col-md-10 mb-5">
-          <EventList
-            events={user.savedEvents}
-            title={`${user.firstName}'s events...`}
+          <Results 
+            savedEvents={eventIdArr}
+            events={eventList}
+            title={`My Searched Events events...`}
             showTitle={false}
-            showUsername={false}
           />
         </div>
       </div>

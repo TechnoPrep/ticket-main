@@ -98,6 +98,36 @@ body {
     width: 100%;
 }
 
+.banner {
+    position: relative; 
+    height: 400px; 
+    width: 100%;
+    overflow-y: hidden !important;
+
+}
+
+.banner img {
+    width: 100%;
+    opacity: .8;
+    -webkit-filter: grayscale(80%);
+    filter: grayscale(80%);
+    object-fit: none; /* Do not scale the image */
+    object-position: center; /* Center the image within the element */
+}
+
+.banner-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 10rem;
+    height: 10rem !important;
+    overflow: visible !important;
+    opacity: .2;
+    font-weight: bold;
+    color: white;
+    height: 100%
+  }
+
 .hero-img {
     height: 400px;
     width: 100vw;
@@ -239,6 +269,13 @@ body {
     padding: 4px;
     margin-top: 40px !important;
 }
+
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
 .find-ticket-text {
     color: white;
