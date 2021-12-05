@@ -21,6 +21,7 @@ import Hero from './components/Hero';
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import DropdownSearch from './components/DropdownSearch';
+import TestMenu from './components/TestMenu';
 import Prices from "./pages/Prices"
 // import DropdownTest from './components/DropdownTest';
 
@@ -72,9 +73,10 @@ function App() {
       <Router>
         <div className="min-100-vh">
           <Header />
-          <DropdownSearch searchVal={handleUpdate} />
+          {/* <DropdownSearch searchVal={handleUpdate} /> */}
+          <TestMenu />
           <Hero />
-          <div className="container">
+          <div className="containter" >
             <Route exact path="/">
               <Home apitokens={apiTokens} />
             </Route>
