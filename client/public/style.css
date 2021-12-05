@@ -304,4 +304,19 @@ body {
 
 .find-ticket-text {
     color: white;
+    font-size: 2rem !important;
+}
+
+.price-card {
+    margin: 9px;
+    margin-top: 18px;
+}
+
+.price {
+    text-align: center;
+    font-size: 3rem !important;
+}
+
+.find-ticket-btn {
+    text-align: center;
 }
