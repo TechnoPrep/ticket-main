@@ -43,6 +43,7 @@ const Results = ({
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                   <Typography component="div" variant="h4" sx={{ width: 300, height: 'fill' }}>
+                    {console.log(event.id)}
                     {event.name}
                   </Typography>
                   <Typography variant="subtitle1" color="text.secondary" component="div">

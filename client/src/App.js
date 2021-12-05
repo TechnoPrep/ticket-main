@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -56,12 +57,22 @@ const apiTokens = {
 
 
 function App() {
+
+  const [searchTerm, setSearchTerm] = useState({
+    term: '',
+  })
+
+  const handleUpdate = (newTerm) =>{
+    console.log('App.js',newTerm);
+    setSearchTerm({term: newTerm})
+  }
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
           <Header />
-          <DropdownSearch />
+          <DropdownSearch searchVal={handleUpdate} />
           <Hero />
           <div className="container">
             <Route exact path="/">
