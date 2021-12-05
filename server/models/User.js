@@ -34,21 +34,10 @@ const userSchema = new Schema({
     required: true,
     default: false,
   },
-  prefsSet: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
   savedEvents: [
     {
       type: Schema.Types.ObjectId,
       ref: 'SavedEvent',
-    },
-  ],
-  eventPrefs: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'EventPref',
     },
   ],
 });
