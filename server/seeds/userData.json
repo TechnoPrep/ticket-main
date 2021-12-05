@@ -6,8 +6,7 @@
     "zipCode": "80220",
     "email": "larry@david.com",
     "password": "PrettyGood!",
-    "emailConfirmed": true,
-    "prefsSet": false
+    "emailConfirmed": true
   },
   {
     "_id": "61a060a56c009a65fc19f44b",
@@ -16,8 +15,7 @@
     "zipCode": "64804",
     "email": "jerry@seinfeld.com",
     "password": "Password123!",
-    "emailConfirmed": true,
-    "prefsSet": true
+    "emailConfirmed": true
   },
   {
     "_id": "61a060a56c009a65fc19f44c",
@@ -26,7 +24,6 @@
     "zipCode": "10007",
     "email": "assman@mail.com",
     "password": "Password123!",
-    "emailConfirmed": false,
-    "prefsSet": false
+    "emailConfirmed": true
   }
 ]
