@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   ApolloClient,
@@ -63,19 +63,30 @@ function App() {
     term: '',
   })
 
+  const [heroImage, setHeroImage] = useState({
+    url: null,
+    performer: '',
+  })
+
+  console.log(heroImage);
+
   const handleUpdate = (newTerm) =>{
-    console.log('App.js',newTerm);
+    // console.log('App.js',newTerm);
     setSearchTerm({term: newTerm})
+  }
+
+  const updateHeroImage = (imageUrl = null, performer = '') =>{
+    setHeroImage({ url: imageUrl, performer: performer });
   }
 
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
-          <Header />
+          <Header heroImage={updateHeroImage} />
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
-          <TestMenu />
-          <Hero />
+          {/* <TestMenu /> */}
+          <Hero heroImage={heroImage} />
           <div className="container" >
             <Route exact path="/">
               <Home apitokens={apiTokens} />
@@ -99,7 +110,7 @@ function App() {
               <ResetPassword />
             </Route>
             <Route exact path="/prices/:token">
-              <Prices apitokens={apiTokens}/>
+              <Prices heroImage={updateHeroImage} apitokens={apiTokens}/>
             </Route>
           </div>
           <Footer />

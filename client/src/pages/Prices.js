@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom';
 // import { results } from '../utils/apiQueries'
 
 
-const Prices = ({apitokens}) => {
+const Prices = ({apitokens, heroImage}) => {
 
   const {token} = useParams();
    
@@ -21,26 +21,23 @@ const Prices = ({apitokens}) => {
   
   let {performer, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
 
-
   const [eventList, setEventList] = useState([]);
 
 
   useEffect(() => {
 
-    const fetchResults = async () => {
-        const events = await fetchPricing(apitokens, performer, eventDate, dateUTC, venue, tmVenueId)
-        setEventList(events)
-    }
+    // const fetchResults = async () => {
+    //     const events = await fetchPricing(apitokens, performer, eventDate, dateUTC, venue, tmVenueId)
+    //     setEventList(events)
+    // }
 
-    fetchResults();
+    heroImage(url, performer)
+
+    // fetchResults();
 }, [])
 
   return (
     <>
-    <div className='banner'>
-      <img src={url} alt={performer} className="banner-img" />
-      <div class="banner-text">{performer.toUpperCase()}</div>
-    </div>
     <div className='home'>
         <div className="flex-row justify-center mb-3">
            {eventList &&
