@@ -48,28 +48,20 @@ export const RESETPW = gql`
   }
 `;
 
-export const EVENT_PREF_SETUP = gql`
-  mutation eventPrefSetup($email: String!) {
-    eventPrefSetup(email: $email) {
-      user {
-        _id
-        prefsSet
-      }
-    }
-  }
-`;
-
 export const ADD_SAVED_EVENT = gql`
-  mutation addSavedEvent($eventName: String!, $venue: String!, $zipCode: Int!, $lat: Float!, $lon: Float!, $eventDate: String!, $eventImage: String!) {
-    addSavedEvent(eventName: $eventName, venue: $venue, zipCode: $zipCode, lat: $lat, lon: $lon, eventDate: $eventDate, eventImage: $eventImage) {
-      _id
+  mutation addEvent($userId: ID, $eventId: String! $eventName: String!, $venue: String!, $city: String!, $stateCode: String!, $eventTime: String!, $eventDate: String!, $eventImage: String!, $queryLink: String, $healthCheck: Boolean) {
+    addEvent(userId: $userId, eventId: $eventId eventName: $eventName, venue: $venue, city: $city, stateCode: $stateCode, eventTime: $eventTime, eventDate: $eventDate, eventImage: $eventImage, queryLink: $queryLink, healthCheck: $healthCheck) {
+      userId
+      eventId
       eventName
       venue
-      zipCode
-      lat
-      lon
+      city
+      stateCode
+      eventTime
       eventDate
       eventImage
+      queryLink
+      healthCheck
     }
   }
 `;
