@@ -14,17 +14,15 @@ const UserProfile = () => {
 
   const user = data?.me || {};
 
+  console.log(user);
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  //If user is not logged in, redirect to login page
   if (!user.email) {
-    return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
-    );
+    window.location.assign('/login')
   }
 
   return (
