@@ -88,7 +88,7 @@ const Login = (props) => {
               </div>
             )}
           </div>
-          <p style={{textAlign: "center", color: "white"}}>
+          <p style={{textAlign: "center", color: "white"}} className='forgot-password'>
             <Link to="/forgotpassword">Forgot Password?</Link>
           </p>
     </main>
