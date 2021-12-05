@@ -76,7 +76,7 @@ function App() {
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
           <TestMenu />
           <Hero />
-          <div className="containter" >
+          <div className="container" >
             <Route exact path="/">
               <Home apitokens={apiTokens} />
             </Route>
