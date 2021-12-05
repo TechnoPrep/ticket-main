@@ -44,12 +44,11 @@ const Prices = ({apitokens}) => {
            {eventList &&
              eventList.map((event) => (
                (
-                 <Card key={event.name} sx={{ display: 'flex' }} className='results-card'>
+                 <Card key={event.id} sx={{ display: 'flex' }} className='results-card'>
               <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                      <CardContent sx={{ flex: '1 0 auto' }}>
                        <Typography component="div" variant="h4">
                          {event.vendor}
-                         {}
                        </Typography>
                      </CardContent>
                    </Box>
@@ -57,7 +56,6 @@ const Prices = ({apitokens}) => {
                      <CardContent sx={{ flex: '1 0 auto' }}>
                        <Typography component="div" variant="h4">
                          ${event.minPrice}
-                         {}
                        </Typography>
                      </CardContent>
                    </Box>
