@@ -51,6 +51,8 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
   const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
 
+  console.log(dedup);
+
   return dedup
 
  } else {

@@ -32,20 +32,6 @@ function Confirm() {
     handleUpdate();
   }
 
-  // if(data){
-  //   return (
-  //     <div className="container">
-  //      <h2>Account Confirmation</h2>
-  //      <p>
-  //        Thank you for confirming your Email Account You may now Login!
-  //      </p>
-  //      <Link to={'/login'}>
-  //      <button type="button" className="btn btn-info">Button</button>
-  //      </Link>
-  //     </div>
-  //   )
-  // }
-
   return (
     <div className="container my-1">
       <h2>Account Confirmation</h2>

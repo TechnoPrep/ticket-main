@@ -1,20 +1,24 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
-import HealthCheckEdit from '../../img/health-check.svg'
-import NoHealthCheck from '../../img/no-health-check.svg'
-import jwtDecode from 'jwt-decode';
 import Button from '@mui/material/Button';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
+
+import HealthCheckEdit from '../../img/health-check.svg'
+import NoHealthCheck from '../../img/no-health-check.svg'
+
 import { formatDate, formatTime } from '../../utils/timestampConverter'
 
 
 const Results = ({
+  savedEvents,
   events,
   title,
   showTitle = true,
@@ -82,7 +86,7 @@ const Results = ({
                 </CardContent>
                 <CardContent sx={{ flex: '1 0 auto' }}>
                 <IconButton aria-label="favorite" size='large'>
-                  <FavoriteBorderIcon />
+                { savedEvents.includes(event.id) ? <FavoriteIcon style={{ color: "red" }}/> : <FavoriteBorderIcon  /> }
                 </IconButton>
 
                 </CardContent>

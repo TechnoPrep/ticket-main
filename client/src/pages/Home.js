@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useQuery } from '@apollo/client';
 import { fetchEvents, fetchLocation } from '../utils/apiQueries'
-
+import { QUERY_ME, QUERY_SAVED_EVENTS } from '../utils/queries';
 import Results from '../components/Results'
 
 const Home = ({apitokens}) => {
   
   const [eventList, setEventList] = useState([]);
+
+  const [userEvents, setSavedEvents] = useState([]);
   
   const [queryState, setQueryState] = useState({
     searchTerm: '',
@@ -16,6 +18,11 @@ const Home = ({apitokens}) => {
     lat: '',
     lon: '',
   });
+
+  const { err, loading, data } = useQuery(QUERY_ME);
+  const { savedEvents } = data?.me || {};
+  
+  const eventIdArr = savedEvents ? savedEvents.map(saved => (saved.eventId)) : []
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -101,6 +108,7 @@ const Home = ({apitokens}) => {
           {eventList.length > 0 ? (
             <div className="col-12 col-md-10 mb-5">
               <Results 
+                savedEvents={eventIdArr}
                 events={eventList}
                 title={`My Searched Events events...`}
                 showTitle={false}
