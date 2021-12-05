@@ -18,21 +18,16 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   if('_embedded' in json && 'events' in json._embedded){
     const results = await json._embedded.events.map((event) => ({
-      id: event.id,
-      date: event.dates.start.localDate,
+      eventId: event.id,
+      eventDate: event.dates.start.localDate,
       dateUTC: 'dateTime' in event.dates.start ? event.dates.start.dateTime : event.dates.start.localDate + 'T00:00:00Z',
-      time: 'localTime' in event.dates.start ? event.dates.start.localTime : false,
-      name: event.classifications[0].segment.name === 'Sports' ? event.name : ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name),
+      eventTime: 'localTime' in event.dates.start ? event.dates.start.localTime : false,
+      eventName: event.classifications[0].segment.name === 'Sports' ? event.name : ('attractions' in event._embedded ? event._embedded.attractions[0].name : event.name),
       performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name,
       city: event._embedded.venues[0].city.name,
       stateCode: event._embedded.venues[0].state.stateCode,
-      img: event.images.find((e) => {
+      eventImage: event.images.find((e) => {
         if(e.ratio === "16_9" && e.width === 640){
-          return e
-        }
-      }),
-      banner: event.images.find((e) => {
-        if(e.ratio === "16_9" && e.width === 2048){
           return e
         }
       }),
@@ -40,16 +35,22 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
       venue: event._embedded.venues[0].name,
       healthCheck: 'ticketing' in event,
       queryLink: jwt.sign({
+        eventId: event.id,
         performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name, 
-        date: event.dates.start.localDate, 
+        eventDate: event.dates.start.localDate, 
         dateUTC: 'dateTime' in event.dates.start ? event.dates.start.dateTime : event.dates.start.localDate + 'T00:00:00Z',
         venue: event._embedded.venues[0].name,
-        tmVenueId: event._embedded.venues[0].id
+        tmVenueId: event._embedded.venues[0].id,
+        banner: event.images.find((e) => {
+          if(e.ratio === "16_9" && e.width === 2048){
+            return e
+          }
+        }),
       }, process.env.REACT_APP_JWT_SECRET)
     }))
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
-  const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.name===v.name && t.date === v.date))===i)
+  const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.eventName===v.eventName && t.eventDate === v.eventDate))===i)
 
   console.log(dedup);
 
@@ -78,6 +79,8 @@ export const fetchLocation = async (apitokens, zipCode) => {
 
 
 export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, tmVenueId) => {
+
+  console.log(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`);
 
   const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`, {
     method: "GET",
