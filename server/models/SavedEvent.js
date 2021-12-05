@@ -9,6 +9,10 @@ const savedEventSchema = new Schema({
     type: SchemaTypes.ObjectId,
     required: true,
   },
+  eventId : {
+    type: String,
+    required: true,
+  },
   eventName: {
     type: String,
     required: true,
@@ -17,28 +21,34 @@ const savedEventSchema = new Schema({
     type: String,
     required: true,
   },
-  zipCode: {
-    type: Number,
-    required: true,
-    trim: true,
-    match: [/(^\d{5}$)|(^\d{5}-\d{4}$)/, 'Must be a valid US Zip Code!'],
-  },
-  lat: {
+  city: {
     type: String,
     required: true,
   },
-  lon: {
+  stateCode: {
     type: String,
     required: true,
   },
   eventDate: {
-    type: Date,
-    default: new(Date),
+    type: String,
+    required: true,
+  },
+  eventTime: {
+    type: String,
+    required: true,
   },
   eventImage: {
     type: String,
-    default: 0,
+    required: true,
   },
+  queryLink: {
+    type: String,
+    required: true,
+  },
+  healthCheck: {
+    type: Boolean,
+    required: true,
+  }
 });
 
 const SavedEvent = model('SavedEvent', savedEventSchema);
