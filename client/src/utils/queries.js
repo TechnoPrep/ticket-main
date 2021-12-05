@@ -1,27 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_USER = gql`
-  query user($email: String!) {
-    user(email: $email) {
-      _id
-      firstName
-      lastName
-      zipCode
-      email
-      savedEvents {
-        _id
-        eventName
-        venue
-        zipCode
-        lat
-        lon
-        eventDate
-        eventImage
-      }
-    }
-  }
-`;
-
 export const QUERY_ME = gql`
   query me {
     me {
@@ -32,13 +10,16 @@ export const QUERY_ME = gql`
       email
       savedEvents {
         _id
+        eventId
         eventName
         venue
-        zipCode
-        lat
-        lon
+        city
+        stateCode
+        eventTime
         eventDate
         eventImage
+        queryLink
+        healthCheck
       }
     }
   }
@@ -48,30 +29,19 @@ export const QUERY_SAVED_EVENTS = gql`
   query savedEvents {
     SavedEvent {
       _id
+      eventId
       eventName
       venue
-      zipCode
-      lat
-      lon
+      city
+      stateCode
+      eventTime
       eventDate
       eventImage
+      queryLink
+      healthCheck
     }
   }
 `;
 
-export const QUERY_SINGLE_SAVED_EVENT = gql`
-  query getSingleSavedEvent($savedEventId: ID!) {
-    SavedEvent(savedEventId: $savedEventId) {
-      _id
-      eventName
-      venue
-      zipCode
-      lat
-      lon
-      eventDate
-      eventImage
-    }
-  }
-`;
 
 
