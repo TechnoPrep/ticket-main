@@ -10,27 +10,27 @@ function Confirm() {
   
   const {token} = useParams();
 
+
   const [accountReg, {data, error}] = useMutation(ACCOUNT_REG);
 
-
-  const handleUpdate = async () => {
-    try{
-
-      const confirmedUser = await accountReg({
-        variables: {
-          token: token,
-        },
-      });
+  useEffect(() => {
+    const handleUpdate = async () => {
+      try{
+  
+        const confirmedUser = await accountReg({
+          variables: {
+            token: token,
+          },
+        });
+      
+      } catch(e){
+        console.error(e)
+      }
     
-    } catch(e){
-      console.error(e)
     }
   
-  }
-
-  window.onload = function() {
     handleUpdate();
-  }
+  },[])
 
   return (
     <div className="container my-1">
