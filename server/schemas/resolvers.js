@@ -1,5 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, SavedEvent, EventPref } = require("../models");
+const { User, SavedEvent } = require("../models");
 const { signToken, isTokenExpired } = require("../utils/auth");
 const  Mailer = require("../mailer/sendEmail");
 const { jwt, JsonWebTokenError } = require("jsonwebtoken");
@@ -130,25 +130,6 @@ const resolvers = {
         console.log(err);
       }
     },
-    // Set prefsSet to true after initial login survey
-    eventPrefSetup: async (parent, { email }, context) =>{
-      if (context.user) {
-        const user = await User.findOne({ email });
-
-        if(!user){
-          throw new AuthenticationError("No user found with this email address");
-        }
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { prefsSet: true }
-        );
-
-        return user;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-
     // Auth Process for User Account
     login: async (parent, { email, password, firstName }) => {
       const user = await User.findOne({ email });
@@ -178,30 +159,47 @@ const resolvers = {
 
       return { token, user };
     },
-
     // Add Saved Event
     addEvent: async (
       parent,
-      { eventName, venue, zipCode, lat, lon, eventDate, eventImage },
+      { eventName, eventId, venue, city, stateCode, eventDate, eventTime, eventImage, queryLink, healthCheck },
       context
     ) => {
       if (context.user) {
-        const event = await SavedEvent.create({
-          eventName,
-          venue,
-          zipCode,
-          lat,
-          lon,
-          eventDate,
-          eventImage,
-        });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { savedEvents: event._id } }
-        );
+        const userId = context.user._id
 
-        return event;
+        const existing = await SavedEvent({
+          eventId: eventId,
+          userId: userId
+        })
+
+        if(!existing){
+
+          const event = await SavedEvent.create({
+            userId,
+            eventId,
+            eventName,
+            venue,
+            city,
+            stateCode,
+            eventDate,
+            eventTime,
+            eventImage,
+            queryLink,
+            healthCheck
+          });
+
+          await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { savedEvents: event._id } }
+          );
+
+          return event;
+        }
+
+        throw new AuthenticationError("Event Is already Saved to user");
+
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -225,7 +223,6 @@ const resolvers = {
   
     
   },
-  // apiNormalized: () => ({}),
 };
 
 module.exports = resolvers;
