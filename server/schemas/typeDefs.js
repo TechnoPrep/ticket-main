@@ -9,19 +9,22 @@ const typeDefs = gql`
     email: String
     password: String
     emailConfirmed: Boolean
-    prefsSet: Boolean
     savedEvents: [SavedEvent]!
   }
 
   type SavedEvent {
     _id: ID
-    eventName: String
-    venue: String
-    zipCode: Int
-    lat: String
-    lon: String
-    eventDate: String
-    eventImage: String
+    userId: ID!
+    eventId: String!
+    eventName: String!
+    venue: String!
+    city: String!
+    stateCode: String!
+    eventDate: String!
+    eventTime: String!
+    eventImage: String!
+    queryLink: String!
+    healthCheck: Boolean!
   }
 
   type Auth {
@@ -45,9 +48,8 @@ const typeDefs = gql`
     accountReg(token: String!) : RegAuth
     forgotPass(email: String!): User
     resetPass(token: String!, password: String!) : RegAuth
-    eventPrefSetup(email: String!): User
     login(email: String!, password: String!): Auth
-    addEvent(eventName: String!, venue: String!, zipCode: Int!, lat: Float!, lon: Float!, eventDate: String!, eventImage: String!): SavedEvent
+    addEvent(eventId: String! eventName: String!, venue: String!, city: String!, stateCode: String!, eventDate: String!, eventTime: String!, eventImage: String!, queryLink: String!, healthCheck: Boolean!): SavedEvent
     removeEvent(savedEventId: ID!): SavedEvent
   }
 `;
