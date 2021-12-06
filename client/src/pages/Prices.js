@@ -16,14 +16,13 @@ import stubHubLogo from '../img/stubhub-logo.png';
 import ticketmasterLogo from '../img/Ticketmaster-Logo.png'
 
 
-const Prices = ({apitokens}) => {
+const Prices = ({apitokens, heroImage}) => {
 
   const {token} = useParams();
    
   const decoded = decode(token)
   
   let {performer, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
-
 
   const [eventList, setEventList] = useState([]);
 
@@ -35,15 +34,13 @@ const Prices = ({apitokens}) => {
         setEventList(events)
     }
 
+    heroImage(url, performer)
+
     fetchResults();
 }, [])
 
   return (
     <>
-    <div className='banner'>
-      <img src={url} alt={performer} className="banner-img" />
-      <div className="banner-text">{performer.toUpperCase()}</div>
-    </div>
     <div className='home'>
         <div className="flex-row justify-center mb-3">
            {eventList &&
