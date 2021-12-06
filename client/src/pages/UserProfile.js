@@ -7,7 +7,7 @@ import Results from '../components/Results';
 import { QUERY_ME } from '../utils/queries';
 
 
-const UserProfile = () => {
+const UserProfile = ({heroImage}) => {
 
   const { err, loading, data } = useQuery(QUERY_ME);
 
@@ -22,6 +22,12 @@ const UserProfile = () => {
   if(!userQuery.email){
     window.location.assign('/')
   }
+
+  useEffect(() => {
+
+  heroImage()
+
+ }, [])
 
   return (
     <div>

@@ -21,6 +21,8 @@ const Prices = ({apitokens, heroImage}) => {
   const {token} = useParams();
    
   const decoded = decode(token)
+
+  console.log(token);
   
   let {performer, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
 
