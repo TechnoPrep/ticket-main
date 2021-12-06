@@ -38,6 +38,7 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
         eventId: event.id,
         performer: 'attractions' in event._embedded ? event._embedded.attractions[0].name : event.name, 
         eventDate: event.dates.start.localDate, 
+        eventTime: 'localTime' in event.dates.start ? event.dates.start.localTime : false,
         dateUTC: 'dateTime' in event.dates.start ? event.dates.start.dateTime : event.dates.start.localDate + 'T00:00:00Z',
         venue: event._embedded.venues[0].name,
         tmVenueId: event._embedded.venues[0].id,
