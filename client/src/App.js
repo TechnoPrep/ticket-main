@@ -66,6 +66,9 @@ function App() {
   const [heroImage, setHeroImage] = useState({
     url: null,
     performer: '',
+    eventDate: '',
+    eventTime: '',
+    venue: '',
   })
 
   console.log(heroImage);
