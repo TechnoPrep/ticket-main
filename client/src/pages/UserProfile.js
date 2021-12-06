@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useQuery } from '@apollo/client';
 import Auth from '../utils/auth';
 
@@ -11,22 +11,17 @@ const UserProfile = () => {
 
   const { err, loading, data } = useQuery(QUERY_ME);
 
-  const user = data?.me || {};
+  const userQuery = data?.me || {};
 
-  const eventIdArr = user.savedEvents ? user.savedEvents.map(saved => (saved.eventId)) : []
+  console.log(userQuery);
 
-  const eventList = user.savedEvents
+  const eventIdArr = userQuery.savedEvents ? userQuery.savedEvents.map(saved => (saved.eventId)) : []
 
-  if (loading) {
-    return <div>Loading...</div>;
+  const eventList = userQuery.savedEvents
+
+  if(!userQuery.email){
+    window.location.assign('/')
   }
-
-  //If user is not logged in, redirect to login page
-  if (!user.email) {
-    window.location.assign('/login')
-  }
-
-  
 
   return (
     <div>
@@ -34,6 +29,8 @@ const UserProfile = () => {
       <h2 className='saved-events-text'>{Auth.getProfile().data.firstName}'s Saved Events</h2>
         <div className="col-12 col-md-10 mb-5">
           <Results 
+            // savedEvents={user.existingEvents}
+            // events={user.eventList}
             savedEvents={eventIdArr}
             events={eventList}
             title={`My Searched Events events...`}
