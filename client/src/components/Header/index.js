@@ -11,7 +11,7 @@ const Header = ({heroImage}) => {
   };
 
   const updateAppState = () => {
-    heroImage(null, '');
+    heroImage();
   }
 
   return (
