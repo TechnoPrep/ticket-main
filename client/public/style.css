@@ -123,10 +123,10 @@ body {
 
 .banner {
     position: relative; 
+    text-align: center;
     height: 600px; 
     width: 100%;
     overflow-y: hidden !important;
-
 }
 
 .banner img {
@@ -135,21 +135,45 @@ body {
     opacity: .8;
     -webkit-filter: grayscale(80%);
     filter: grayscale(80%);
-    object-fit: none !important; 
+    object-fit: cover;
     object-position: center !important; 
 }
 
 .banner-text {
     position: absolute;
-    bottom: 0;
-    left: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 8rem;
     height: 10rem !important;
     overflow: visible !important;
-    opacity: .2;
+    opacity: .69;
     font-weight: bold;
     color: white;
-  }
+    
+}
+
+.banner-details {
+    position: absolute;
+    top: 95.6%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8rem;
+    overflow: visible !important;
+    opacity: .69;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(38,45,45);
+    padding-right: 10px;
+    padding-left: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 65%;
+}
+
+.banner-title {
+    font-size: 3rem;
+}
 
 .hero-img {
     height: 400px;
@@ -348,10 +372,16 @@ body {
 .price {
     text-align: center;
     font-size: 3rem !important;
+    margin-top: 10px !important;
+}
+
+.price-box {
+    border-top: 3px solid rgb(0, 0, 0, 0.3);
 }
 
 .buy-ticket-btn {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .saved-events-text {

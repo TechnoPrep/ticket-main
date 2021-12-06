@@ -58,11 +58,11 @@ const Prices = ({apitokens, heroImage}) => {
                         alt={event.eventName}
                       />
                     </CardContent>
-                    <Typography variant="h5" color="text.secondary" component="div">
+                    {/* <Typography variant="h5" color="text.secondary" component="div">
                      actual vendor: {event.vendor}
-                    </Typography>
+                    </Typography> */}
                   </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column'}} className='price-box'>
                     <CardContent sx={{ flex: '1 0 auto' }}>
                       <Typography component="div" variant="h4" className='price'>
                         ${event.minPrice}
@@ -72,9 +72,6 @@ const Prices = ({apitokens, heroImage}) => {
                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                     <CardContent sx={{ flex: '1 0 auto' }} className='buy-ticket-btn'>
                       <Button href={event.url} target="_blank" variant="contained" size='small'><span className='buy-ticket-text'>Buy Tickets</span></Button>
-                    </CardContent>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                      <IconButton aria-label="favorite" size='large'></IconButton>
                     </CardContent>
                   </Box>
                 </Card>
