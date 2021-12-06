@@ -165,16 +165,29 @@ const resolvers = {
       { eventName, eventId, venue, city, stateCode, eventDate, eventTime, eventImage, queryLink, healthCheck },
       context
     ) => {
+
+      console.log('I ran!');
+
       if (context.user) {
+
+        console.log('Im Logged in!');
 
         const userId = context.user._id
 
-        const existing = await SavedEvent({
+        // const userId = '61a060a56c009a65fc19f44a'
+
+        console.log(userId, eventId);
+
+        const existing = await SavedEvent.findOne({
           eventId: eventId,
-          userId: userId
+          userId: userId,
         })
 
+        console.log('exists', existing);
+
         if(!existing){
+
+          console.log('I dont exist! Make me!');
 
           const event = await SavedEvent.create({
             userId,
@@ -190,6 +203,8 @@ const resolvers = {
             healthCheck
           });
 
+          console.log(event);
+
           await User.findOneAndUpdate(
             { _id: context.user._id },
             { $addToSet: { savedEvents: event._id } }
@@ -197,6 +212,8 @@ const resolvers = {
 
           return event;
         }
+
+        // console.log('I already exist');
 
         throw new AuthenticationError("Event Is already Saved to user");
 
