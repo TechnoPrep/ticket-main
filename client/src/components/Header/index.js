@@ -28,23 +28,26 @@ const Header = ({heroImage}) => {
         <div className='navbar-end'>
           {Auth.loggedIn() ? (
             <>
-              <Link onClick={updateAppState} className="m-2 profile-name" to="/me">
-                {Auth.getProfile().data.firstName}'s profile
+              <Link onClick={updateAppState} className="nav-link home" to="/">
+                Home
               </Link>
-              <button className="m-2 logout-btn" onClick={logout}>
+              <Link onClick={updateAppState} className="nav-link" to="/me">
+                {Auth.getProfile().data.firstName}'s Profile
+              </Link>
+              <button className="logout-btn" onClick={logout}>
                 Logout
               </button>
             </>
           ) : (
             <>
-            <Link onClick={updateAppState} className="m-2 nav-link home" to="/">
+            <Link onClick={updateAppState} className="nav-link home" to="/">
                 Home
               </Link>
               
-              <Link onClick={updateAppState} className="m-2 nav-link" to="/login">
+              <Link onClick={updateAppState} className="nav-link" to="/login">
                 Login
               </Link>
-              <Link onClick={updateAppState} className="m-2 nav-link" to="/signup">
+              <Link onClick={updateAppState} className="nav-link" to="/signup">
                 Signup
               </Link>
             </>
