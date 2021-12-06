@@ -7,7 +7,7 @@ import { ADD_SAVED_EVENT } from '../utils/mutations'
 import Results from '../components/Results'
 import decode from 'jwt-decode'
 
-const Home = ({apitokens}) => {
+const Home = ({apitokens, heroImage}) => {
   
   const [eventList, setEventList] = useState([]);
   
@@ -19,12 +19,15 @@ const Home = ({apitokens}) => {
     lon: '',
   });
 
+  useEffect(() => {
+
+    heroImage()
+  
+   }, [])
+
   const { loading, data } = useQuery(QUERY_ME);
 
   const [addEvent, {error, results}] = useMutation(ADD_SAVED_EVENT);
-
-  console.log('error', error);
-  console.log('results', results);
 
   const user = data?.me || {};
   

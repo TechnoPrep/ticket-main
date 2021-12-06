@@ -82,6 +82,10 @@ function App() {
     setHeroImage({ url: imageUrl, performer: performer });
   }
 
+  // useEffect(() => {
+  //   updateHeroImage();
+  // })
+
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -92,7 +96,7 @@ function App() {
           <Hero heroImage={heroImage} />
           <div className="container" >
             <Route exact path="/">
-              <Home apitokens={apiTokens} />
+              <Home heroImage={updateHeroImage} apitokens={apiTokens} />
             </Route>
             <Route exact path="/login">
               <Login />
@@ -104,7 +108,7 @@ function App() {
               <Confirm />
             </Route>
             <Route exact path="/me">
-              <UserProfile />
+              <UserProfile heroImage={updateHeroImage} />
             </Route>
             <Route exact path="/forgotpassword">
               <ForgotPassword />
