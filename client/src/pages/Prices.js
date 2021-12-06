@@ -26,14 +26,14 @@ const Prices = ({apitokens, heroImage}) => {
 
   useEffect(() => {
 
-    // const fetchResults = async () => {
-    //     const events = await fetchPricing(apitokens, performer, eventDate, dateUTC, venue, tmVenueId)
-    //     setEventList(events)
-    // }
+    const fetchResults = async () => {
+        const events = await fetchPricing(apitokens, performer, eventDate, dateUTC, venue, tmVenueId)
+        setEventList(events)
+    }
 
     heroImage(url, performer)
 
-    // fetchResults();
+    fetchResults();
 }, [])
 
   return (
