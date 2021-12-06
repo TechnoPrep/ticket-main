@@ -20,7 +20,10 @@ const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }}) => {
       ) : (
       <div className='banner'>
         <img src={url} className="banner-img" />
-        {/* <div class="banner-text">{performer.toUpperCase()}</div> */}
+        <h1 className='banner-text'>{performer.toUpperCase()}</h1>
+        <div className='banner-details'>
+        <h3 className='banner-title'>{venue} {eventDate} {eventTime}</h3>
+        </div>
       </div>
       )
     }
