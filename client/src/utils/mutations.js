@@ -49,9 +49,8 @@ export const RESETPW = gql`
 `;
 
 export const ADD_SAVED_EVENT = gql`
-  mutation addEvent($userId: ID, $eventId: String! $eventName: String!, $venue: String!, $city: String!, $stateCode: String!, $eventTime: String!, $eventDate: String!, $eventImage: String!, $queryLink: String, $healthCheck: Boolean) {
-    addEvent(userId: $userId, eventId: $eventId eventName: $eventName, venue: $venue, city: $city, stateCode: $stateCode, eventTime: $eventTime, eventDate: $eventDate, eventImage: $eventImage, queryLink: $queryLink, healthCheck: $healthCheck) {
-      userId
+  mutation addEvent($eventId: String! $eventName: String!, $venue: String!, $city: String!, $stateCode: String!, $eventTime: String!, $eventDate: String!, $eventImage: String!, $queryLink: String!, $healthCheck: Boolean!) {
+    addEvent(eventId: $eventId eventName: $eventName, venue: $venue, city: $city, stateCode: $stateCode, eventTime: $eventTime, eventDate: $eventDate, eventImage: $eventImage, queryLink: $queryLink, healthCheck: $healthCheck) {
       eventId
       eventName
       venue
