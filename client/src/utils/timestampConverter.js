@@ -64,8 +64,8 @@ export const formatDate = (date) => {
 
 export const formatTime = (time) => {
 
-    if(!time){
-        return 'Event Time Not Listed'
+    if(time === 'Event Time Not Listed'){
+        return 
     }
 
     let timeArr = time.split(':')

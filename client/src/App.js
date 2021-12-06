@@ -66,6 +66,9 @@ function App() {
   const [heroImage, setHeroImage] = useState({
     url: null,
     performer: '',
+    eventDate: '',
+    eventTime: '',
+    venue: '',
   })
 
   console.log(heroImage);
@@ -75,7 +78,7 @@ function App() {
     setSearchTerm({term: newTerm})
   }
 
-  const updateHeroImage = (imageUrl = null, performer = '') =>{
+  const updateHeroImage = (imageUrl, performer) =>{
     setHeroImage({ url: imageUrl, performer: performer });
   }
 

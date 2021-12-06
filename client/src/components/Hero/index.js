@@ -3,7 +3,7 @@ import heroPhoto from '../../img/hero-pic.jpg';
 import videoBg from '../../img/video-bg.mp4'
 
 
-const Hero = ({heroImage: { url, performer }}) => {
+const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }}) => {
   return (
     <>
     { (typeof url !== 'string' ) ? (
