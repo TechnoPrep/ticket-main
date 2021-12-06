@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { fetchEvents, fetchLocation } from '../utils/apiQueries'
-import { QUERY_ME, QUERY_SAVED_EVENTS } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
+import { ADD_SAVED_EVENT } from '../utils/mutations'
 import Results from '../components/Results'
+import decode from 'jwt-decode'
 
 const Home = ({apitokens}) => {
   
   const [eventList, setEventList] = useState([]);
-
-  const [userEvents, setSavedEvents] = useState([]);
   
   const [queryState, setQueryState] = useState({
     searchTerm: '',
@@ -19,10 +19,16 @@ const Home = ({apitokens}) => {
     lon: '',
   });
 
-  const { err, loading, data } = useQuery(QUERY_ME);
-  const { savedEvents } = data?.me || {};
+  const { loading, data } = useQuery(QUERY_ME);
+
+  const [addEvent, {error, results}] = useMutation(ADD_SAVED_EVENT);
+
+  console.log('error', error);
+  console.log('results', results);
+
+  const user = data?.me || {};
   
-  const eventIdArr = savedEvents ? savedEvents.map(saved => (saved.eventId)) : []
+  const eventIdArr = user.savedEvents ? user.savedEvents.map(saved => (saved.eventId)) : []
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -47,8 +53,52 @@ const Home = ({apitokens}) => {
     });
   };
 
+  const saveEvent = async (token) => { 
+
+    console.log('token', token);
+
+    const { 
+      eventId,
+      performer,
+      venue,
+      city,
+      stateCode,
+      eventDate,
+      eventTime,
+      eventImage,
+      healthCheck
+    } = await decode(token)
+
+    const decoded = await decode(token)
+
+    console.log(decoded);
+      
+      try {
+        const mutationResponse = await addEvent({
+          variables: {
+            eventId: eventId,
+            eventName: performer,
+            venue: venue,
+            city: city,
+            stateCode: stateCode,
+            eventDate: eventDate,
+            eventTime: eventTime,
+            eventImage: eventImage.url,
+            queryLink: token,
+            healthCheck: healthCheck
+          }
+        })
+        console.log(mutationResponse);
+      } catch (error) {
+        console.error(error)
+      }
+  }
+
   return (
     <div className=''>
+      {results &&
+        alert('Your Event Has been saved!')
+      }
       <div className='search-box'>
         <h2 className='search-header'>Enter an Event or band name to get started!</h2>
         <form className='search-form' onSubmit={handleFormSubmit}>
@@ -108,6 +158,7 @@ const Home = ({apitokens}) => {
           {eventList.length > 0 ? (
             <div className="col-12 col-md-10 mb-5">
               <Results 
+                saveToEvents={saveEvent}
                 savedEvents={eventIdArr}
                 events={eventList}
                 title={`My Searched Events events...`}
