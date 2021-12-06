@@ -43,7 +43,7 @@ function ForgotPassword() {
 
   return (
     <div className="signup-box">
-      <h2 className='signup-header'>Signup</h2>
+      <h2 className='signup-header'>Forgot Password?</h2>
       {formState.isSubmitted ? (
         <p style={{color: 'white'}}>
           Thank you! And Email has been sent to reset your Password!
@@ -51,7 +51,7 @@ function ForgotPassword() {
       ) : (
       <form className='signup-form' onSubmit={handleFormSubmit}>
         <div className="flex-row space-between">
-          <label htmlFor="email">Email:</label>
+          <label className='signup-label' htmlFor="email">Email:</label>
           <input
             className='form-input'
             placeholder="youremail@test.com"

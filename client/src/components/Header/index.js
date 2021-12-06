@@ -23,10 +23,10 @@ const Header = ({heroImage}) => {
         <div className='navbar-end'>
           {Auth.loggedIn() ? (
             <>
-              <Link onClick={updateAppState} className="m-2" to="/me">
+              <Link onClick={updateAppState} className="m-2 profile-name" to="/me">
                 {Auth.getProfile().data.firstName}'s profile
               </Link>
-              <button className="m-2" onClick={logout}>
+              <button className="m-2 logout-btn" onClick={logout}>
                 Logout
               </button>
             </>
