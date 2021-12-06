@@ -28,34 +28,51 @@ body {
 
 .navbar {
     background-color: #000000;
-    width: 100vw;
     display: flex;
-    padding-bottom: 5px;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
 }
 
 .navbar-start {
     display: flex;
-    width: 100vw;
 }
 
 .logo {
-    justify-content: flex-start;
-    width: 49vw;
-    margin-left: 10px;
+    margin-left: 15px;
     color: white;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 5vw;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .navbar-end {
     display: flex;
     justify-content: flex-end;
-    width: 50vw;
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
 }
 
 .nav-link {
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 2px;
+    padding-bottom: 7px;
+}
+
+.nav-link:hover {
+    color: #03dac6;
 }
 
 .dropdown {
@@ -96,6 +113,7 @@ body {
 
 .video-bg {
     width: 100%;
+    margin-top: 70px;
 }
 
 .banner {
