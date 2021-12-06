@@ -39,9 +39,13 @@ body {
     display: flex;
 }
 
-.logo {
+.logo-text {
     margin-left: 15px;
-    color: white;
+    color: rgb(255, 255, 255, 0.93);
+}
+
+.logo-text:hover {
+    color: #cc0631;
 }
 
 .logo-box {
@@ -69,6 +73,7 @@ body {
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 7px;
+    color: rgb(255, 255, 255, 0.93);
 }
 
 .nav-link:hover {

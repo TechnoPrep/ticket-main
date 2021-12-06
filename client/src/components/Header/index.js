@@ -22,7 +22,7 @@ const Header = ({heroImage}) => {
             <img src={logo} className='logo-img'></img>
           </Link>
           <Link onClick={updateAppState} className="logo-box" to="/">
-            <h1 className="logo">TOTAL TICKET</h1>
+            <h1 className="logo-text">TOTAL TICKET</h1>
           </Link>
       </div>
         <div className='navbar-end'>
