@@ -47,6 +47,14 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
             return e
           }
         }),
+        eventImage: event.images.find((e) => {
+          if(e.ratio === "16_9" && e.width === 640){
+            return e
+          }
+        }),
+        city: event._embedded.venues[0].city.name,
+        stateCode: event._embedded.venues[0].state.stateCode,
+        healthCheck: 'ticketing' in event,
       }, process.env.REACT_APP_JWT_SECRET)
     }))
  
