@@ -42,9 +42,9 @@ const Results = ({
       console.log(newEvent.target.id);
       const token = await newEvent.target.id
       console.log('token',token);
-      // const {eventId} = await decode(token)
-      // setClick({eventId: eventId, isClicked: true});
-      // saveToEvents(token)
+      const {eventId} = await decode(token)
+      setClick({eventId: eventId, isClicked: true});
+      saveToEvents(token)
   }
 
   return (
