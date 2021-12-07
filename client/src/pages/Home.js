@@ -3,34 +3,44 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 import { fetchEvents, fetchLocation } from '../utils/apiQueries'
 import { QUERY_ME } from '../utils/queries';
-import { ADD_SAVED_EVENT } from '../utils/mutations'
+import { ADD_SAVED_EVENT, REMOVE_SAVED_EVENT } from '../utils/mutations'
 import Results from '../components/Results'
 import decode from 'jwt-decode'
 
 const Home = ({apitokens, heroImage}) => {
   
   const [eventList, setEventList] = useState([]);
-  
+
   const [queryState, setQueryState] = useState({
     searchTerm: '',
     zipCode: '',
-    radius: '10',
-    lat: '',
-    lon: '',
+    radius: '10'
   });
 
   useEffect(() => {
 
     heroImage()
-  
+ 
    }, [])
 
   const { loading, data } = useQuery(QUERY_ME);
 
-  const [addEvent, {error, results}] = useMutation(ADD_SAVED_EVENT);
+  const [addEvent, {error, results}] = useMutation(ADD_SAVED_EVENT, {
+    refetchQueries: [
+      QUERY_ME,
+      'me'
+    ]
+  });
+
+  const [rmEvent] = useMutation(REMOVE_SAVED_EVENT, {
+    refetchQueries: [
+      QUERY_ME,
+      'me'
+    ]
+  });
 
   const user = data?.me || {};
-  
+
   const eventIdArr = user.savedEvents ? user.savedEvents.map(saved => (saved.eventId)) : []
 
   const handleFormSubmit = async (event) => {
@@ -58,8 +68,6 @@ const Home = ({apitokens, heroImage}) => {
 
   const saveEvent = async (token) => { 
 
-    console.log('token', token);
-
     const { 
       eventId,
       performer,
@@ -71,10 +79,6 @@ const Home = ({apitokens, heroImage}) => {
       eventImage,
       healthCheck
     } = await decode(token)
-
-    const decoded = await decode(token)
-
-    console.log(decoded);
       
       try {
         const mutationResponse = await addEvent({
@@ -91,10 +95,26 @@ const Home = ({apitokens, heroImage}) => {
             healthCheck: healthCheck
           }
         })
-        console.log(mutationResponse);
+
       } catch (error) {
         console.error(error)
       }
+    
+  }
+
+  const removeEvent = async (eventId) => {
+
+    try {
+
+      const mutationResponse = await rmEvent({
+        variables: {
+          eventId: eventId
+        }
+      })
+      
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -162,6 +182,7 @@ const Home = ({apitokens, heroImage}) => {
             <div className="col-12 col-md-10 mb-5">
               <Results 
                 saveToEvents={saveEvent}
+                removeFromEvents={removeEvent}
                 savedEvents={eventIdArr}
                 events={eventList}
                 title={`My Searched Events events...`}

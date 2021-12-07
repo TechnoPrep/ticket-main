@@ -21,6 +21,7 @@ import Auth from '../../utils/auth'
 
 
 const Results = ({
+  removeFromEvents,
   saveToEvents,
   savedEvents,
   events,
@@ -37,15 +38,19 @@ const Results = ({
     return <h3> No events were found, please check another Performer or Change your search location </h3>;
   }
 
-  const saveThisEvent = async (newEvent) => {
-      console.log(newEvent.target);
-      console.log(newEvent.target.id);
-      const token = await newEvent.target.id
-      console.log('token',token);
-      const {eventId} = await decode(token)
-      setClick({eventId: eventId, isClicked: true});
-      saveToEvents(token)
+  const saveThisEvent = async (event) => {
+    event.persist();
+    const token = event.currentTarget.value
+    saveToEvents(token)
   }
+
+  const removeThisEvent = async (event) => {
+    event.persist();
+    const eventId = await event.currentTarget.value
+    removeFromEvents(eventId)
+}
+
+  console.log(savedEvents)
 
   return (
     <div>
@@ -107,42 +112,41 @@ const Results = ({
 
                 <Button variant="contained" size='small'><Link to={`/prices/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
                 </CardContent>
-                {/* <CardContent sx={{ flex: '1 0 auto' }}> */}
-                  {/* <IconButton
-                  className="saveEvent"
-                  onClick={saveThisEvent}
-                  aria-label="favorite" 
-                  size='large'
-                  >  */}
-                  {/* <button                       
-                     className="saveEvent"
-                     onClick={saveThisEvent}
-                     aria-label="favorite" 
-                     size='large'
-                   > */}
-
-                    {(savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? (
+                <CardContent className="heart-icon" sx={{ flex: '1 0 auto' }}>
+                  {(savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
+                    (
+                    <IconButton
+                      sx={{ flex: '1 0 auto' }}
+                      className="heart-button"
+                      onClick={removeThisEvent}
+                      aria-label="favorite" 
+                      aria-haspopup='true'
+                      size='large'
+                      name="eventToRemove"
+                      value={event.eventId}
+                    >
                       <FavoriteIcon 
-                        sx={{ flex: '1 0 auto' }}
-                        className="pointer"
-                        name="eventToRemove"
-                        id={event.eventId}
-                        // onClick={saveThisEvent}
-                        style={{ color: "red" }}/>
-                      ) : (
+                        className="heart-icon"
+                        style={{ color: "red" }}
+                      />
+                    </IconButton>
+                    ) : (
+                    <IconButton
+                      sx={{ flex: '1 0 auto' }}
+                      className="heart-button"
+                      onClick={saveThisEvent}
+                      aria-label="favorite" 
+                      size='large'
+                      name="eventToAdd" 
+                      value={event.queryLink}
+                    >
                       <FavoriteBorderIcon 
-                        sx={{ flex: '1 0 auto' }}
-                        className="pointer"
-                        name="eventToAdd" 
-                        onClick={saveThisEvent}
-                        id={event.queryLink} 
-                      /> 
-                      )
-                    }
-                    {console.log('token',event.queryLink)}
-                  {/* </IconButton> */}
-                  {/* </button> */}
-                {/* </CardContent> */}
+                        className="heart-icon"
+                      />
+                    </IconButton>
+                    )
+                  }
+                </CardContent>
               </Box>
             </Card>
          )

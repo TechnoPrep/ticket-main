@@ -64,3 +64,10 @@ export const ADD_SAVED_EVENT = gql`
     }
   }
 `;
+export const REMOVE_SAVED_EVENT = gql`
+  mutation removeEvent($eventId: String!) {
+    removeEvent(eventId: $eventId) {
+      eventId
+    }
+  }
+`;

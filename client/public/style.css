@@ -389,6 +389,11 @@ body {
     margin-bottom: 20px !important;
 }
 
-.pointer {
-    cursor: pointer !important;
+.heart-button {
+    z-index: 100 !important;
+}
+
+.heart-icon,
+.heart-icon path {
+    z-index: 2 !important;
 }

@@ -222,10 +222,12 @@ const resolvers = {
     },
     
     // Remove Saved Event
-    removeEvent: async (parent, { savedEventId }, context) => {
+    removeEvent: async (parent, { eventId }, context) => {
       if (context.user) {
+
         const event = await SavedEvent.findOneAndDelete({
-          _id: savedEventId
+          eventId: eventId,
+          userId: context.user._id
         });
 
         await User.findOneAndUpdate(

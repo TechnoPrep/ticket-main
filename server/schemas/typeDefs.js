@@ -50,7 +50,7 @@ const typeDefs = gql`
     resetPass(token: String!, password: String!) : RegAuth
     login(email: String!, password: String!): Auth
     addEvent(eventId: String! eventName: String!, venue: String!, city: String!, stateCode: String!, eventDate: String!, eventTime: String!, eventImage: String!, queryLink: String!, healthCheck: Boolean!): SavedEvent
-    removeEvent(savedEventId: ID!): SavedEvent
+    removeEvent(eventId: String!): SavedEvent
   }
 `;
 
