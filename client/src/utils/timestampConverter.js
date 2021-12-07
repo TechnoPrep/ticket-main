@@ -1,13 +1,30 @@
-// export const nextDate =(timestamp) => {
-//     var d = new Date(timestamp * 1), // Convert the passed timestamp to milliseconds
-//         yyyy = d.getFullYear(),
-//         mm = ('0' + (d.getMonth() + 1)).slice(-2),  // Months are zero based. Add leading 0.
-//         dd = ('0' + d.getDate()).slice(-2)      // Add leading 0.
+const path = require('path');
+require('dotenv').config({path: path.join(__dirname, '../../.env')})
 
-//     // ie: 03-24-2022, 3:00 PM
-//     time =  mm + '-' + dd + '-' +  yyyy + ', ' + h + ':' + min + ' ' + ampm;
-//     return time;
-// }
+export const dateRange =(timestamp) => {
+
+  //create the UTC string into   
+  const d = new Date(timestamp)
+  // Check if app is in dev or prod, as Prod is hosted in UTC time zone so no need to add an additional day
+  const dd = process.env.REACT_APP_TIME_ENV === 'dev' ? new Date(d.getTime() + 86400000) : d
+  const curY = dd.getFullYear();
+  const curM = ('0' + (dd.getMonth() + 1)).slice(-2)  // Months are zero based. Add leading 0.
+  const curD = ('0' + dd.getDate()).slice(-2)
+
+  //Format date into unixTime so that I can add a day in miliseconds
+  const nextDay = new Date(dd.getTime() + 86400000) 
+  const nextY = nextDay.getFullYear();
+  const nextM = ('0' + (nextDay.getMonth() + 1)).slice(-2)
+  const nextD = ('0' + nextDay.getDate()).slice(-2)
+
+  let dateRange = {
+    date: `${curY}-${curM}-${curD}`,
+    nextDate: `${nextY}-${nextM}-${nextD}`
+  }
+
+  return dateRange
+
+}
 
 export const formatDate = (date) => {
 
@@ -73,4 +90,4 @@ export const formatTime = (time) => {
 
 }
 
-export default {formatDate, formatTime}
+export default { dateRange, formatDate, formatTime}
