@@ -54,16 +54,12 @@ function ResetPassword() {
        
        try{
  
-         console.log('I Worked!');
- 
          const mutationResponse = await resetPW({
            variables: {
              token: token,
              password: formState.password,
            },
          });
- 
-         console.log(mutationResponse);
        
        } catch(e){
          console.error(e)

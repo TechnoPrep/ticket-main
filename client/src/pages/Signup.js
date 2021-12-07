@@ -23,15 +23,6 @@ function Signup(props) {
     passMatch: false
   })
 
-  console.log('PreSubmit',
-    errorMsg.fName,
-    errorMsg.lName,
-    errorMsg.zipCode,
-    errorMsg.email,
-    errorMsg.passLen,
-    errorMsg.passMatch
-  );
-
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
@@ -76,8 +67,6 @@ function Signup(props) {
         ) {
         try{
   
-          console.log('I made it this far!');
-  
           const mutationResponse = await addUser({
             variables: {
               firstName: formState.firstName,
@@ -87,8 +76,6 @@ function Signup(props) {
               password: formState.password,
             },
           });
-  
-          console.log(mutationResponse);
         
         } catch(e){
           console.error(e)

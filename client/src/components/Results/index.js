@@ -50,8 +50,6 @@ const Results = ({
     removeFromEvents(eventId)
 }
 
-  console.log(savedEvents)
-
   return (
     <div>
     {showTitle && <h3>{title}</h3>}

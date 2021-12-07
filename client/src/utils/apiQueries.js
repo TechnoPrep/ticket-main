@@ -6,8 +6,6 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
   const locData = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
 
-  console.log(`https://app.ticketmaster.com/discovery/v2/events.json?${locData}keyword=${searchTerm}&countryCode=US&size=100&sort=date,asc&apikey=${apitokens.ticketmaster}`);
-
   const data = await fetch(`https://app.ticketmaster.com/discovery/v2/events.json?${locData}keyword=${searchTerm}&countryCode=US&size=100&sort=date,asc&apikey=${apitokens.ticketmaster}`, {
     method: "GET",
     headers: {
@@ -60,8 +58,6 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
  
   //Remove Duplicates, TicketMasters API returns 1 entry for different ticket types.
   const dedup = results.filter((v,i,a)=>a.findIndex(t=>(t.eventName===v.eventName && t.eventDate === v.eventDate))===i)
-
-  console.log(dedup);
 
   return dedup
 
