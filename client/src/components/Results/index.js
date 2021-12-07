@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -12,17 +14,29 @@ import Button from '@mui/material/Button';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import { formatDate, formatTime } from '../../utils/timestampConverter'
-
+import { getThemeProps } from '@mui/system';
+import { ADD_SAVED_EVENT } from '../../utils/mutations'
+import { useMutation } from '@apollo/client'
+import { savedEvents } from '../../utils/queries'
 
 const Results = ({
   events,
   title,
   showTitle = true,
 }) => {
+
+//   const [searchedEvent, setSearchedEvent] = useState([]);
+//   // create state for holding our search field data
+//   const [searchInput, setSearchInput] = useState('');
+
+//   // create state to hold saved bookId values
+//   const [savedEvents, setSavedEvents] = useState(getSavedEvents());
+
+// const [savedEvent] = useMutation(ADD_SAVED_EVENT);
+
   if (events[0] === 'No Events were found') {
     return <h3> No events were found, please check another Performer or Change your search location </h3>;
   }
-
   return (
     <div>
     {showTitle && <h3>{title}</h3>}
