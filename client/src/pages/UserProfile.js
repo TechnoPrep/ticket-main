@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 
 import Results from '../components/Results';
 
 import { QUERY_ME } from '../utils/queries';
-
+import { REMOVE_SAVED_EVENT } from '../utils/mutations'
 
 const UserProfile = ({heroImage}) => {
 
   const { err, loading, data } = useQuery(QUERY_ME);
 
-  const userQuery = data?.me || {};
+  const [rmEvent] = useMutation(REMOVE_SAVED_EVENT, {
+    refetchQueries: [
+      QUERY_ME,
+      'me'
+    ]
+  });
 
-  console.log(userQuery);
+  const userQuery = data?.me || {};
 
   const eventIdArr = userQuery.savedEvents ? userQuery.savedEvents.map(saved => (saved.eventId)) : []
 
@@ -21,6 +26,21 @@ const UserProfile = ({heroImage}) => {
 
   if(!userQuery.email){
     window.location.assign('/')
+  }
+
+  const removeEvent = async (eventId) => {
+
+    try {
+
+      const mutationResponse = await rmEvent({
+        variables: {
+          eventId: eventId
+        }
+      })
+      
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
@@ -35,8 +55,7 @@ const UserProfile = ({heroImage}) => {
       <h2 className='saved-events-text'>{Auth.getProfile().data.firstName}'s Saved Events</h2>
         <div className="col-12 col-md-10 mb-5">
           <Results 
-            // savedEvents={user.existingEvents}
-            // events={user.eventList}
+            removeFromEvents={removeEvent}
             savedEvents={eventIdArr}
             events={eventList}
             title={`My Searched Events events...`}
