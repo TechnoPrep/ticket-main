@@ -72,7 +72,6 @@ function App() {
   })
 
   const handleUpdate = (newTerm) =>{
-    // console.log('App.js',newTerm);
     setSearchTerm({term: newTerm})
   }
 

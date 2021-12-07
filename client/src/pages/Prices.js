@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
 import { fetchPricing } from '../utils/apiQueries'
 import decode from 'jwt-decode';
 import { useParams } from 'react-router-dom';
-// import { results } from '../utils/apiQueries'
 import seatGeekLogo from '../img/seatgeek-logo.png';
 import stubHubLogo from '../img/stubhub-logo.png';
 import ticketmasterLogo from '../img/Ticketmaster-Logo.png'
@@ -21,8 +18,6 @@ const Prices = ({apitokens, heroImage}) => {
   const {token} = useParams();
    
   const decoded = decode(token)
-
-  console.log(token);
   
   let {performer, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
 
@@ -65,7 +60,7 @@ const Prices = ({apitokens, heroImage}) => {
                   <Box sx={{ display: 'flex', flexDirection: 'column'}} className='price-box'>
                     <CardContent sx={{ flex: '1 0 auto' }}>
                       <Typography component="div" variant="h4" className='price'>
-                        ${event.minPrice}
+                        {event.minPrice ? `$${event.minPrice}` : 'No Price Listing '}
                       </Typography>
                     </CardContent>
                   </Box>
