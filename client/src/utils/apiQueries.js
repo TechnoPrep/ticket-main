@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 
 import { stringCleanup } from './replace'
 
+import { nextDate } from './timestampConverter'
+
 export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radius = 0 ) => {
 
   const locData = lat === 0 && lon === 0 ? '' : `latlong=${lat}%2C${lon}&radius=${radius}&`
@@ -89,7 +91,15 @@ export const fetchLocation = async (apitokens, zipCode) => {
 
 export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, tmVenueId) => {
 
+  const dd = new Date(dateUTC)
+  const nextDay = new Date(dd.getTime() + 86400000 * 2)
+  
+
+  console.log(dateUTC, nextDay);
+
   console.log(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`);
+
+  console.log(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`);
 
   const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`, {
     method: "GET",
