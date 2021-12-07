@@ -75,8 +75,8 @@ function App() {
     setSearchTerm({term: newTerm})
   }
 
-  const updateHeroImage = (imageUrl, performer) =>{
-    setHeroImage({ url: imageUrl, performer: performer });
+  const updateHeroImage = (imageUrl, performer, venue, eventDate, eventTime) =>{
+    setHeroImage({ url: imageUrl, performer: performer, venue: venue, eventDate: eventDate, eventTime: eventTime });
   }
 
   return (
