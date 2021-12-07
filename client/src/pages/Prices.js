@@ -18,8 +18,10 @@ const Prices = ({apitokens, heroImage}) => {
   const {token} = useParams();
    
   const decoded = decode(token)
+
+  console.log(decoded);
   
-  let {performer, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
+  let {performer, eventTime, eventDate, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
 
   const [eventList, setEventList] = useState([]);
 
@@ -31,7 +33,7 @@ const Prices = ({apitokens, heroImage}) => {
         setEventList(events)
     }
 
-    heroImage(url, performer)
+    heroImage(url, performer, venue, eventDate, eventTime)
 
     fetchResults();
 }, [])
