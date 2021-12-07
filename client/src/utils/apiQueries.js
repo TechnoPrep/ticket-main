@@ -127,7 +127,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
    url: `https://www.stubhub.com/${event.webURI}`,
    minPrice: 'minListPrice' in event.ticketInfo ? event.ticketInfo.minListPrice : false,
    maxPrice: 'maxListPrice' in event.ticketInfo ? event.ticketInfo.maxListPrice : false,
-   vendor: 'StubHub',
+   vendor: 'stubhub',
   }));
 
   const normalizedseatGeekData = sgJson.events.map(event => ({
@@ -139,7 +139,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     url: event.url,
     minPrice: 'lowest_price' in event.stats && event.stats.lowest_price !== null ? event.stats.lowest_price : false,
     maxPrice: 'median_price' in event.stats && event.stats.median_price !== null ? event.stats.median_price : false,
-    vendor: 'SeatGeek'
+    vendor: 'seatgeek'
   }));
 
   const normalizedTicketmMaster = tmJson._embedded.events.map(event => ({
@@ -151,7 +151,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     url: event.url,
     minPrice: 'priceRanges' in event ? event.priceRanges[0].min : false,
     maxPrice: 'priceRanges' in event ? event.priceRanges[0].max : false,
-    vendor: 'Ticket Master'
+    vendor: 'ticketmaster'
    }));
 
   const totallyNormalized = [...normalizedStubHubData, ...normalizedseatGeekData, ...normalizedTicketmMaster];

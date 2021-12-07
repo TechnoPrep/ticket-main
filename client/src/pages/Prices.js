@@ -54,7 +54,7 @@ const Prices = ({apitokens, heroImage}) => {
                       <CardMedia
                         component="img"
                         sx={{ width: 350, height: 200 }}
-                        image={ticketmasterLogo}
+                        image={event.vendor === 'ticketmaster' ? ticketmasterLogo : (event.vendor === 'stubhub' ? stubHubLogo : seatGeekLogo)}
                         alt={event.eventName}
                       />
                     </CardContent>
