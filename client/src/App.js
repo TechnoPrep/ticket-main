@@ -71,8 +71,6 @@ function App() {
     venue: '',
   })
 
-  console.log(heroImage);
-
   const handleUpdate = (newTerm) =>{
     // console.log('App.js',newTerm);
     setSearchTerm({term: newTerm})
@@ -81,10 +79,6 @@ function App() {
   const updateHeroImage = (imageUrl, performer) =>{
     setHeroImage({ url: imageUrl, performer: performer });
   }
-
-  // useEffect(() => {
-  //   updateHeroImage();
-  // })
 
   return (
     <ApolloProvider client={client}>
