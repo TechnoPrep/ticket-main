@@ -14,7 +14,9 @@ const Home = ({apitokens, heroImage}) => {
   const [queryState, setQueryState] = useState({
     searchTerm: '',
     zipCode: '',
-    radius: '10'
+    radius: '10',
+    lat: '',
+    lon: ''
   });
 
   useEffect(() => {
@@ -117,6 +119,15 @@ const Home = ({apitokens, heroImage}) => {
     }
   }
 
+  // const position = async () => {
+  //   await navigator.geolocation.getCurrentPosition(
+  //     position => setQueryState({
+  //       lat: position.coords.latitude,
+  //       lon: position.coords.longitude
+  //     })
+  //   )
+  // }
+
   return (
     <div className=''>
       {results &&
@@ -131,7 +142,6 @@ const Home = ({apitokens, heroImage}) => {
               htmlFor="eventName">
                 Event / Performer Name
             </label>
-          
             <input 
               className='form-input' 
               type="text"
