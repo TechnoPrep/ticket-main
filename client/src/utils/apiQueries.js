@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
-
 import { stringCleanup } from './replace'
-
-import { nextDate } from './timestampConverter'
+import { dateRange } from './timestampConverter'
 
 export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radius = 0 ) => {
 
@@ -91,17 +89,9 @@ export const fetchLocation = async (apitokens, zipCode) => {
 
 export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, tmVenueId) => {
 
-  const dd = new Date(dateUTC)
-  const nextDay = new Date(dd.getTime() + 86400000 * 2)
-  
+  const range = dateRange(dateUTC)
 
-  console.log(dateUTC, nextDay);
-
-  console.log(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`);
-
-  console.log(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`);
-
-  const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${date}&venue=${venue}&parking=false`, {
+  const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${range.date}TO${range.nextDate}&venue=${venue}&parking=false`, {
     method: "GET",
     mode: 'cors',
     headers: {
@@ -112,7 +102,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
      }
   });
 
-  const ticketmMaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${dateUTC}&size=25&apikey=${apitokens.ticketmaster}`,{
+  const ticketmMaster = fetch(`https://app.ticketmaster.com/discovery/v2/events.json?keyword=${performer}&venueId=${tmVenueId}&startDateTime=${range.date}T00:00:00Z&endDateTime=${range.nextDate}T00:00:00Z&size=25&apikey=${apitokens.ticketmaster}`,{
     method: "GET",
     headers: {
 
@@ -120,8 +110,6 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
   })
   
   const slug = stringCleanup(performer)
-
-  console.log(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
 
   const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
 
