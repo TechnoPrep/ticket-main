@@ -1,11 +1,11 @@
 import React from 'react';
 import heroPhoto from '../../img/hero-pic.jpg';
 import videoBg from '../../img/video-bg.mp4'
-
+import { formatDate, formatTime } from '../../utils/timestampConverter'
 
 const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }}) => {
 
-  console.log(url, performer, eventDate, eventTime, venue);
+  console.log(url);
   return (
     <>
     { (typeof url !== 'string' ) ? (
