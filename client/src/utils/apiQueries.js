@@ -87,6 +87,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
 
   const range = dateRange(dateUTC)
 
+  console.log(range);
+
   const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${range.date}TO${range.nextDate}&venue=${venue}&parking=false`, {
     method: "GET",
     mode: 'cors',
