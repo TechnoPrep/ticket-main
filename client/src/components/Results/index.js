@@ -35,7 +35,7 @@ const Results = ({
   })
 
   if (events[0] === 'No Events were found') {
-    return <h3> No events were found, please check another Performer or Change your search location </h3>;
+    return <h3 className='search-header'> No events were found, please check another Performer or Change your search location </h3>;
   }
 
   const saveThisEvent = async (event) => {
