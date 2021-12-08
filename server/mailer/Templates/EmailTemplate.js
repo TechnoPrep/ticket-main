@@ -301,7 +301,7 @@ const notificationEmailTemplate = (firstName, messageContent) => {
                                                          ><img
                                                            editable=""
                                                            alt="Remindr"
-                                                           src="https://remindr-notification.herokuapp.com/img/remindr%20logo.png"
+                                                           src="https://total-ticket.herokuapp.com/static/media/logo.6b882ecf.png"
                                                            width="100%"
                                                            height="auto"
                                                            style="
