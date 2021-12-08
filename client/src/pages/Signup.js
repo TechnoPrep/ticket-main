@@ -103,7 +103,7 @@ function Signup(props) {
       {data ? (
         <>
           <p className="signup-confirm">
-            {formState.firstName}'s ticket buying experience is only one step away! Please check {formState.email} for a confirmation Link!`
+            {formState.firstName}'s Ticket Buying Experience is One Step Away! Please Check {formState.email} For a Confirmation Link!
           </p>
         </>
       ) : (
