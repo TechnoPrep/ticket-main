@@ -234,6 +234,20 @@ body {
     font-size: 1.7rem !important;
 }
 
+.email-no-confirm {
+    margin-left: auto;
+    margin-right: auto;
+    margin: auto;
+    background-color: #f11c1c;
+    padding: 30px;
+    border-radius: 10px;
+    color: #E8E8E8;
+    text-align: center;
+    font-size: 1rem;
+    max-width: 40%;
+}
+
+
 .forgot-password {
     margin-top: 17px;
     font-size: 1.3rem;
@@ -292,6 +306,17 @@ body {
     padding: 30px;
     border-radius: 10px;
 }
+
+.signup-confirm {
+    margin: auto;
+    background-color: #25282a;
+    padding: 30px;
+    border-radius: 10px;
+    color: #E8E8E8;
+    font-size: 1.5rem !important;
+    text-align: center;
+}
+
 
 .signup-header {
     text-align: center;

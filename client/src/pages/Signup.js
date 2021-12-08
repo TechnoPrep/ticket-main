@@ -102,8 +102,8 @@ function Signup(props) {
       <h2 className='signup-header'>Signup</h2>
       {data ? (
         <>
-          <p style={{color: 'white'}}>
-            Thank you! Please check your email for a confirmation Link!
+          <p className="signup-confirm">
+            {formState.firstName}'s ticket buying experience is only one step away! Please check {formState.email} for a confirmation Link!`
           </p>
         </>
       ) : (
