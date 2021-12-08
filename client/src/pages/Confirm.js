@@ -33,15 +33,15 @@ function Confirm() {
   },[])
 
   return (
-    <div className="container my-1">
+    <div className="confirm-done">
       <h2>Account Confirmation</h2>
       {data ? (
         <>
-        <p>
+        <h3>
           Thank you for confirming your Email Account You may now Login!
-        </p>
+        </h3>
        <Link to={'/login'}>
-         <button type="button" className="btn btn-info">Button</button>
+         <button type="button" className="confirm-button">Back to Login</button>
        </Link>
         </>
       ) : (

@@ -234,6 +234,24 @@ body {
     font-size: 1.7rem !important;
 }
 
+.confirm-done {
+    margin: auto;
+    background-color: #25282a;
+    padding: 30px;
+    border-radius: 10px;
+    color: #E8E8E8;
+    font-size: 1.5rem !important;
+    text-align: center;
+
+}
+.confirm-button {
+    background-color: #03dac6 !important;
+    color: #00221e !important;
+    font-size: 1.2rem !important;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
 .email-no-confirm {
     margin-left: auto;
     margin-right: auto;
