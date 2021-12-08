@@ -4,27 +4,27 @@ body {
 
 ::-webkit-scrollbar {
     width: 8px;
-  }
+}
   
   /* Track */
-  ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: #151318;
-  }
+}
    
   /* Handle */
-  ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background:#03dac6; 
     border-radius: 10px;
-  }
+}
   
   /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #03dac5c4; 
-  }
+}
   
-  * {
+* {
     overflow-y: auto !important;
-  }
+}
 
 .navbar {
     background-color: #000000;
@@ -162,10 +162,9 @@ body {
     transform: translate(-50%, -50%);
     font-size: 8rem;
     overflow: visible !important;
-    opacity: .69;
     font-weight: bold;
     color: white;
-    background-color: rgb(38,45,45);
+    background-color: rgb(0,0,0,.35);
     padding-right: 10px;
     padding-left: 10px;
     border-top-left-radius: 10px;
