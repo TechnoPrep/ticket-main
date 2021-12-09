@@ -444,3 +444,14 @@ body {
 .heart-icon path {
     z-index: 2 !important;
 }
+
+.find-ticket-small {
+    font-size: 2rem !important;
+    position: relative;
+    left: 20px;
+    bottom: 10px;
+}
+
+.find-ticket-text-small {
+    color: white !important;
+}
