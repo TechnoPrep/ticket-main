@@ -22,9 +22,11 @@ body {
     background: #03dac5c4; 
 }
   
+/*
+  Commented out due to causing issues and making everything scrollable 
 * {
     overflow-y: auto !important;
-}
+} */
 
 .navbar {
     background-color: #000000;
@@ -211,7 +213,7 @@ body {
 }
 
 .banner-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .banner-title-small {
@@ -553,5 +555,20 @@ body {
 .pagenotfound-image {
     display: flex;
     justify-content: center;
+}
+
+.pagenotfound-image img {
+    border-radius: 60%;
+}
+
+/* .pagenotfound {
+    display: flex !important;
+    justify-content: center !important;
+} */
+
+.pagenotfound-text {
+    text-align: center;
+    color: white;
+    font-size: 3rem;
 }
 

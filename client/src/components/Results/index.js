@@ -53,6 +53,8 @@ const Results = ({
     removeFromEvents(eventId)
 }
 
+  const isLoggedIn = Auth.loggedIn()
+
   return (
     <div>
     {showTitle && <h3>{title}</h3>}
@@ -74,7 +76,7 @@ const Results = ({
                   value={typeof event.eventImage === 'string' ? event.eventImage : event.eventImage.url}
                 />
                 <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                  <CardContent sx={{ flex: '1 0 auto' }}>
+                  <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
                     <Typography component="div" variant="h4" sx={{ width: 300, height: 'fill' }}>
                       {event.eventName}
                     </Typography>
@@ -125,54 +127,57 @@ const Results = ({
                   {matches => {
                     return matches ? 
                     <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                  <CardContent sx={{ flex: '1 0 auto' }}>
+                  <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
   
                   <Button variant="contained" size='small'><Link to={`/prices/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
                   </CardContent>
                   <CardContent className="heart-icon" sx={{ flex: '1 0 auto' }}>
-                    {(savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
-                      (
-                      <IconButton
-                        sx={{ flex: '1 0 auto' }}
-                        className="heart-button"
-                        onClick={removeThisEvent}
-                        aria-label="favorite" 
-                        aria-haspopup='true'
-                        size='large'
-                        name="eventToRemove"
-                        value={event.eventId}
-                      >
-                        <FavoriteIcon 
-                          className="heart-icon"
-                          style={{ color: "red" }}
-                        />
-                      </IconButton>
-                      ) : (
-                      <IconButton
-                        sx={{ flex: '1 0 auto' }}
-                        className="heart-button"
-                        onClick={saveThisEvent}
-                        aria-label="favorite" 
-                        size='large'
-                        name="eventToAdd" 
-                        value={event.queryLink}
-                      >
-                        <FavoriteBorderIcon 
-                          className="heart-icon"
-                        />
-                      </IconButton>
-                      )
-                    }
+                  {isLoggedIn ? ((savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
+                        (
+                        <IconButton
+                          sx={{ flex: '1 0 auto' }}
+                          className="heart-button"
+                          onClick={removeThisEvent}
+                          aria-label="favorite" 
+                          aria-haspopup='true'
+                          size='large'
+                          name="eventToRemove"
+                          value={event.eventId}
+                        >
+                          <FavoriteIcon 
+                            className="heart-icon"
+                            style={{ color: "red" }}
+                          />
+                        </IconButton>
+                        ) : (
+                        <IconButton
+                          sx={{ flex: '1 0 auto' }}
+                          className="heart-button"
+                          onClick={saveThisEvent}
+                          aria-label="favorite" 
+                          size='large'
+                          name="eventToAdd" 
+                          value={event.queryLink}
+                        >
+                          <FavoriteBorderIcon 
+                            className="heart-icon"
+                          />
+                        </IconButton>
+                        )) : 
+                        (
+                          <div></div>
+                        )
+                      }
                   </CardContent>
                 </Box>
                 :
                 <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                  <CardContent sx={{ flex: '1 0 auto' }}>
+                  <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
   
                   <Button variant="contained" size='small'><Link to={`/prices/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
                   </CardContent>
   
-                  <CardContent sx={{ flex: '1 0 auto' }}>
+                  <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
                   {event.healthCheck ? (
                         <CardMedia
                         component="img"
@@ -194,39 +199,42 @@ const Results = ({
                   </CardContent>
                   
                   <CardContent className="heart-icon" sx={{ flex: '1 0 auto' }}>
-                    {(savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
-                      (
-                      <IconButton
-                        sx={{ flex: '1 0 auto' }}
-                        className="heart-button"
-                        onClick={removeThisEvent}
-                        aria-label="favorite" 
-                        aria-haspopup='true'
-                        size='large'
-                        name="eventToRemove"
-                        value={event.eventId}
-                      >
-                        <FavoriteIcon 
-                          className="heart-icon"
-                          style={{ color: "red" }}
-                        />
-                      </IconButton>
-                      ) : (
-                      <IconButton
-                        sx={{ flex: '1 0 auto' }}
-                        className="heart-button"
-                        onClick={saveThisEvent}
-                        aria-label="favorite" 
-                        size='large'
-                        name="eventToAdd" 
-                        value={event.queryLink}
-                      >
-                        <FavoriteBorderIcon 
-                          className="heart-icon"
-                        />
-                      </IconButton>
-                      )
-                    }
+                  {isLoggedIn ? ((savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
+                        (
+                        <IconButton
+                          sx={{ flex: '1 0 auto' }}
+                          className="heart-button"
+                          onClick={removeThisEvent}
+                          aria-label="favorite" 
+                          aria-haspopup='true'
+                          size='large'
+                          name="eventToRemove"
+                          value={event.eventId}
+                        >
+                          <FavoriteIcon 
+                            className="heart-icon"
+                            style={{ color: "red" }}
+                          />
+                        </IconButton>
+                        ) : (
+                        <IconButton
+                          sx={{ flex: '1 0 auto' }}
+                          className="heart-button"
+                          onClick={saveThisEvent}
+                          aria-label="favorite" 
+                          size='large'
+                          name="eventToAdd" 
+                          value={event.queryLink}
+                        >
+                          <FavoriteBorderIcon 
+                            className="heart-icon"
+                          />
+                        </IconButton>
+                        )) : 
+                        (
+                          <div></div>
+                        )
+                      }
                   </CardContent>
                 </Box>
                   }}
@@ -249,7 +257,7 @@ const Results = ({
                     value={typeof event.eventImage === 'string' ? event.eventImage : event.eventImage.url}
                   />
                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
+                    <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
                       <Typography component="div" variant="h4" sx={{ width: 150, height: 'fill' }}>
                         {event.eventName}
                       </Typography>
@@ -269,11 +277,11 @@ const Results = ({
                   </Box>
             
                   <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
+                    <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
                     <Button variant="contained" size='small'><Link to={`/prices/${event.queryLink}`}><span className='find-ticket-text'>Find Tickets</span></Link></Button>
                     </CardContent>
     
-                    <CardContent sx={{ flex: '1 0 auto' }}>
+                    <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
                     {event.healthCheck ? (
                           <CardMedia
                           component="img"
@@ -295,7 +303,7 @@ const Results = ({
                     </CardContent>
                     
                     <CardContent className="heart-icon" sx={{ flex: '1 0 auto' }}>
-                      {(savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
+                      {isLoggedIn ? ((savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
                         (
                         <IconButton
                           sx={{ flex: '1 0 auto' }}
@@ -326,6 +334,9 @@ const Results = ({
                             className="heart-icon"
                           />
                         </IconButton>
+                        )) : 
+                        (
+                          <div></div>
                         )
                       }
                     </CardContent>
@@ -343,7 +354,7 @@ const Results = ({
                     value={typeof event.eventImage === 'string' ? event.eventImage : event.eventImage.url}
                   />
                   <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
+                    <CardContent sx={{ flex: '1 0 auto', overflow: "hidden !important" }}>
                       <Typography component="div" variant="h4" sx={{ width: 250, height: 'fill' }}>
                         {event.eventName}
                       </Typography>
@@ -359,10 +370,10 @@ const Results = ({
                       <Typography variant="h5" color="text.secondary" component="div">
                         {formatTime(event.eventTime)}
                       </Typography>
-                      {(savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
+                      {isLoggedIn ? ((savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
                         (
                         <IconButton
-                        sx={{ position:'relative', left:'210px', bottom:'125px' }}
+                          sx={{ flex: '1 0 auto' }}
                           className="heart-button"
                           onClick={removeThisEvent}
                           aria-label="favorite" 
@@ -378,7 +389,7 @@ const Results = ({
                         </IconButton>
                         ) : (
                         <IconButton
-                          sx={{ position:'relative', left:'210px', bottom:'125px' }}
+                          sx={{ flex: '1 0 auto' }}
                           className="heart-button"
                           onClick={saveThisEvent}
                           aria-label="favorite" 
@@ -390,6 +401,9 @@ const Results = ({
                             className="heart-icon"
                           />
                         </IconButton>
+                        )) : 
+                        (
+                          <div></div>
                         )
                       }
                       {event.healthCheck ? (

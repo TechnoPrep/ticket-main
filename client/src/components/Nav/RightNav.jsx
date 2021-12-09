@@ -30,7 +30,7 @@ const Ul = styled.ul`
   }
 `;
 
-const RightNav = ({ open, heroImage }) => {
+const RightNav = ({ open, heroImage, displayHero }) => {
     const logout = (event) => {
         event.preventDefault();
         Auth.logout();
@@ -38,6 +38,7 @@ const RightNav = ({ open, heroImage }) => {
     
       const updateAppState = () => {
         heroImage();
+        displayHero(true)
       }
   return (
     <Ul open={open}>
