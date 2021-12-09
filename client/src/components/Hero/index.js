@@ -19,7 +19,7 @@ const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }, displ
             {matches => {
               return matches ? 
               <div className="hero-text-box">
-                <p className='hero-text'>WELCOME TO TOTAL TICKET.</p>
+                <p className='hero-text'>WELCOME TO TOTAL TICKET</p>
                 <p className='hero-text'>ANY TICKET - ANY TIME</p>
                 <p className='hero-text'>FOR THE BEST PRICE</p>
               </div>
