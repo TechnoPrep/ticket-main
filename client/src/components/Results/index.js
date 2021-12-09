@@ -102,7 +102,7 @@ const Results = ({
                 {event.healthCheck ? (
                         <CardMedia
                         component="img"
-                        sx={{ width: 250, height: 200 }}
+                        sx={{ width: 270, height: 200 }}
                         image={HealthCheckEdit}
                         alt={event.eventName}
                       />
@@ -111,7 +111,7 @@ const Results = ({
                         (
                           <CardMedia
                           component="img"
-                          sx={{ width: 250, height: 200 }}
+                          sx={{ width: 270, height: 200 }}
                           image={NoHealthCheck}
                           alt={event.eventName}
                         />
