@@ -22,6 +22,7 @@ const Home = ({apitokens, heroImage}) => {
   useEffect(() => {
 
     heroImage()
+    
  
    }, [])
 
@@ -119,20 +120,8 @@ const Home = ({apitokens, heroImage}) => {
     }
   }
 
-  // const position = async () => {
-  //   await navigator.geolocation.getCurrentPosition(
-  //     position => setQueryState({
-  //       lat: position.coords.latitude,
-  //       lon: position.coords.longitude
-  //     })
-  //   )
-  // }
-
   return (
     <div className=''>
-      {results &&
-        alert('Your Event Has been saved!')
-      }
       <div className='search-box'>
         <h2 className='search-header'>Enter an Event or band name to get started!</h2>
         <form className='search-form' onSubmit={handleFormSubmit}>
