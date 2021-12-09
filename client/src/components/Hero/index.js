@@ -4,12 +4,13 @@ import videoBg from '../../img/video-bg.mp4'
 import { formatDate, formatTime } from '../../utils/timestampConverter'
 import Media from 'react-media';
 
-const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }}) => {
+const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }, displayHero}) => {
 
-  console.log(url);
+  console.log(displayHero);
+
   return (
     <>
-    { (typeof url !== 'string' ) ? (
+    {displayHero ? ((typeof url !== 'string' ) ? (
       <div className='hero'>
           <video autoPlay muted loop className='video-bg'>
             <source src={videoBg} type="video/mp4"></source>
@@ -36,6 +37,8 @@ const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }}) => {
         <h3 className='banner-title'>{venue} || {formatDate(eventDate)} || {formatTime(eventTime)}</h3>
         </div>
       </div>
+      )) : (
+        <div></div>
       )
     }
     </>
