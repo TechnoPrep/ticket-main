@@ -35,7 +35,7 @@ const StyledBurger = styled.div`
   }
 `;
 
-const Burger = () => {
+const Burger = ({heroImage, displayHero}) => {
   const [open, setOpen] = useState(false)
   
   return (
@@ -45,7 +45,7 @@ const Burger = () => {
         <div />
         <div />
       </StyledBurger>
-      <RightNav open={open}/>
+      <RightNav displayHero={displayHero} heroImage={heroImage} open={open}/>
     </>
   )
 }

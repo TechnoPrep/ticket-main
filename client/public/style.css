@@ -554,3 +554,18 @@ body {
     justify-content: center;
 }
 
+.pagenotfound-image img {
+    border-radius: 60%;
+}
+
+/* .pagenotfound {
+    display: flex !important;
+    justify-content: center !important;
+} */
+
+.pagenotfound-text {
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+}
+

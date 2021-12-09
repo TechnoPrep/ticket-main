@@ -19,7 +19,7 @@ const Nav = styled.nav`
   }
 `
 
-const Navbar = ({heroImage}) => {
+const Navbar = ({heroImage, displayHero}) => {
     const logout = (event) => {
         event.preventDefault();
         Auth.logout();
@@ -27,6 +27,7 @@ const Navbar = ({heroImage}) => {
     
       const updateAppState = () => {
         heroImage();
+        displayHero(true)
       }
 
   return (
@@ -34,7 +35,7 @@ const Navbar = ({heroImage}) => {
       <Link onClick={updateAppState} className="logo-box navbar-start" to="/">
             <img src={logo} className='logo-img'></img>
           </Link>
-      <Burger />
+      <Burger displayHero={displayHero} heroImage={heroImage} />
     </Nav>
   )
 }

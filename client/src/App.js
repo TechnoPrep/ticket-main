@@ -65,6 +65,8 @@ function App() {
     term: '',
   })
 
+  const [displayHero, setDisplayHero] = useState(true)
+
   const [heroImage, setHeroImage] = useState({
     url: null,
     performer: '',
@@ -81,15 +83,19 @@ function App() {
     setHeroImage({ url: imageUrl, performer: performer, venue: venue, eventDate: eventDate, eventTime: eventTime });
   }
 
+  const isNotFound = (boolean) => {
+    setDisplayHero(boolean)
+  }
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
-          {/* <Navbar heroImage={updateHeroImage}/> */}
-          <Header heroImage={updateHeroImage} />
+          <Navbar displayHero={isNotFound} heroImage={updateHeroImage}/>
+          {/* <Header displayHero={isNotFound} heroImage={updateHeroImage} /> */}
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
           {/* <TestMenu /> */}
-          <Hero heroImage={heroImage} />
+          <Hero displayHero={displayHero} heroImage={heroImage} />
           <div className="container" >
           <Switch>
             <Route exact path="/">
@@ -117,11 +123,11 @@ function App() {
               <Prices heroImage={updateHeroImage} apitokens={apiTokens}/>
             </Route>
             <Route path="*" >
-              <PageNotFound />
+              <PageNotFound displayHero={isNotFound} />
             </Route>
             </Switch>
           </div>
-          <Footer />
+          <Footer displayHero={isNotFound} />
         </div>
       </Router>
     </ApolloProvider>
