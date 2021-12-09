@@ -16,16 +16,26 @@ const Mailer = async (event, email, url, firstName) => {
 
     // create reusable transporter object using a Gmail Account setup with OAuth2
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "mail.privateemail.com",
+      port: 465,
+      secure: true,
       auth: {
-        type: 'OAuth2',
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN
-      },
+        user: process.env.NAMECHEAP_MAIL_USER,
+        pass: process.env.NAMECHEAP_MAIL_PASS
+      }
     });
+
+    // const transporter = nodemailer.createTransport({
+    //   service: "gmail",
+    //   auth: {
+    //     type: 'OAuth2',
+    //     user: process.env.MAIL_USERNAME,
+    //     pass: process.env.MAIL_PASSWORD,
+    //     clientId: process.env.OAUTH_CLIENTID,
+    //     clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    //     refreshToken: process.env.OAUTH_REFRESH_TOKEN
+    //   },
+    // });
 
     let type = ''
 
@@ -46,7 +56,7 @@ const Mailer = async (event, email, url, firstName) => {
       EmailTemplate(firstName, Reset(url, email))
 
     await transporter.sendMail({
-      from: `"Totally Tickets" <totally.tickets.notifications@gmail.com>`, // sender address
+      from: `"Total Ticket" <notifications@total-ticket.com>`, // sender address
       to: `${email}`, // list of receivers
       subject: `${type}`, // Subject line
       text: `${url}`, // plain text body
