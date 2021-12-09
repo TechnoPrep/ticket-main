@@ -94,7 +94,7 @@ function ResetPassword() {
       ) : (
         <form className='signup-form' onSubmit={handleFormSubmit}>
           <div className="flex-row space-between">
-            <label htmlFor="password">Password:</label>
+            <label className="signup-label" htmlFor="password">Password:</label>
             <input
               className='form-input'
               placeholder="******"
@@ -112,7 +112,7 @@ function ResetPassword() {
               <div></div> 
           }
           <div className="flex-row space-between">
-            <label htmlFor="confirm">Confirm Password:</label>
+            <label className="signup-label" htmlFor="confirm">Confirm Password:</label>
             <input
               className='form-input'
               placeholder="******"
