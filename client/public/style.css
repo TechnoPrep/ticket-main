@@ -457,6 +457,7 @@ body {
     color: white !important;
 }
 
+
 .topnav {
     overflow: hidden;
     background-color: #333;
@@ -497,3 +498,9 @@ body {
     background-color: #04AA6D;
     color: white;
   }
+
+.pagenotfound-image {
+    display: flex;
+    justify-content: center;
+}
+
