@@ -75,10 +75,10 @@ body {
     font-size: 2rem;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 7px;
     color: rgb(255, 255, 255, 0.93);
     margin-left: 12px;
     margin-right: 12px;
+    font-family: 'Bebas Neue', cursive;
 }
 
 .nav-link:hover {
@@ -198,18 +198,21 @@ body {
     color: white;
     padding-right: 10px;
     margin: 0;
+    font-family: 'Teko', sans-serif;
 }
 
 .banner-title-two {
     color: #cc0631;
     padding-right: 10px;
     margin: 0;
+    font-family: 'Teko', sans-serif;
 }
 
 .banner-title-three {
     color: white;
     padding-right: 10px;
     margin: 0;
+    font-family: 'Teko', sans-serif;
 }
 
 .banner-title {
@@ -233,6 +236,7 @@ body {
     font-size: 150%;
     text-align: center;
     margin: 4px;
+    font-family: 'Permanent Marker', cursive;
     
 }
 
@@ -241,11 +245,12 @@ body {
     width: 30%;
     position: absolute;
     left: 35%;
-    bottom: 5px;
+    bottom: 5.5px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    height: 110px;
+    height: 130px;
     padding-top: 5px;
+    min-width: 370px;
 }
 
 .search-input {
@@ -278,13 +283,15 @@ body {
 .login-header {
     color: white;
     text-align: center;
-    font-size: 1.5rem;
+    font-family: 'Teko', sans-serif;
+    font-size: 2.5rem;
 }
 
 .login-btn {
     background-color: #c38fff !important;
     color: #00221e !important;
-    font-size: 1.7rem !important;
+    font-size: 2rem !important;
+    font-family: 'Teko', sans-serif;
 }
 
 .confirm-done {
@@ -326,7 +333,8 @@ body {
 .go-back-btn {
     background-color: #03dac6 !important;
     color: #00221e !important;
-    font-size: 1.2rem !important;
+    font-size: 1.9rem !important;
+    font-family: 'Teko', sans-serif;
 }
 
 .saveEvent {
@@ -344,6 +352,8 @@ body {
 
 .search-label {
     color: rgb(255, 255, 255, 0.87);
+    font-family: 'Teko', sans-serif;
+    font-size: 1.7rem;
 }
 
 .search-form {
@@ -352,17 +362,21 @@ body {
     padding: 30px;
     border-radius: 10px;
     min-width: 275px;
+    margin-top: 30px;
 }
 
 .search-header {
     text-align: center;
     color: #E8E8E8;
+    font-family: 'Teko', sans-serif;
+    font-size: 2.5rem;
 }
 
 .search-btn {
     margin: auto;
     text-align: center;
-    font-size: 1.5rem !important;
+    font-size: 1.8rem !important;
+    font-family: 'Teko', sans-serif;
 }
 
 .signup-box {
@@ -396,16 +410,22 @@ body {
 .signup-header {
     text-align: center;
     color: #E8E8E8;
+    font-family: 'Teko', sans-serif;
+    font-size: 2.5rem;
 }
 
 .signup-btn {
     margin: auto;
     text-align: center;
     font-size: 1.5rem !important;
+    font-size: 1.8rem !important;
+    font-family: 'Teko', sans-serif;
 }
 
 .signup-label {
     color: rgb(255, 255, 255, 0.87);
+    font-family: 'Teko', sans-serif;
+    font-size: 1.7rem;
 }
 
 .submit-btn {
@@ -487,6 +507,7 @@ body {
     font-size: 4rem;
     margin-top: 20px !important;
     margin-bottom: 20px !important;
+    font-family: 'Teko', sans-serif;
 }
 
 .heart-button {
@@ -501,7 +522,7 @@ body {
 .find-ticket-small {
     font-size: 2rem !important;
     position: relative;
-    left: 20px;
+    left: 10px;
     bottom: 10px;
 }
 
