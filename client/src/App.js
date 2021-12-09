@@ -90,8 +90,10 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
+
           <Navbar displayHero={isNotFound} heroImage={updateHeroImage}/>
           {/* <Header displayHero={isNotFound} heroImage={updateHeroImage} /> */}
+
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
           {/* <TestMenu /> */}
           <Hero displayHero={displayHero} heroImage={heroImage} />

@@ -15,7 +15,7 @@ const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }, displ
           <video autoPlay muted loop className='video-bg'>
             <source src={videoBg} type="video/mp4"></source>
           </video>
-          <Media query="(min-width: 1016px)">
+          <Media query="(min-width: 1115px)">
             {matches => {
               return matches ? 
               <div className="hero-text-box">
