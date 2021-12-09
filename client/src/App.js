@@ -83,7 +83,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
-          <Header heroImage={updateHeroImage} />
+          <Header heroImage={updateHeroImage} className='header-overflow'/>
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
           {/* <TestMenu /> */}
           <Hero heroImage={heroImage} />
