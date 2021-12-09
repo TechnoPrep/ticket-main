@@ -160,7 +160,7 @@ const Home = ({apitokens, heroImage}) => {
           <label 
             className='search-label'
             htmlFor="Radius">
-              Radius:
+              Radius (in miles)
           </label>
         
           <select name="radius" value={queryState.radius} onChange={handleChange} className='form-input'>
