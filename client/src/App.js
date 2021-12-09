@@ -85,8 +85,8 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
-          {/* <Navbar heroImage={updateHeroImage}/> */}
-          <Header heroImage={updateHeroImage} />
+          <Navbar heroImage={updateHeroImage}/>
+          {/* <Header heroImage={updateHeroImage} /> */}
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
           {/* <TestMenu /> */}
           <Hero heroImage={heroImage} />
