@@ -373,7 +373,7 @@ const Results = ({
                       {isLoggedIn ? ((savedEvents.includes(event.eventId) || (clicked.isClicked === true && event.eventId === clicked.eventId)) ? 
                         (
                         <IconButton
-                          sx={{ flex: '1 0 auto' }}
+                          sx={{ width: 50, height: 30, position:'relative', left:'208px', bottom:'135px' }}
                           className="heart-button"
                           onClick={removeThisEvent}
                           aria-label="favorite" 
@@ -389,7 +389,7 @@ const Results = ({
                         </IconButton>
                         ) : (
                         <IconButton
-                          sx={{ flex: '1 0 auto' }}
+                          sx={{ width: 50, height: 30, position:'relative', left:'208px', bottom:'135px' }}
                           className="heart-button"
                           onClick={saveThisEvent}
                           aria-label="favorite" 
