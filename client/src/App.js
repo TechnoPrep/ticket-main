@@ -7,7 +7,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 
 import Home from './pages/Home';
@@ -23,6 +23,7 @@ import ResetPassword from './pages/ResetPassword'
 import DropdownSearch from './components/DropdownSearch';
 import TestMenu from './components/TestMenu';
 import Prices from "./pages/Prices"
+import PageNotFound from  "./pages/404"
 // import DropdownTest from './components/DropdownTest';
 
 // Construct our main GraphQL API endpoint
@@ -88,6 +89,7 @@ function App() {
           {/* <TestMenu /> */}
           <Hero heroImage={heroImage} />
           <div className="container" >
+          <Switch>
             <Route exact path="/">
               <Home heroImage={updateHeroImage} apitokens={apiTokens} />
             </Route>
@@ -112,6 +114,10 @@ function App() {
             <Route exact path="/prices/:token">
               <Prices heroImage={updateHeroImage} apitokens={apiTokens}/>
             </Route>
+            <Route path="*" >
+              <PageNotFound />
+            </Route>
+            </Switch>
           </div>
           <Footer />
         </div>

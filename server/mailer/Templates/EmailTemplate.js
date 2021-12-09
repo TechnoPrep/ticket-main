@@ -286,7 +286,7 @@ const notificationEmailTemplate = (firstName, messageContent) => {
                                                  border="0"
                                                  cellspacing="0"
                                                  cellpadding="0"
-                                                 align="center"
+                                                 align="left"
                                                >
                                                  <tbody>
                                                    <tr>
@@ -315,7 +315,7 @@ const notificationEmailTemplate = (firstName, messageContent) => {
                                                    </tr>
                                                  </tbody>
                                                </table>
-                                               <h3 style="font-size: 3rem;font-family:Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;color:white">Total Ticket</h3>
+                                               <h3 align="right" style="font-size: 3rem;font-family:Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;color:white">Total Ticket</h3>
                                              </td>
                                            </tr>
    

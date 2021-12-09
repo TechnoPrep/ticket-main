@@ -101,11 +101,11 @@ function Signup(props) {
     <div className="signup-box">
       <h2 className='signup-header'>Signup</h2>
       {data ? (
-        <>
-          <p className="signup-confirm">
-            {formState.firstName}'s Ticket Buying Experience is One Step Away! Please Check {formState.email} For a Confirmation Link!
-          </p>
-        </>
+          <div className="signup-confirm">
+            <p>{formState.firstName}'s Ticket Buying Experience is One Step Away! </p>
+            <br/>
+            <p>Please Check {formState.email} For a Confirmation Link! </p>
+          </div>
       ) : (
         <form className='signup-form' onSubmit={handleFormSubmit}>
           <div className="flex-row space-between">
