@@ -455,3 +455,8 @@ body {
 .find-ticket-text-small {
     color: white !important;
 }
+
+.pagenotfound-image {
+    display: flex;
+    justify-content: center;
+}
