@@ -120,7 +120,8 @@ body {
 
 .video-bg {
     width: 100%;
-    margin-top: 70px;
+    padding-top: 60px;
+    background-color: black;
 }
 
 .banner {
@@ -182,19 +183,22 @@ body {
 }
 
 .hero-text {
-    font-size: 1.5rem;
+    font-size: 150%;
     text-align: center;
+    margin: 4px;
+    
 }
 
 .hero-text-box {
     background-color: rgb(38,45,45, .5);
-    width: 50%;
+    width: 30%;
     position: absolute;
-    left: 25%;
+    left: 35%;
     bottom: 5px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-
+    height: 110px;
+    padding-top: 5px;
 }
 
 .search-input {
@@ -297,6 +301,7 @@ body {
     background-color: #25282a;
     padding: 30px;
     border-radius: 10px;
+    min-width: 300px;
 }
 
 .search-header {

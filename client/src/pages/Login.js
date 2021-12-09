@@ -45,7 +45,7 @@ const Login = (props) => {
           <h4 className="login-header">Login</h4>
           <div className="login-box">
             {data ? (
-              <p>
+              <p className='search-header'>
                 Success! You may now head{' '}
                 <Link to="/">back to the homepage.</Link>
               </p>
