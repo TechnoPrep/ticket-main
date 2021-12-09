@@ -48,61 +48,60 @@ const Prices = ({apitokens, heroImage}) => {
                    <Media query="(min-width: 489px)">
                      {matches => {
                        return matches ?
-                       <Card key={event.id} sx={{ display: 'flex', flexDirection: 'column' }} className='price-card'>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                      <CardMedia
-                        component="img"
-                        sx={{ width: 350, height: 200 }}
-                        image={event.vendor === 'ticketmaster' ? ticketmasterLogo : (event.vendor === 'stubhub' ? stubHubLogo : seatGeekLogo)}
-                        alt={event.eventName}
-                      />
-                    </CardContent>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}} className='price-box'>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                      <Typography component="div" variant="h4" className='price'>
-                        {event.minPrice ? `$${event.minPrice}` : 'No Price Listing '}
-                      </Typography>
-                    </CardContent>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }} className='buy-ticket-btn'>
-                      <Button href={event.url} target="_blank" variant="contained" size='small'><span className='buy-ticket-text'>Buy Tickets</span></Button>
-                    </CardContent>
-                  </Box>
-                </Card>
-                :
-                <Card key={event.id} sx={{ display: 'flex', flexDirection: 'column' }} className='price-card'>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                      <CardMedia
-                        component="img"
-                        sx={{ width: 250, height: 125 }}
-                        image={event.vendor === 'ticketmaster' ? ticketmasterLogo : (event.vendor === 'stubhub' ? stubHubLogo : seatGeekLogo)}
-                        alt={event.eventName}
-                      />
-                    </CardContent>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}} className='price-box'>
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                      <Typography component="div" variant="h4" className='price'>
-                        {event.minPrice ? `$${event.minPrice}` : 'No Price Listing '}
-                      </Typography>
-                    </CardContent>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-                    <CardContent sx={{ flex: '1 0 auto' }} className='buy-ticket-btn'>
-                      <Button href={event.url} target="_blank" variant="contained" size='small'><span className='buy-ticket-text'>Buy Tickets</span></Button>
-                    </CardContent>
-                  </Box>
-                </Card>
+                      <Card key={event.id} sx={{ display: 'flex', flexDirection: 'column' }} className='price-card'>
+                        <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                          <CardContent sx={{ flex: '1 0 auto' }}>
+                            <CardMedia
+                              component="img"
+                              sx={{ width: 350, height: 200 }}
+                              image={event.vendor === 'ticketmaster' ? ticketmasterLogo : (event.vendor === 'stubhub' ? stubHubLogo : seatGeekLogo)}
+                              alt={event.eventName}
+                            />
+                          </CardContent>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'column'}} className='price-box'>
+                          <CardContent sx={{ flex: '1 0 auto' }}>
+                            <Typography component="div" variant="h4" className='price'>
+                              {event.minPrice ? `$${event.minPrice}` : 'No Price Listing '}
+                            </Typography>
+                          </CardContent>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                          <CardContent sx={{ flex: '1 0 auto' }} className='buy-ticket-btn'>
+                            <Button href={event.url} target="_blank" variant="contained" size='small'><span className='buy-ticket-text'>Buy Tickets</span></Button>
+                          </CardContent>
+                        </Box>
+                      </Card>
+                    :
+                      <Card key={event.id} sx={{ display: 'flex', flexDirection: 'column' }} className='price-card'>
+                        <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                          <CardContent sx={{ flex: '1 0 auto' }}>
+                            <CardMedia
+                              component="img"
+                              sx={{ width: 250, height: 125 }}
+                              image={event.vendor === 'ticketmaster' ? ticketmasterLogo : (event.vendor === 'stubhub' ? stubHubLogo : seatGeekLogo)}
+                              alt={event.eventName}
+                            />
+                          </CardContent>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'column'}} className='price-box'>
+                          <CardContent sx={{ flex: '1 0 auto' }}>
+                            <Typography component="div" variant="h4" className='price'>
+                              {event.minPrice ? `$${event.minPrice}` : 'No Price Listing '}
+                            </Typography>
+                          </CardContent>
+                        </Box>
+                        <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+                          <CardContent sx={{ flex: '1 0 auto' }} className='buy-ticket-btn'>
+                            <Button href={event.url} target="_blank" variant="contained" size='small'><span className='buy-ticket-text'>Buy Tickets</span></Button>
+                          </CardContent>
+                        </Box>
+                      </Card>
                      }}
-                
                 </Media>
-                </div>
+              </div>
               )
-             ))} 
+          ))} 
       </div>
     </div>
     </>
