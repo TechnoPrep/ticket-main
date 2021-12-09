@@ -6,7 +6,7 @@ export const dateRange =(timestamp) => {
   //create the UTC string into   
   const d = new Date(timestamp)
   // Check if app is in dev or prod, as Prod is hosted in UTC time zone so no need to add an additional day
-  const dd = process.env.REACT_APP_TIME_ENV === 'dev' ? new Date(d.getTime() + 86400000) : d
+  const dd = process.env.NODE_ENV !== 'production' ? new Date(d.getTime() + 86400000) : d
   const curY = dd.getFullYear();
   const curM = ('0' + (dd.getMonth() + 1)).slice(-2)  // Months are zero based. Add leading 0.
   const curD = ('0' + dd.getDate()).slice(-2)
