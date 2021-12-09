@@ -28,6 +28,11 @@ Within their account a user can view favorite events as well as remove events
 To access this site visit total-ticket.com
 
 
+<img width="1162" alt="Screen Shot 2021-12-09 at 8 58 24 AM" src="https://user-images.githubusercontent.com/85956994/145432721-acc3426a-cef4-4bd3-8e5e-da60eabbf223.png">
+
+
+
+![logo](https://user-images.githubusercontent.com/85956994/145432669-2b487056-f759-4f81-9bf2-4b14b0b517f7.png)
 
 ## Deployment
 
