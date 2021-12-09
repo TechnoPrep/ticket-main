@@ -8,7 +8,6 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import {Switch, BrowserRouter as Router, Route } from 'react-router-dom';
-import 'semantic-ui-css/semantic.min.css'
 
 import Home from './pages/Home';
 import Signup from './pages/Signup';
