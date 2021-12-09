@@ -17,7 +17,11 @@ const Header = ({heroImage}) => {
   }
 
   return (
-    <header className="navbar">
+    <div>
+      <Media query="(min-width: 1116px)">
+        {matches => {
+          return matches ?
+          <header className="navbar">
           <Link onClick={updateAppState} className="logo-box navbar-start" to="/">
             <img src={logo} className='logo-img'></img>
           </Link>
@@ -53,7 +57,32 @@ const Header = ({heroImage}) => {
           )}
       </div>
     </header>
+    :
+    <div class="topnav">
+      <a href="#home" class="active">Logo</a>
+      
+      <div id="myLinks">
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </div>
+      
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars">click</i>
+      </a>
+    </div>
+
+        }}
+    
+    </Media>
+    </div>
   );
 };
 
 export default Header;
+
+
+
+
+
+

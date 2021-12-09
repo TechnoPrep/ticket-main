@@ -24,6 +24,7 @@ import DropdownSearch from './components/DropdownSearch';
 import TestMenu from './components/TestMenu';
 import Prices from "./pages/Prices"
 // import DropdownTest from './components/DropdownTest';
+import Navbar from './components/Nav/Navbar';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -83,7 +84,8 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="min-100-vh">
-          <Header heroImage={updateHeroImage} className='header-overflow'/>
+          <Navbar heroImage={updateHeroImage}/>
+          {/* <Header heroImage={updateHeroImage} /> */}
           {/* <DropdownSearch searchVal={handleUpdate} /> */}
           {/* <TestMenu /> */}
           <Hero heroImage={heroImage} />
