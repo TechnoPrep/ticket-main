@@ -10,6 +10,8 @@ const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+import sslRedirect from 'heroku-ssl-redirect';
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -18,7 +20,7 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-
+app.use(sslRedirect());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
