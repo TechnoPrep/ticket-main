@@ -10,8 +10,6 @@ const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-import sslRedirect from 'heroku-ssl-redirect';
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -20,7 +18,14 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-app.use(sslRedirect());
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    else
+      next()
+  })
+}
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -32,13 +37,6 @@ app.use(function(req, res, next) {
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
-
-  app.use((req, res, next) => {
-    if (req.header('x-forwarded-proto') !== 'https')
-      res.redirect(`https://${req.header('host')}${req.url}`)
-    else
-      next()
-  })
 }
 
 app.get('*', (req, res) => {
