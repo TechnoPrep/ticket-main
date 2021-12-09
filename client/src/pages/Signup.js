@@ -109,7 +109,7 @@ function Signup(props) {
       ) : (
         <form className='signup-form' onSubmit={handleFormSubmit}>
           <div className="flex-row space-between">
-            <label className='signup-label' htmlFor="firstName">First Name:</label>
+            <label className='signup-label' htmlFor="firstName">First Name</label>
             <input
               className='form-input'
               placeholder="First"
@@ -126,7 +126,7 @@ function Signup(props) {
             }
           </div>
           <div className="flex-row space-between">
-            <label className='signup-label' htmlFor="lastName">Last Name:</label>
+            <label className='signup-label' htmlFor="lastName">Last Name</label>
             <input
               className='form-input'
               placeholder="Last"
@@ -143,7 +143,7 @@ function Signup(props) {
             }
           </div>
           <div className="flex-row space-between">
-            <label className='signup-label' htmlFor="zipCode">Zip Code:</label>
+            <label className='signup-label' htmlFor="zipCode">Zip Code</label>
             <input
               className='form-input'
               placeholder="Zip Code"
@@ -160,7 +160,7 @@ function Signup(props) {
             }
           </div>
           <div className="flex-row space-between">
-            <label className='signup-label' htmlFor="email">Email:</label>
+            <label className='signup-label' htmlFor="email">Email</label>
             <input
               className='form-input'
               placeholder="youremail@test.com"
@@ -177,7 +177,7 @@ function Signup(props) {
             }
           </div>
           <div className="flex-row space-between">
-            <label className='signup-label' htmlFor="password">Password:</label>
+            <label className='signup-label' htmlFor="password">Password</label>
             <input
               className='form-input'
               placeholder="******"
@@ -195,7 +195,7 @@ function Signup(props) {
             }
           </div>
           <div className="flex-row space-between">
-            <label className='signup-label' htmlFor="confirm">Confirm Password:</label>
+            <label className='signup-label' htmlFor="confirm">Confirm Password</label>
             <input
               className='form-input'
               placeholder="******"
