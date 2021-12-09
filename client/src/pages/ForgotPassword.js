@@ -27,7 +27,6 @@ function ForgotPassword() {
     }
 
     setFormState({
-      email: '',
       isSubmitted: true,
     });
     
@@ -45,9 +44,11 @@ function ForgotPassword() {
     <div className="signup-box">
       <h2 className='signup-header'>Forgot Password?</h2>
       {formState.isSubmitted ? (
-        <p style={{color: 'white'}}>
-          Thank you! And Email has been sent to reset your Password!
-        </p>
+        <div className="signup-confirm">
+          <p>A password reset email has been send!</p>
+            <br/>
+          <p>This link will be valid for 24 hours!</p>
+        </div>
       ) : (
       <form className='signup-form' onSubmit={handleFormSubmit}>
         <div className="flex-row space-between">
