@@ -29,12 +29,28 @@ const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }}) => {
           </Media>
       </div>
       ) : (
-      <div className='banner'>
-        <img src={url} className="banner-img" />
-        <h1 className='banner-text'>{performer.toUpperCase()}</h1>
-        <div className='banner-details'>
-        <h3 className='banner-title'>{venue} || {formatDate(eventDate)} || {formatTime(eventTime)}</h3>
-        </div>
+        <div>
+        <Media query="(min-width: 1511px)">
+          {matches => {
+            return matches ?
+            <div className='banner'>
+            <img src={url} className="banner-img" />
+            <h1 className='banner-text'>{performer.toUpperCase()}</h1>
+            <div className='banner-details'>
+            <h3 className='banner-title'><span className='banner-title-one'>{venue}</span> <span className='banner-title-two'>{formatDate(eventDate)}</span> <span className='banner-title-three'>{formatTime(eventTime)}</span></h3>
+            </div>
+          </div>
+          :
+          <div className='banner'>
+            <img src={url} className="banner-img" />
+            <h1 className='banner-text-small'>{performer.toUpperCase()}</h1>
+            <div className='banner-details-small'>
+            <h3 className='banner-title-small'><span className='banner-title-one'>{venue}</span> <span className='banner-title-two'>{formatDate(eventDate)}</span> <span className='banner-title-three'>{formatTime(eventTime)}</span></h3>
+            </div>
+          </div>
+          }}
+          
+      </Media>
       </div>
       )
     }
