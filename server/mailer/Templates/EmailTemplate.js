@@ -297,24 +297,25 @@ const notificationEmailTemplate = (firstName, messageContent) => {
                                                            text-decoration: none;
                                                            color: #ffffff;
                                                          "
-                                                         href="https://example.com"
+                                                         href="https://www.total-ticket.com/"
                                                          ><img
                                                            editable=""
-                                                           alt="Remindr"
-                                                           src="https://total-ticket.herokuapp.com/static/media/logo.6b882ecf.png"
+                                                           alt="Total Ticket"
+                                                           src="https://www.total-ticket.com/static/media/total-ticket-logo-smaller.5afc9bba.png"
                                                            width="100%"
                                                            height="auto"
                                                            style="
                                                              max-width: 214px;
                                                              color: #ffffff;
                                                              font-size: 20px;
-                                                             text-align: center;
+                                                             text-align: left;
                                                            "
                                                        /></a>
                                                      </td>
                                                    </tr>
                                                  </tbody>
                                                </table>
+                                               <h3 style="font-size: 3rem;font-family:Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;color:white">Total Ticket</h3>
                                              </td>
                                            </tr>
    
@@ -540,8 +541,8 @@ const notificationEmailTemplate = (firstName, messageContent) => {
                                                "
                                              >
                                                <singleline
-                                                 >© 2020 All Rights Reserved By
-                                                 Remindr</singleline
+                                                 >© 2021 All Rights Reserved By
+                                                 Total Ticket</singleline
                                                >
                                              </td>
                                            </tr>
