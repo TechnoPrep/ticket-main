@@ -9,13 +9,14 @@ function ForgotPassword() {
     isSubmitted: false,
   });
 
+  // Mutation used to check if use exists and send password reset token to email
   const [findUser, {error}] = useMutation(FORGOTPW);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try{
-
+      
       await findUser({
         variables: {
           email: formState.email,
@@ -40,6 +41,7 @@ function ForgotPassword() {
     });
   };
 
+  // Tell the user we sent them a password reset email whether or not they have an account with us
   return (
     <div className="signup-box">
       <h2 className='signup-header'>Forgot Password?</h2>

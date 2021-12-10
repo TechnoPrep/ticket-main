@@ -50,11 +50,13 @@ const Mailer = async (event, email, url, firstName) => {
         break;
     }
 
+    // Determine which message template to use
     const messageHTML = (event === 'confirm') ? 
       EmailTemplate(firstName, Registration(url, email)) 
         :
       EmailTemplate(firstName, Reset(url, email))
 
+      // Pass all the data from above to the mailer
     await transporter.sendMail({
       from: `"Total Ticket" <notifications@total-ticket.com>`, // sender address
       to: `${email}`, // list of receivers

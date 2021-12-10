@@ -68,6 +68,7 @@ export const fetchEvents = async (apitokens, searchTerm, lat = 0, lon = 0, radiu
 
 }
 
+// Feth Lat and Lon from ZipCode passed through
 export const fetchLocation = async (apitokens, zipCode) => {
   const data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apitokens.googleapi}`, {
     method: "GET",
@@ -85,9 +86,8 @@ export const fetchLocation = async (apitokens, zipCode) => {
 
 export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, tmVenueId) => {
 
+  // Take in UTC Date, and create a Range Object. Current Date + 1 Day
   const range = dateRange(dateUTC)
-
-  console.log(range);
 
   const stubHub = fetch(`https://api.stubHub.com/sellers/search/events/v3?name=${performer}&date=${range.date}TO${range.nextDate}&venue=${venue}&parking=false`, {
     method: "GET",
@@ -107,6 +107,7 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     }
   })
   
+  // Clean up String to match SeatGeeks formatting 
   const slug = stringCleanup(performer)
 
   const seatGeek = fetch(`https://api.seatgeek.com/2/events?performers.slug=${slug}&datetime_utc=${dateUTC}&q=${venue}&client_id=${apitokens.seatgeek}`);
@@ -114,8 +115,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
   const [stubHubData, seatGeekData, ticketMaster] = await Promise.all([stubHub, seatGeek, ticketmMaster]);
   const [shJson, sgJson, tmJson] = await Promise.all([stubHubData.json(), seatGeekData.json(), ticketMaster.json()])
   
+  // Nomalize Data into uniform format
   const normalizedStubHubData = shJson.events.map(event => ({
-   //discover what stubhub is spitting out for perfomer venue etc
    id: event.id,
    name: event.name,
    city: event.venue.city,
@@ -126,8 +127,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
    vendor: 'stubhub',
   }));
 
+    // Nomalize Data into uniform format
   const normalizedseatGeekData = sgJson.events.map(event => ({
-    //discover what seat geek is spitting out for perfomer venue etc
     id: event.id,
     name: event.performers[0].name,
     city: event.venue.city,
@@ -138,8 +139,8 @@ export const fetchPricing = async (apitokens, performer, date, dateUTC, venue, t
     vendor: 'seatgeek'
   }));
 
+    // Nomalize Data into uniform format
   const normalizedTicketmMaster = tmJson._embedded.events.map(event => ({
-    //discover what ticketmaster is spitting out for perfomer venue etc
     id: event.id,
     name: event.name,
     city: event._embedded.venues[0].city.name,

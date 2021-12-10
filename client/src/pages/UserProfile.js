@@ -9,8 +9,10 @@ import { REMOVE_SAVED_EVENT } from '../utils/mutations'
 
 const UserProfile = ({heroImage}) => {
 
+  // Pull data of the logged in user passed through from context
   const { err, loading, data } = useQuery(QUERY_ME);
 
+  // Handle the removal of an event, and run the QUERY_ME query on callback
   const [rmEvent] = useMutation(REMOVE_SAVED_EVENT, {
     refetchQueries: [
       QUERY_ME,
@@ -18,16 +20,21 @@ const UserProfile = ({heroImage}) => {
     ]
   });
 
+  // set to either data pulled from QUERY_ME or to an empty object
   const userQuery = data?.me || {};
 
+  // Set through the user and exact the eventId's and save to an array, if no saved events, set ot empty array
   const eventIdArr = userQuery.savedEvents ? userQuery.savedEvents.map(saved => (saved.eventId)) : []
 
+  // Set to the array of savedEvents from user Query
   const eventList = userQuery.savedEvents
 
+  // If no context is passed through, no email is present, sent to login page
   if(!userQuery.email){
     window.location.assign('/')
   }
 
+  // Remove the event based off its eventId
   const removeEvent = async (eventId) => {
 
     try {
@@ -43,6 +50,7 @@ const UserProfile = ({heroImage}) => {
     }
   }
 
+  // If this page is loaded, set the Banner Image back to default
   useEffect(() => {
 
   heroImage()

@@ -60,12 +60,10 @@ const apiTokens = {
 
 function App() {
 
-  const [searchTerm, setSearchTerm] = useState({
-    term: '',
-  })
-
+  // State to determine if the Hero component should be displayed
   const [displayHero, setDisplayHero] = useState(true)
 
+  // State to handle what values should be passed to the Hero componenet
   const [heroImage, setHeroImage] = useState({
     url: null,
     performer: '',
@@ -73,15 +71,12 @@ function App() {
     eventTime: '',
     venue: '',
   })
-
-  const handleUpdate = (newTerm) =>{
-    setSearchTerm({term: newTerm})
-  }
-
+  // If called, set the state with the args
   const updateHeroImage = (imageUrl, performer, venue, eventDate, eventTime) =>{
     setHeroImage({ url: imageUrl, performer: performer, venue: venue, eventDate: eventDate, eventTime: eventTime });
   }
 
+  // Set the state of DisplayHero depending on if the page navigated to is a routed page
   const isNotFound = (boolean) => {
     setDisplayHero(boolean)
   }

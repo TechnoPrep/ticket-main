@@ -10,9 +10,10 @@ function Confirm() {
   
   const {token} = useParams();
 
-
+  // Mutation used to set the emailConfirm value to true if token is valid
   const [accountReg, {data, error}] = useMutation(ACCOUNT_REG);
 
+  // Upon page load, execute the query 
   useEffect(() => {
     const handleUpdate = async () => {
       try{

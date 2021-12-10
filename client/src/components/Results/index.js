@@ -32,27 +32,31 @@ const Results = ({
   showTitle = true,
 }) => {
 
+  // State to handle which heart button is clicked
   const [clicked, setClick ] = useState({
     eventId: '',
     isClicked: false
   })
 
+  // If element 0 contains 'No events were found' return this
   if (events[0] === 'No Events were found') {
     return <h3 className='search-header'> No events were found, please check another Performer or Change your search location </h3>;
   }
 
+  // Handles sending the value of the icon clicked to pass the token to the home page
   const saveThisEvent = async (event) => {
     event.persist();
     const token = event.currentTarget.value
     saveToEvents(token)
   }
-
+  // Handles sending the value of the icon clicked to pass the eventId to the home page
   const removeThisEvent = async (event) => {
     event.persist();
     const eventId = await event.currentTarget.value
     removeFromEvents(eventId)
 }
 
+  // Returns True if Logged in, used to determine whether to display the 'favorite' icons or not
   const isLoggedIn = Auth.loggedIn()
 
   return (

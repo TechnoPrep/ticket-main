@@ -9,8 +9,10 @@ import decode from 'jwt-decode'
 
 const Home = ({apitokens, heroImage}) => {
   
+  //State to manage the API Query return
   const [eventList, setEventList] = useState([]);
 
+  // Manages the state of the values in the form
   const [queryState, setQueryState] = useState({
     searchTerm: '',
     zipCode: '',
@@ -19,6 +21,7 @@ const Home = ({apitokens, heroImage}) => {
     lon: ''
   });
 
+  // If this page is loaded, set the Banner Image back to default
   useEffect(() => {
 
     heroImage()
@@ -26,8 +29,10 @@ const Home = ({apitokens, heroImage}) => {
  
    }, [])
 
+  //  Query that pulls data of user based off context
   const { loading, data } = useQuery(QUERY_ME);
 
+  // Mutation to handle adding events to the users SavedEvents, after it is ran, re-run the ME query to pull newly saved values
   const [addEvent, {error, results}] = useMutation(ADD_SAVED_EVENT, {
     refetchQueries: [
       QUERY_ME,
@@ -35,6 +40,7 @@ const Home = ({apitokens, heroImage}) => {
     ]
   });
 
+  // Mutation to handle removing events from the users SavedEvents, after it is ran, re-run the ME query to pull newly saved values
   const [rmEvent] = useMutation(REMOVE_SAVED_EVENT, {
     refetchQueries: [
       QUERY_ME,
@@ -42,10 +48,13 @@ const Home = ({apitokens, heroImage}) => {
     ]
   });
 
+  // set to either data pulled from QUERY_ME or to an empty object
   const user = data?.me || {};
 
+  // Set through the user and exact the eventId's and save to an array, if no saved events, set ot empty array
   const eventIdArr = user.savedEvents ? user.savedEvents.map(saved => (saved.eventId)) : []
 
+  // Handle submit on the Search Form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -69,6 +78,7 @@ const Home = ({apitokens, heroImage}) => {
     });
   };
 
+  // Accept the token from the Results component, decode it to extract the data needed to save to the Database
   const saveEvent = async (token) => { 
 
     const { 
@@ -105,6 +115,7 @@ const Home = ({apitokens, heroImage}) => {
     
   }
 
+  // Remove the event based off its eventId
   const removeEvent = async (eventId) => {
 
     try {

@@ -15,6 +15,7 @@ const resolvers = {
     user: async (parent, { email }) => {
       return User.findOne({ email }).populate('savedEvents');
     },
+    // Use Context to return User Data
     me: async (parent, args, context) => {
       if (context.user) {
 
@@ -22,20 +23,11 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    savedEvents: async (parent, {userId}) => {
-
-      return SavedEvent.find({userId: userId}).sort({ createdAt: -1 });
-    },
-    savedEvent: async (parent, { savedEventId }) => {
-      return SavedEvent.findOne({ _id: savedEventId });
-    },
   },
   Mutation: {
     // Create User Account
     addUser: async (parent, args) => {
-
       const email = args.email
-
       const existing = await User.findOne({ email })
 
       if(existing){
@@ -46,10 +38,9 @@ const resolvers = {
         { ...args }
       );
 
+      // Create a Token, pass other data into the Mailer Function
       const token = signToken(user, process.env.REG_RESET_EXP)
-
       const url = `${process.env.SITE_URL}/confirmation/${token}`;
-      
       Mailer("confirm", args.email, url, args.firstName)
 
       return { token, user };
@@ -60,9 +51,7 @@ const resolvers = {
       try{
 
         const decoded = decode(token)
-
         const id = decoded.data._id
-
         const user = await User.findOneAndUpdate({_id: id}, {emailConfirmed: true})
  
         // return (token, user)
@@ -72,21 +61,23 @@ const resolvers = {
         console.log(err);
       }
     },
+    // Find User, Create Token, and Send Email
     forgotPass: async (parent, { email }) => {
 
+      // Find User from Email
       const user = await User.findOne({ email: email })
 
-      // No user was found, return null
+      // No user was found, return nothing, do not error out as user shouldnt know if account with that email exists or not until they get email
       if(!user){ return }
 
+      // If User exists pass values to create a token to send to the email
       const token = signToken(user, process.env.REG_RESET_EXP)
-
       const url = `${process.env.SITE_URL}/reset/${token}`;
-      
       Mailer("reset", user.email, url, user.firstName)
 
       return user;
     },
+    // Handle Token, and update password for user provided with token
     resetPass: async (parent, { token, password }) =>{
 
       try{
