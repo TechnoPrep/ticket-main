@@ -1,5 +1,6 @@
 const registration = (url, email) => {
 
+  // Account Verification Email Template
   return `
   <br>
   <p style="font-size:20px">Click here to complete your <a href="${url}">account registration</a>.</p>

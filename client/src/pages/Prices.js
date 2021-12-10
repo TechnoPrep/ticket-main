@@ -19,19 +19,22 @@ const Prices = ({apitokens, heroImage}) => {
   const {token} = useParams();
    
   const decoded = decode(token)
-  
+
+  // Deconstruct the object returned from the token
   let {performer, eventDate, eventTime, dateUTC, venue, tmVenueId, banner:{url}} = decoded;
 
+  // define the state of eventList to an empty array
   const [eventList, setEventList] = useState([]);
 
 
+  // Upon page load, execute the fetchResults function
   useEffect(() => {
 
     const fetchResults = async () => {
         const events = await fetchPricing(apitokens, performer, eventDate, dateUTC, venue, tmVenueId)
         setEventList(events)
     }
-
+    // pass event data through to the Hero Component to update the hero
     heroImage(url, performer, venue, eventDate, eventTime)
 
     fetchResults();

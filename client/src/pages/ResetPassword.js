@@ -9,20 +9,23 @@ function ResetPassword() {
   
   const {token} = useParams();
 
+  // Holds the state of the items entered into the form
   const [formState, setFormState] = useState({
     password: "",
     confirm: "",
     isSubmitted: false
   });
 
+  // Holds the state of the validator return values
   const [errorMsg, setErrorMsg] = useState({
     passLen: false,
     passMatch: false
   })
 
+  // Mutation to kick validate the token in the params is valid
   const [resetPW, { error, data }] = useMutation(RESETPW);
 
-
+  
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -46,6 +49,7 @@ function ResetPassword() {
 
   useEffect(() => {
 
+    // If the form passes validation, continue with the Password reset process
     const validateAndUpdate = async () => {
       if( 
         errorMsg.passLen &&

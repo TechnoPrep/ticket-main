@@ -25,9 +25,11 @@ function Signup(props) {
 
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
+  // Handle Form Submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    // Set the formState for the text fields to ensure that they are all filled out
     const [validFName, validLName, validZip, validEmail, validLen, match] = await Promise.all([
       Validate.isNotEmpty(formState.firstName),
       Validate.isNotEmpty(formState.lastName),
@@ -37,6 +39,7 @@ function Signup(props) {
       Validate.passMatch(formState.password, formState.confirm)
     ])
 
+    // Set Error state based on returns
     setErrorMsg({
       fName: validFName,
       lName: validLName,
@@ -46,6 +49,7 @@ function Signup(props) {
       passMatch: match
     })
 
+    // If field, reset password and confirm field, keep all data in the reset
     setFormState({
       ...formState,
       password: '',
@@ -55,6 +59,7 @@ function Signup(props) {
     
   };
 
+  // Upon errorMsg state being changed, validate the form fields are able to be submitted
   useEffect(() => {
     const validateAndAdd = async () => {
       if(

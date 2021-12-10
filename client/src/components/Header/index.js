@@ -12,7 +12,7 @@ const Header = ({heroImage}) => {
     event.preventDefault();
     Auth.logout();
   };
-
+  // If this is ran, reset the HeroImage
   const updateAppState = () => {
     heroImage();
   }

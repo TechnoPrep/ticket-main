@@ -25,6 +25,7 @@ const Navbar = ({heroImage, displayHero}) => {
         Auth.logout();
       };
     
+      // If this is ran, reset the HeroImage, and display the component
       const updateAppState = () => {
         heroImage();
         displayHero(true)

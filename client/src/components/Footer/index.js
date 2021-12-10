@@ -5,6 +5,7 @@ const Footer = ({displayHero}) => {
   const location = useLocation();
   const history = useHistory();
 
+  // If this is ran, and display the Hero component, and use the goBack() function
   const handleOnClick = () => {
     displayHero(true)
     history.goBack()
