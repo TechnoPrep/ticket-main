@@ -76,6 +76,9 @@ export const fetchLocation = async (apitokens, zipCode) => {
       "Accept": "application/json",
     }
   })
+
+  console.log(apitokens.googleapi);
+
   const json = await data.json()
 
   const { results } = json
