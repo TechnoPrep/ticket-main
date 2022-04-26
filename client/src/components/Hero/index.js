@@ -6,8 +6,6 @@ import Media from 'react-media';
 
 const Hero = ({heroImage: { url, performer, eventDate, eventTime, venue }, displayHero}) => {
 
-  console.log(displayHero);
-
   return (
     <>
     {displayHero ? ((typeof url !== 'string' ) ? (
