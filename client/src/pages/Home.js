@@ -59,7 +59,7 @@ const Home = ({apitokens, heroImage}) => {
     event.preventDefault();
 
     if(queryState.zipCode !== ''){
-      const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
+      // const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
       const results = await fetchEvents(apitokens, queryState.searchTerm, lat, lng, queryState.radius );
       setEventList(results);
     } else {
