@@ -59,7 +59,10 @@ const Home = ({apitokens, heroImage}) => {
     event.preventDefault();
 
     if(queryState.zipCode !== ''){
-      // const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
+
+      //If this line fails, likely due to GoogleAPI key issues. Use API key in Insomia to validate
+      const {geometry: {location: {lat, lng}}} = await fetchLocation(apitokens, queryState.zipCode);
+
       const results = await fetchEvents(apitokens, queryState.searchTerm, lat, lng, queryState.radius );
       setEventList(results);
     } else {
