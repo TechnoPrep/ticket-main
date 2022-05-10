@@ -22,22 +22,15 @@ const Mailer = async (event, email, url, firstName) => {
       auth: {
         user: process.env.NAMECHEAP_MAIL_USER,
         pass: process.env.NAMECHEAP_MAIL_PASS
+      },
+      dkim: {
+        domainName: "total-ticket.com",
+        keySelector: "default",
+        privateKey: process.env.NAMECHEAP_DKIM_PRVT_KEY
       }
     });
 
-    // const transporter = nodemailer.createTransport({
-    //   service: "gmail",
-    //   auth: {
-    //     type: 'OAuth2',
-    //     user: process.env.MAIL_USERNAME,
-    //     pass: process.env.MAIL_PASSWORD,
-    //     clientId: process.env.OAUTH_CLIENTID,
-    //     clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    //     refreshToken: process.env.OAUTH_REFRESH_TOKEN
-    //   },
-    // });
-
-    let type = ''
+    let type = ""
 
     switch (event) {
       case "confirm":
@@ -58,7 +51,8 @@ const Mailer = async (event, email, url, firstName) => {
 
       // Pass all the data from above to the mailer
     await transporter.sendMail({
-      from: `"Total Ticket" <notifications@total-ticket.com>`, // sender address
+      //from: `"Total Ticket" <notifications@total-ticket.com>`, // sender address
+      from: `Total Ticket ${process.env.NAMECHEAP_MAIL_USER}`,
       to: `${email}`, // list of receivers
       subject: `${type}`, // Subject line
       text: `${url}`, // plain text body
